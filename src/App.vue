@@ -1,28 +1,54 @@
 <template>
   <div id="app">
-    <ToDoList />
-    <ToDoItem v-for="item in ToDoItems" :key="item.id" :label="item.label" :completed="item.completed" />
+    <TodoList @item-submitted="addItem" />
+    <ul>
+      <li v-for="item in TodoItems" :key="item.id">
+        <TodoItem
+          :label="item.label"
+          :completed="item.completed"
+          :id="item.id"
+          @checkbox-toggled="completedStatusUpdate(item.id)"
+          @removed-item="removeItem(item.id)"
+        />
+      </li>
+    </ul>
   </div>
 </template>
 
 <script>
-import ToDoList from './components/ToDoList.vue';
-import ToDoItem from './components/ToDoItem.vue';
-import { v4 as uuidv4 } from 'uuid';
+import TodoList from "./components/TodoList.vue";
+import TodoItem from "./components/TodoItem.vue";
+import { v4 as uuidv4 } from "uuid";
 
 export default {
   components: {
-    ToDoList,
-    ToDoItem
+    TodoList,
+    TodoItem,
   },
   data() {
     return {
-      ToDoItems: [{label: "First item", completed: false, id: uuidv4()},
-      {label: "Second item", completed: true, id: uuidv4()},
-      {label: "Three item", completed: false, id: uuidv4()}]
+      TodoItems: [
+        { label: "First item", completed: false, id: uuidv4() },
+        { label: "Second item", completed: true, id: uuidv4() },
+        { label: "Three item", completed: false, id: uuidv4() },
+      ],
+    };
+  },
+  methods: {
+    addItem(description) {
+      const item = { label: description, completed: false, id: uuidv4() };
+      this.TodoItems.push(item);
+    },
+    completedStatusUpdate(todoId) {
+      const toggledTodo = this.TodoItems.find((item) => item.id === todoId);
+      toggledTodo.completed = !toggledTodo.completed;
+    },
+    removeItem(todoId) {
+      const todoIndex = this.TodoItems.findIndex(item => item.id === todoId);
+      this.TodoItems.splice(todoIndex, 1);
     }
-  }
-}
+  },
+};
 </script>
 
 <style>
@@ -33,5 +59,10 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+  /* color: #fff; */
+}
+
+body {
+  background-color: #ddd;
 }
 </style>
