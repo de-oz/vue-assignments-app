@@ -1,6 +1,11 @@
 <template>
   <div id="app">
-    <TodoList @item-submitted="addItem" />
+    <TodoList
+      @submitted-item="addItem"
+      @list-cleared="clearAll"
+      @items-checked="checkAll"
+      @items-unchecked="uncheckAll"
+    />
     <ul>
       <li v-for="item in TodoItems" :key="item.id">
         <TodoItem
@@ -8,7 +13,8 @@
           :completed="item.completed"
           :id="item.id"
           @checkbox-toggled="completedStatusUpdate(item.id)"
-          @removed-item="removeItem(item.id)"
+          @item-edited="editItem(item.id, $event)"
+          @item-removed="removeItem(item.id)"
         />
       </li>
     </ul>
@@ -44,9 +50,22 @@ export default {
       toggledTodo.completed = !toggledTodo.completed;
     },
     removeItem(todoId) {
-      const todoIndex = this.TodoItems.findIndex(item => item.id === todoId);
+      const todoIndex = this.TodoItems.findIndex((item) => item.id === todoId);
       this.TodoItems.splice(todoIndex, 1);
-    }
+    },
+    editItem(todoId, newLabel) {
+      const editedTodo = this.TodoItems.find((item) => item.id === todoId);
+      editedTodo.label = newLabel;
+    },
+    clearAll() {
+      this.TodoItems = [];
+    },
+    checkAll() {
+      this.TodoItems.forEach((item) => (item.completed = true));
+    },
+    uncheckAll() {
+      this.TodoItems.forEach((item) => (item.completed = false));
+    },
   },
 };
 </script>
@@ -59,7 +78,6 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
-  /* color: #fff; */
 }
 
 body {
