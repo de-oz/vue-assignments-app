@@ -10,44 +10,48 @@
     <label v-if="!isEditing" :for="id">{{ label }}</label>
     <input
       v-else
-      type="text"
+      ref="labelInput"
       v-model.lazy.trim="newLabel"
       name="todo-description"
     />
-    <font-awesome-icon
-      v-if="!isEditing"
-      @click="toggleEditMode"
-      icon="fa-solid fa-pen"
-      size="lg"
-      class="icon"
-    />
-    <font-awesome-icon
-      v-if="!isEditing"
-      @click="removeItem"
-      icon="fa-solid fa-trash fa-3x"
-      size="lg"
-      class="icon"
-    />
-    <font-awesome-icon
-      v-if="isEditing"
-      @click="editItem"
-      icon="fa-solid fa-check"
-      size="lg"
-      class="icon"
-    />
-    <font-awesome-icon
-      v-if="isEditing"
-      @click="toggleEditMode"
-      icon="fa-solid fa-xmark"
-      size="lg"
-      class="icon"
-    />
+    <div v-if="!isEditing" class="options">
+      <font-awesome-icon
+        @click="editItem"
+        icon="fa-solid fa-pen"
+        size="lg"
+        class="icon"
+      />
+      <font-awesome-icon
+        @click="removeItem"
+        icon="fa-solid fa-trash fa-3x"
+        size="lg"
+        class="icon"
+      />
+    </div>
+    <div v-else class="options">
+      <font-awesome-icon
+        @click="saveEdit"
+        icon="fa-solid fa-check"
+        size="lg"
+        class="icon"
+      />
+      <font-awesome-icon
+        @click="cancelEdit"
+        icon="fa-solid fa-xmark"
+        size="lg"
+        class="icon"
+      />
+    </div>
   </div>
 </template>
 
 <script>
 export default {
-  props: ["label", "completed", "id"],
+  props: {
+    label: { required: true, type: String },
+    completed: { default: false, type: Boolean },
+    id: { required: true, type: String },
+  },
   data() {
     return {
       newLabel: this.label,
@@ -60,14 +64,18 @@ export default {
     },
   },
   methods: {
-    toggleEditMode() {
-      this.isEditing = !this.isEditing;
-    },
     editItem() {
-      if (this.newLabel && this.newLabel != this.label) {
+      this.isEditing = true;
+      this.$nextTick(() => this.$refs.labelInput.focus());
+    },
+    saveEdit() {
+      if (this.newLabel) {
         this.$emit("item-edited", this.newLabel);
         this.isEditing = false;
       }
+    },
+    cancelEdit() {
+      this.isEditing = false;
     },
     removeItem() {
       this.$emit("item-removed");
