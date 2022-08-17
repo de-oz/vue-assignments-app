@@ -1,15 +1,17 @@
 <template>
   <div id="app">
     <TodoList
-      @submitted-item="addItem"
+      :isEmpty="todoItems?.length === 0"
+      @added-item="addItem"
       @list-cleared="clearAll"
-      @items-checked="checkAll"
-      @items-unchecked="uncheckAll"
+      @checked-all="checkAll"
+      @unchecked-all="uncheckAll"
+      @data-fetched="generateData"
     />
     <ul>
-      <li v-for="item in TodoItems" :key="item.id">
+      <li v-for="item in todoItems" :key="item.id">
         <TodoItem
-          :label="item.label"
+          :title="item.title"
           :completed="item.completed"
           :id="item.id"
           @checkbox-toggled="completedStatusUpdate(item.id)"
@@ -33,39 +35,38 @@ export default {
   },
   data() {
     return {
-      TodoItems: [
-        { label: "First item", completed: false, id: uuidv4() },
-        { label: "Second item", completed: true, id: uuidv4() },
-        { label: "Three item", completed: false, id: uuidv4() },
-      ],
+      todoItems: [],
     };
   },
   methods: {
     addItem(description) {
-      const item = { label: description, completed: false, id: uuidv4() };
-      this.TodoItems.push(item);
+      const item = { title: description, completed: false, id: uuidv4() };
+      this.todoItems.push(item);
     },
     completedStatusUpdate(todoId) {
-      const toggledTodo = this.TodoItems.find((item) => item.id === todoId);
+      const toggledTodo = this.todoItems.find((item) => item.id === todoId);
       toggledTodo.completed = !toggledTodo.completed;
     },
     removeItem(todoId) {
-      const todoIndex = this.TodoItems.findIndex((item) => item.id === todoId);
-      this.TodoItems.splice(todoIndex, 1);
+      const todoIndex = this.todoItems.findIndex((item) => item.id === todoId);
+      this.todoItems.splice(todoIndex, 1);
     },
-    editItem(todoId, newLabel) {
-      const editedTodo = this.TodoItems.find((item) => item.id === todoId);
-      editedTodo.label = newLabel;
+    editItem(todoId, newTitle) {
+      const editedTodo = this.todoItems.find((item) => item.id === todoId);
+      editedTodo.title = newTitle;
     },
     clearAll() {
-      this.TodoItems = [];
+      this.todoItems = [];
     },
     checkAll() {
-      this.TodoItems.forEach((item) => (item.completed = true));
+      this.todoItems.forEach((item) => (item.completed = true));
     },
     uncheckAll() {
-      this.TodoItems.forEach((item) => (item.completed = false));
+      this.todoItems.forEach((item) => (item.completed = false));
     },
+    generateData(data) {
+      this.todoItems = data;
+    }
   },
 };
 </script>
