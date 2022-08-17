@@ -7,11 +7,11 @@
       :checked="isCompleted"
       @change="$emit('checkbox-toggled')"
     />
-    <label v-if="!isEditing" :for="id">{{ label }}</label>
+    <label v-if="!isEditing" :for="id">{{ title }}</label>
     <input
       v-else
       ref="labelInput"
-      v-model.lazy.trim="newLabel"
+      v-model.lazy.trim="newTitle"
       name="todo-description"
     />
     <div v-if="!isEditing" class="options">
@@ -48,13 +48,13 @@
 <script>
 export default {
   props: {
-    label: { required: true, type: String },
+    title: { required: true, type: String },
     completed: { default: false, type: Boolean },
-    id: { required: true, type: String },
+    id: { required: true, type: Number },
   },
   data() {
     return {
-      newLabel: this.label,
+      newTitle: this.title,
       isEditing: false,
     };
   },
@@ -69,8 +69,8 @@ export default {
       this.$nextTick(() => this.$refs.labelInput.focus());
     },
     saveEdit() {
-      if (this.newLabel) {
-        this.$emit("item-edited", this.newLabel);
+      if (this.newTitle) {
+        this.$emit("item-edited", this.newTitle);
         this.isEditing = false;
       }
     },
