@@ -13,7 +13,7 @@
         <TodoItem
           :title="item.title"
           :completed="item.completed"
-          :id="item.id"
+          :id="String(item.id)"
           @checkbox-toggled="updateCompletedStatus(item.id)"
           @item-edited="editItem(item.id, $event)"
           @item-removed="removeItem(item.id)"
@@ -41,7 +41,7 @@ export default {
   methods: {
     addItem(description) {
       const item = { title: description, completed: false, id: uuidv4() };
-      this.todoItems.push(item);
+      this.todoItems.unshift(item);
     },
     updateCompletedStatus(todoId) {
       const toggledTodo = this.todoItems.find((item) => item.id === todoId);
