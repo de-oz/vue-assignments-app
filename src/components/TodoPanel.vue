@@ -9,9 +9,9 @@
       <input
         name="new-todo"
         id="new-todo"
-        ref="todoTitle"
+        ref="todoTitleInput"
         autocomplete="off"
-        v-model.lazy.trim="title"
+        v-model.trim="todoTitle"
       />
       <button type="submit" class="btn btn__add">
         <font-awesome-icon class="icon__add" icon="fa-solid fa-plus" />
@@ -20,31 +20,31 @@
     <!-- button group -->
     <button
       v-if="isEmpty"
-      @click="fetchData"
       type="button"
       class="btn btn__generate"
+      @click="fetchData"
     >
       Generate data
     </button>
     <div v-else class="btn-group">
       <button
-        @click="$emit('list-cleared')"
         type="button"
         class="btn btn__delete"
+        @click="$emit('list-cleared')"
       >
         Clear All
       </button>
       <button
-        @click="$emit('checked-all')"
         type="button"
         class="btn btn__check"
+        @click="$emit('checked-all')"
       >
         Check All
       </button>
       <button
-        @click="$emit('unchecked-all')"
         type="button"
         class="btn btn__uncheck"
+        @click="$emit('unchecked-all')"
       >
         Uncheck All
       </button>
@@ -61,15 +61,17 @@ export default {
   },
   data() {
     return {
-      title: "",
+      todoTitle: "",
     };
   },
   methods: {
     addItem() {
-      if (this.title === "") return;
+      if (this.todoTitle === "") return;
 
-      this.$emit("added-item", this.title);
-      this.title = "";
+      this.$emit("added-item", this.todoTitle);
+
+      this.todoTitle = "";
+      this.$refs.todoTitleInput.focus();
     },
     fetchData() {
       axios
@@ -79,7 +81,7 @@ export default {
     },
   },
   mounted() {
-    this.$refs.todoTitle.focus();
+    this.$refs.todoTitleInput.focus();
   },
 };
 </script>

@@ -3,46 +3,47 @@
     <input
       name="todo-description"
       type="checkbox"
-      class="checkbox"
+      class="todo-checkbox"
       :id="id"
       :checked="isCompleted"
-      @change="$emit('checkbox-toggled')"
+      @change="toggleCheckbox"
     />
     <label v-if="!isEditing" :for="id" class="todo-label">{{ title }}</label>
     <input
       v-else
       name="todo-description"
       class="todo-edit"
-      ref="labelInput"
+      ref="labelEditingInput"
       autocomplete="off"
-      v-model.lazy.trim="newTitle"
+      v-model.trim="modifiedTitle"
+      @keydown.enter="saveEdit"
     />
     <div v-if="!isEditing" class="todo-controls">
       <font-awesome-icon
-        @click="editItem"
         icon="fa-solid fa-pen"
         size="lg"
         class="icon"
+        @click="editItem"
       />
       <font-awesome-icon
-        @click="removeItem"
         icon="fa-solid fa-trash"
         size="lg"
         class="icon danger"
+        @click="removeItem"
       />
     </div>
     <div v-else class="todo-controls">
       <font-awesome-icon
-        @click="saveEdit"
         icon="fa-solid fa-check"
         size="lg"
         class="icon"
+        @click="saveEdit"
       />
       <font-awesome-icon
-        @click="cancelEdit"
         icon="fa-solid fa-x"
         size="lg"
         class="icon danger"
+        @click="cancelEdit"
       />
     </div>
   </div>
@@ -53,11 +54,11 @@ export default {
   props: {
     title: { required: true, type: String },
     completed: { default: false, type: Boolean },
-    id: { required: true, type: Number },
+    id: { required: true, type: String },
   },
   data() {
     return {
-      newTitle: this.title,
+      modifiedTitle: this.title,
       isEditing: false,
     };
   },
@@ -69,11 +70,11 @@ export default {
   methods: {
     editItem() {
       this.isEditing = true;
-      this.$nextTick(() => this.$refs.labelInput.focus());
+      this.$nextTick(() => this.$refs.labelEditingInput.focus());
     },
     saveEdit() {
-      if (this.newTitle) {
-        this.$emit("item-edited", this.newTitle);
+      if (this.modifiedTitle) {
+        this.$emit("item-edited", this.modifiedTitle);
         this.isEditing = false;
       }
     },
@@ -82,6 +83,9 @@ export default {
     },
     removeItem() {
       this.$emit("item-removed");
+    },
+    toggleCheckbox() {
+      this.$emit("checkbox-toggled");
     },
   },
 };
@@ -103,7 +107,7 @@ export default {
 
 /* CUSTOM CHECKBOX */
 
-.todo-item > .checkbox {
+.todo-item > .todo-checkbox {
   border: 3px solid #0b0c0c;
   width: 40px;
   height: 40px;
@@ -116,16 +120,28 @@ export default {
 
 /* TODO LABEL AND EDIT INPUT */
 
-.todo-item > .todo-label,
+.todo-item > .todo-label {
+  flex: 1;
+  padding: 0.8rem 0.5rem 0.5rem;
+  margin-left: 1rem;
+  cursor: pointer;
+  touch-action: manipulation;
+  transition: 0.4s;
+}
+
 .todo-item > .todo-edit {
-  padding: 8px 5px 5px;
+  width: 70%;
+  flex: 1;
+  background-color: inherit;
+  padding: 0.8rem 0.5rem 0.5rem;
   margin-left: 1rem;
   border: 0;
-  cursor: pointer;
-  flex: 1;
-  outline: none;
-  color: #000;
-  touch-action: manipulation;
+  box-shadow: inset 0 0 2px #39f;
+}
+
+.todo-item > .todo-checkbox:checked + .todo-label {
+  opacity: 0.4;
+  text-decoration: line-through 1px;
 }
 
 /* TODO CONTROLS */
@@ -134,29 +150,26 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-left: 1.5rem;
   width: 75px;
-  opacity: 0;
-  transition: 0.3s;
+  margin-left: 1.5rem;
 }
 
 .todo-controls > * + * {
   margin-left: 5px;
 }
 
-.todo-item > .todo-edit {
-  width: 70%;
-  background-color: inherit;
-  outline: 1px solid #28f;
+.todo-item > .todo-label + .todo-controls {
+  opacity: 0;
+  transition: 0.3s;
 }
 
-.todo-item:hover .todo-controls {
+.todo-item:hover > .todo-label + .todo-controls {
   opacity: 1;
 }
 
 /* CUSTOM CHECK MARK */
 
-.todo-item > [type="checkbox"]::after {
+.todo-item > .todo-checkbox::after {
   box-sizing: content-box;
   content: "";
   position: absolute;
@@ -170,7 +183,7 @@ export default {
   opacity: 0;
 }
 
-.todo-item > [type="checkbox"]:checked::after {
+.todo-item > .todo-checkbox:checked::after {
   opacity: 1;
 }
 </style>
