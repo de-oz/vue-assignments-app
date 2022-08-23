@@ -6,7 +6,8 @@
       class="todo-checkbox"
       :id="id"
       :checked="isCompleted"
-      @change="toggleCheckbox"
+      @click="toggleCheckbox($event)"
+      @keyup.shift="toggleCheckbox($event)"
     />
     <label v-if="!isEditing" :for="id" class="todo-label">{{ title }}</label>
     <input
@@ -21,13 +22,11 @@
     <div v-if="!isEditing" class="todo-controls">
       <font-awesome-icon
         icon="fa-solid fa-pen"
-        size="lg"
         class="icon"
         @click="editItem"
       />
       <font-awesome-icon
         icon="fa-solid fa-trash"
-        size="lg"
         class="icon danger"
         @click="removeItem"
       />
@@ -35,13 +34,11 @@
     <div v-else class="todo-controls">
       <font-awesome-icon
         icon="fa-solid fa-check"
-        size="lg"
         class="icon"
         @click="saveEdit"
       />
       <font-awesome-icon
         icon="fa-solid fa-x"
-        size="lg"
         class="icon danger"
         @click="cancelEdit"
       />
@@ -84,8 +81,8 @@ export default {
     removeItem() {
       this.$emit("item-removed");
     },
-    toggleCheckbox() {
-      this.$emit("checkbox-toggled");
+    toggleCheckbox(e) {
+      this.$emit("checkbox-toggled", e);
     },
   },
 };
@@ -93,12 +90,11 @@ export default {
 
 <style scoped>
 .todo-item {
-  max-width: 60rem;
+  max-width: 80rem;
   position: relative;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  position: relative;
   min-height: 40px;
   margin: 1.5rem auto;
   padding: 1rem 0;
