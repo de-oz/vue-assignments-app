@@ -140,6 +140,10 @@ export default {
   text-decoration: line-through 1px;
 }
 
+.todo-label:not(:hover) {
+  user-select: none;
+}
+
 /* TODO CONTROLS */
 
 .todo-item > .todo-controls {

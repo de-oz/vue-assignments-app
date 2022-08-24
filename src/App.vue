@@ -39,6 +39,14 @@ export default {
       previouslyToggled: "",
     };
   },
+  watch: {
+    todoItems: {
+      handler() {
+        localStorage.setItem("todo-items", JSON.stringify(this.todoItems));
+      },
+      deep: true,
+    },
+  },
   methods: {
     addItem(description) {
       const item = { title: description, completed: false, id: uuidv4() };
@@ -89,6 +97,9 @@ export default {
     generateData(data) {
       this.todoItems = data;
     },
+  },
+  mounted() {
+    this.todoItems = JSON.parse(localStorage.getItem("todo-items"));
   },
 };
 </script>
