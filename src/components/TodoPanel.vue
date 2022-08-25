@@ -1,64 +1,22 @@
 <template>
-  <form @submit.prevent="addItem">
-    <h1>To-Do List</h1>
-    <!-- todo addition panel -->
-    <div class="new-task">
-      <h2 class="form-title">
-        <label for="new-todo">New Task</label>
-      </h2>
-      <input
-        name="new-todo"
-        id="new-todo"
-        ref="todoTitleInput"
-        autocomplete="off"
-        v-model.trim="todoTitle"
-      />
-      <button type="submit" class="btn btn__add">
-        <font-awesome-icon class="icon__add" icon="fa-solid fa-plus" />
-      </button>
-    </div>
-    <!-- button group -->
-    <button
-      v-if="isEmpty"
-      type="button"
-      class="btn btn__generate"
-      @click="fetchData"
-    >
-      Generate data
-    </button>
-    <div v-else class="btn-group">
-      <button
-        type="button"
-        class="btn btn__delete"
-        @click="$emit('list-cleared')"
-      >
-        Clear All
-      </button>
-      <button
-        type="button"
-        class="btn btn__check"
-        @click="$emit('checked-all')"
-      >
-        Check All
-      </button>
-      <button
-        type="button"
-        class="btn btn__uncheck"
-        @click="$emit('unchecked-all')"
-      >
-        Uncheck All
-      </button>
-    </div>
+  <form @submit.prevent="addItem" class="todo-form">
+    <h2 class="todo-form__heading">
+      <label for="new-todo-input">New Task</label>
+    </h2>
+    <input
+      name="new-todo-input"
+      id="new-todo-input"
+      ref="todoTitleInput"
+      class="todo-form__input"
+      autocomplete="off"
+      v-model.trim="todoTitle"
+    />
+    <button type="submit" class="todo-form__submit-button">Add</button>
   </form>
 </template>
 
 <script>
-import axios from "axios";
-
 export default {
-  props: {
-    isEmpty: { required: true, type: Boolean },
-  },
   data() {
     return {
       todoTitle: "",
@@ -71,13 +29,8 @@ export default {
       this.$emit("added-item", this.todoTitle);
 
       this.todoTitle = "";
+
       this.$refs.todoTitleInput.focus();
-    },
-    fetchData() {
-      axios
-        .get(`https://jsonplaceholder.typicode.com/todos?_limit=10`)
-        .then((res) => this.$emit("data-fetched", res.data))
-        .catch((err) => console.log(`Error: ${err}`));
     },
   },
   mounted() {
@@ -86,79 +39,42 @@ export default {
 };
 </script>
 
-<style scoped>
-.form-title {
-  margin: 1rem auto;
-  width: 100%;
-}
-
-[type="submit"] {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-left: 2rem;
-  color: #005;
-  font-size: 2rem;
-  padding: 1rem;
-  background-color: #ddf;
-  border: 3px solid #bbf;
-}
-
-.new-task {
+<style lang="scss" scoped>
+.todo-form {
   max-width: 45rem;
-  padding: 1.5rem;
-  margin: 2rem auto;
-  box-shadow: 0 0 15px 5px #ddd;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-}
-
-.new-task input {
-  max-width: 70%;
-  font-size: 2rem;
-  border: 2px solid #558eaf;
-  border-radius: 3px;
-}
-
-.btn__generate {
-  color: #222;
-  background-color: #2bd;
-  border-color: #08a;
-}
-
-.btn__delete {
-  color: #fff;
-  background-color: #d44;
-  border-color: #a11;
-}
-
-.btn__check {
-  color: #fff;
-  background-color: #273;
-  border-color: #051;
-}
-
-.btn__uncheck {
-  color: #fff;
-  background-color: #e74;
-  border-color: #b41;
-}
-
-.btn-group {
+  margin: 0 auto;
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 35rem;
-  margin: 2rem auto;
-}
+  flex-direction: column;
+  box-shadow: 0 0 10px #333;
+  border-bottom-left-radius: 0.5rem;
+  border-bottom-right-radius: 0.5rem;
 
-.btn-group > * {
-  flex: 1;
-}
+  &__heading {
+    width: 100%;
+    text-align: center;
+    margin: 2.5rem auto 1rem;
+  }
 
-.btn-group > * + * {
-  margin-left: 1rem;
+  &__input {
+    width: 80%;
+    padding: 3px;
+    font-size: 2rem;
+    border: 3px solid #558eaf;
+    border-radius: 3px;
+  }
+
+  &__submit-button {
+    color: #fff;
+    width: 80%;
+    margin: 1rem 0 2.5rem;
+    font-size: 2rem;
+    padding: 0.8rem 0 0.5rem;
+    background-color: #16d;
+    border: 2px solid #036;
+    border-radius: 1rem;
+    cursor: pointer;
+  }
 }
 </style>

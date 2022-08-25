@@ -1,36 +1,39 @@
 <template>
-  <div id="todo-app">
-    <TodoPanel
-      :isEmpty="todoItems?.length === 0"
-      @added-item="addItem"
-      @list-cleared="clearAll"
-      @checked-all="checkAll"
-      @unchecked-all="uncheckAll"
-      @data-fetched="generateData"
+  <TodoHeader />
+  <TodoPanel @added-item="addItem" />
+  <ControlButtons
+    :isEmpty="todoItems?.length === 0"
+    @list-cleared="clearAll"
+    @checked-all="checkAll"
+    @unchecked-all="uncheckAll"
+    @data-fetched="generateData"
+  />
+  <ul>
+    <TodoItem
+      v-for="item in todoItems"
+      :key="item.id"
+      :title="item.title"
+      :completed="item.completed"
+      :id="String(item.id)"
+      @checkbox-toggled="updateCompletedStatus(item.id, $event)"
+      @item-edited="editItem(item.id, $event)"
+      @item-removed="removeItem(item.id)"
     />
-    <ul>
-      <li v-for="item in todoItems" :key="item.id">
-        <TodoItem
-          :title="item.title"
-          :completed="item.completed"
-          :id="String(item.id)"
-          @checkbox-toggled="updateCompletedStatus(item.id, $event)"
-          @item-edited="editItem(item.id, $event)"
-          @item-removed="removeItem(item.id)"
-        />
-      </li>
-    </ul>
-  </div>
+  </ul>
 </template>
 
 <script>
+import TodoHeader from "./components/TodoHeader.vue";
 import TodoPanel from "./components/TodoPanel.vue";
+import ControlButtons from "./components/ControlButtons.vue";
 import TodoItem from "./components/TodoItem.vue";
 import { v4 as uuidv4 } from "uuid";
 
 export default {
   components: {
+    TodoHeader,
     TodoPanel,
+    ControlButtons,
     TodoItem,
   },
   data() {
@@ -104,56 +107,40 @@ export default {
 };
 </script>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-#todo-app h1,
-#todo-app form {
+<style lang="scss">
+h1 {
   width: 100%;
+  margin: 0;
   text-align: center;
 }
 
-#todo-app ul {
+ul {
   width: 90vw;
   margin: 0 auto;
+  padding: 0;
+  list-style: none;
 }
 
 .icon {
-  font-size: 2rem;
-  color: #454545;
-  background-color: #fff;
+  font-size: 2.2rem;
   padding: 0.7rem;
-  border: 0.2rem solid #ddd;
+  box-shadow: inset 0 0 2px #aaa;
   border-radius: 1rem;
   cursor: pointer;
-}
 
-.danger {
-  color: #f33;
+  &--standard {
+    color: #454545;
+  }
+
+  &--danger {
+    color: #f44;
+  }
 }
 
 .btn {
-  padding: 0.8rem 1rem 0.7rem;
+  padding: 1rem 1rem 0.8rem;
   border: 0.2rem solid #000;
   cursor: pointer;
-  text-transform: capitalize;
-  color: #000;
-  background-color: #fff;
   border-radius: 1rem;
-}
-
-.hidden {
-  position: absolute;
-  height: 1px;
-  width: 1px;
-  overflow: hidden;
-  clip: rect(1px 1px 1px 1px);
-  clip: rect(1px, 1px, 1px, 1px);
-  clip-path: rect(1px, 1px, 1px, 1px);
-  white-space: nowrap;
 }
 </style>
