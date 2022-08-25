@@ -1,49 +1,51 @@
 <template>
-  <div class="todo-item">
+  <li class="todo-item">
     <input
-      name="todo-description"
+      name="todo-status"
       type="checkbox"
-      class="todo-checkbox"
+      class="todo-item__checkbox"
       :id="id"
       :checked="isCompleted"
-      @click="toggleCheckbox($event)"
-      @keyup.shift="toggleCheckbox($event)"
+      @click="toggleCheckbox"
+      @keyup.shift="toggleCheckbox"
     />
-    <label v-if="!isEditing" :for="id" class="todo-label">{{ title }}</label>
+    <label v-if="!isEditing" :for="id" class="todo-item__title">{{
+      title
+    }}</label>
     <input
       v-else
-      name="todo-description"
-      class="todo-edit"
+      name="todo-title"
+      class="todo-item__editing-input"
       ref="labelEditingInput"
       autocomplete="off"
       v-model.trim="modifiedTitle"
       @keydown.enter="saveEdit"
     />
-    <div v-if="!isEditing" class="todo-controls">
+    <div v-if="!isEditing" class="todo-item__control-buttons">
       <font-awesome-icon
         icon="fa-solid fa-pen"
-        class="icon"
+        class="icon icon--standard"
         @click="editItem"
       />
       <font-awesome-icon
         icon="fa-solid fa-trash"
-        class="icon danger"
+        class="icon icon--danger"
         @click="removeItem"
       />
     </div>
-    <div v-else class="todo-controls">
+    <div v-else class="todo-item__control-buttons">
       <font-awesome-icon
         icon="fa-solid fa-check"
-        class="icon"
+        class="icon icon--standard"
         @click="saveEdit"
       />
       <font-awesome-icon
         icon="fa-solid fa-x"
-        class="icon danger"
+        class="icon icon--danger"
         @click="cancelEdit"
       />
     </div>
-  </div>
+  </li>
 </template>
 
 <script>
@@ -88,7 +90,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .todo-item {
   max-width: 80rem;
   position: relative;
@@ -98,92 +100,91 @@ export default {
   min-height: 40px;
   margin: 1.5rem auto;
   padding: 1rem 0;
-  border-bottom: 2px solid #888;
-}
+  border-bottom: 2px solid #aaa;
 
-/* CUSTOM CHECKBOX */
+  /* CUSTOM CHECKBOX */
 
-.todo-item > .todo-checkbox {
-  border: 3px solid #0b0c0c;
-  width: 40px;
-  height: 40px;
-  border-radius: 1rem;
-  cursor: pointer;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-}
+  &__checkbox {
+    border: 3px solid #454545;
+    width: 4rem;
+    height: 4rem;
+    border-radius: 1rem;
+    cursor: pointer;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+  }
 
-/* TODO LABEL AND EDIT INPUT */
+  /* TODO TITLE AND EDIT INPUT */
 
-.todo-item > .todo-label {
-  flex: 1;
-  padding: 0.8rem 0.5rem 0.5rem;
-  margin-left: 1rem;
-  cursor: pointer;
-  touch-action: manipulation;
-  transition: 0.4s;
-}
+  &__title {
+    flex: 1;
+    padding: 0.8rem 0.5rem 0.5rem;
+    margin-left: 1rem;
+    cursor: pointer;
+    touch-action: manipulation;
+    transition: 0.4s;
+  }
 
-.todo-item > .todo-edit {
-  width: 70%;
-  flex: 1;
-  background-color: inherit;
-  padding: 0.8rem 0.5rem 0.5rem;
-  margin-left: 1rem;
-  border: 0;
-  box-shadow: inset 0 0 2px #39f;
-}
+  &__editing-input {
+    width: 70%;
+    flex: 1;
+    background-color: inherit;
+    padding: 0.8rem 0.5rem 0.5rem;
+    margin-left: 1rem;
+    border: 0;
+    box-shadow: inset 0 0 3px #39f;
+  }
 
-.todo-item > .todo-checkbox:checked + .todo-label {
-  opacity: 0.4;
-  text-decoration: line-through 1px;
-}
+  &__checkbox:checked + &__title {
+    opacity: 0.3;
+  }
 
-.todo-label:not(:hover) {
-  user-select: none;
-}
+  &__title:not(:hover) {
+    user-select: none;
+  }
 
-/* TODO CONTROLS */
+  /* TODO ITEM CONTROLS */
 
-.todo-item > .todo-controls {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 75px;
-  margin-left: 1.5rem;
-}
+  &__control-buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 75px;
+    margin-left: 1.5rem;
+  }
 
-.todo-controls > * + * {
-  margin-left: 5px;
-}
+  &__control-buttons > * + * {
+    margin-left: 5px;
+  }
 
-.todo-item > .todo-label + .todo-controls {
-  opacity: 0;
-  transition: 0.3s;
-}
+  &__title + &__control-buttons {
+    opacity: 0;
+    transition: 0.3s;
+  }
 
-.todo-item:hover > .todo-label + .todo-controls {
-  opacity: 1;
-}
+  &:hover > &__title + &__control-buttons {
+    opacity: 1;
+  }
 
-/* CUSTOM CHECK MARK */
+  /* CUSTOM CHECK MARK */
 
-.todo-item > .todo-checkbox::after {
-  box-sizing: content-box;
-  content: "";
-  position: absolute;
-  top: 50%;
-  left: 9px;
-  width: 18px;
-  height: 7px;
-  transform: translateY(-60%) rotate(-45deg);
-  border: solid;
-  border-width: 0 0 5px 5px;
-  opacity: 0;
-}
+  &__checkbox::after {
+    box-sizing: content-box;
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 9px;
+    width: 18px;
+    height: 7px;
+    transform: translateY(-60%) rotate(-45deg);
+    border: solid;
+    border-width: 0 0 5px 5px;
+    opacity: 0;
+  }
 
-.todo-item > .todo-checkbox:checked::after {
-  opacity: 1;
+  &__checkbox:checked::after {
+    opacity: 1;
+  }
 }
 </style>
