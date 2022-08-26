@@ -1,5 +1,5 @@
-<template>
-  <TodoHeader />
+<template >
+  <TodoHeader @theme-toggled="changeTheme" :theme="darkTheme" />
   <TodoPanel @added-item="addItem" />
   <ControlButtons
     :isEmpty="todoItems?.length === 0"
@@ -40,15 +40,19 @@ export default {
     return {
       todoItems: [],
       previouslyToggled: "",
+      darkTheme: JSON.parse(localStorage.getItem('theme')) ?? true,
     };
   },
   watch: {
     todoItems: {
       handler() {
-        localStorage.setItem("todo-items", JSON.stringify(this.todoItems));
+        localStorage.setItem('todo-items', JSON.stringify(this.todoItems));
       },
       deep: true,
     },
+    darkTheme() {
+      localStorage.setItem('theme', JSON.stringify(this.darkTheme));
+    }
   },
   methods: {
     addItem(description) {
@@ -100,14 +104,28 @@ export default {
     generateData(data) {
       this.todoItems = data;
     },
+    changeTheme() {
+      this.darkTheme = !this.darkTheme;
+      document.body.classList.toggle('dark-theme');
+    }
   },
   mounted() {
-    this.todoItems = JSON.parse(localStorage.getItem("todo-items"));
+    this.todoItems = JSON.parse(localStorage.getItem('todo-items'));
+    if (this.darkTheme) document.body.classList.add('dark-theme');
   },
 };
 </script>
 
 <style lang="scss">
+body {
+  background-color: #eee;
+}
+
+.dark-theme {
+  background-color: hsl(0, 0%, 17%);
+  color: #fff;
+}
+
 h1 {
   width: 100%;
   margin: 0;
@@ -122,25 +140,25 @@ ul {
 }
 
 .icon {
-  font-size: 2.2rem;
-  padding: 0.7rem;
-  box-shadow: inset 0 0 2px #aaa;
-  border-radius: 1rem;
+  font-size: 2rem;
+  padding: 0.8rem;
+  box-shadow: inset 0 0 3px hsl(0, 0%, 45%);
+  border-radius: 8px;
   cursor: pointer;
 
   &--standard {
-    color: #454545;
+    color: hsl(210, 35%, 45%);
   }
 
   &--danger {
-    color: #f44;
+    color: hsl(0, 80%, 55%);
   }
 }
 
 .btn {
   padding: 1rem 1rem 0.8rem;
-  border: 0.2rem solid #000;
+  border: 2px solid currentColor;
   cursor: pointer;
-  border-radius: 1rem;
+  border-radius: 8px;
 }
 </style>
