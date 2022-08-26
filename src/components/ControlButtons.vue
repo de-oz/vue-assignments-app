@@ -63,23 +63,24 @@ export default {
     color: #fff;
 
     &--generate {
-      background-color: #565656;
-      border-color: #121212;
+      font-size: 1.8rem;
+      background-color: hsl(180, 100%, 25%);
+      border-color: hsl(180, 100%, 10%);
     }
 
     &--delete {
-      background-color: #d44;
-      border-color: #a11;
+      background-color: hsl(0, 90%, 40%);
+      border-color: hsl(0, 90%, 20%);
     }
 
     &--check {
-      background-color: #273;
-      border-color: #051;
+      background-color: hsl(120, 50%, 30%);
+      border-color: hsl(120, 50%, 15%);
     }
 
     &--uncheck {
-      background-color: #e74;
-      border-color: #b41;
+      background-color: hsl(30, 100%, 40%);
+      border-color: hsl(30, 100%, 25%);
     }
   }
 }

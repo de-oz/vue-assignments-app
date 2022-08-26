@@ -92,23 +92,22 @@ export default {
 
 <style lang="scss" scoped>
 .todo-item {
-  max-width: 80rem;
+  max-width: 60rem;
   position: relative;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  min-height: 40px;
   margin: 1.5rem auto;
   padding: 1rem 0;
-  border-bottom: 2px solid #aaa;
+  border-bottom: 2px solid currentColor;
 
   /* CUSTOM CHECKBOX */
 
   &__checkbox {
-    border: 3px solid #454545;
+    border: 3px solid currentColor;
     width: 4rem;
     height: 4rem;
-    border-radius: 1rem;
+    border-radius: 8px;
     cursor: pointer;
     -webkit-appearance: none;
     -moz-appearance: none;
@@ -127,9 +126,10 @@ export default {
   }
 
   &__editing-input {
+    color: inherit;
+    background-color: inherit;
     width: 70%;
     flex: 1;
-    background-color: inherit;
     padding: 0.8rem 0.5rem 0.5rem;
     margin-left: 1rem;
     border: 0;
@@ -155,7 +155,7 @@ export default {
   }
 
   &__control-buttons > * + * {
-    margin-left: 5px;
+    margin-left: 0.8rem;
   }
 
   &__title + &__control-buttons {
