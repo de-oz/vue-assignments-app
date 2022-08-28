@@ -98,16 +98,23 @@ export default {
   justify-content: space-between;
   align-items: center;
   margin: 1.5rem auto;
-  padding: 1rem 0;
-  border-bottom: 2px solid currentColor;
+  padding: 1.5rem 0;
+  border-radius: 2.5rem;
+  box-shadow: 0 0 5px 1px hsl(5, 100%, 70%);
+  transition: box-shadow 0.1s;
+
+  &:hover {
+    box-shadow: 0 0 5px 3px #999;
+  }
 
   /* CUSTOM CHECKBOX */
 
   &__checkbox {
     border: 3px solid currentColor;
-    width: 4rem;
-    height: 4rem;
-    border-radius: 8px;
+    margin-left: 1rem;
+    width: 3.5rem;
+    height: 3.5rem;
+    border-radius: 10px;
     cursor: pointer;
     -webkit-appearance: none;
     -moz-appearance: none;
@@ -122,7 +129,8 @@ export default {
     margin-left: 1rem;
     cursor: pointer;
     touch-action: manipulation;
-    transition: 0.4s;
+    transition: opacity 0.3s;
+    overflow: auto;
   }
 
   &__editing-input {
@@ -133,7 +141,8 @@ export default {
     padding: 0.8rem 0.5rem 0.5rem;
     margin-left: 1rem;
     border: 0;
-    box-shadow: inset 0 0 3px #39f;
+    outline: 0;
+    border-bottom: 2px solid hsl(205, 70%, 45%);
   }
 
   &__checkbox:checked + &__title {
@@ -151,16 +160,20 @@ export default {
     justify-content: center;
     align-items: center;
     width: 75px;
-    margin-left: 1.5rem;
-  }
+    margin: 0 1rem;
 
-  &__control-buttons > * + * {
-    margin-left: 0.8rem;
+    * {
+      width: 35%;
+    }
+
+    * + * {
+      margin-left: 0.8rem;
+    }
   }
 
   &__title + &__control-buttons {
     opacity: 0;
-    transition: 0.3s;
+    transition: opacity 0.3s;
   }
 
   &:hover > &__title + &__control-buttons {
@@ -174,10 +187,10 @@ export default {
     content: "";
     position: absolute;
     top: 50%;
-    left: 9px;
-    width: 18px;
-    height: 7px;
-    transform: translateY(-60%) rotate(-45deg);
+    left: 1.8rem;
+    width: 14px;
+    height: 6px;
+    transform: translateY(-65%) rotate(-45deg);
     border: solid;
     border-width: 0 0 5px 5px;
     opacity: 0;
@@ -185,6 +198,33 @@ export default {
 
   &__checkbox:checked::after {
     opacity: 1;
+  }
+}
+
+@media (max-width: 400px) {
+  .todo-item {
+    &__checkbox {
+      border-radius: 8px;
+    }
+
+    &__checkbox::after {
+      left: 1.82rem;
+      width: 11px;
+      height: 5px;
+      border-width: 0 0 4px 4px;
+    }
+
+    &__control-buttons {
+      width: 54px;
+
+      * {
+        padding: 5px;
+      }
+
+      * + * {
+        margin-left: 0.3rem;
+      }
+    }
   }
 }
 </style>

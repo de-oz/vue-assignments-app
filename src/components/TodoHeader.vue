@@ -38,9 +38,7 @@ export default {
 
 <style lang="scss" scoped>
 .header {
-  position: sticky;
-  top: 0;
-  z-index: 1;
+  position: relative;
   background-color: hsl(0, 0%, 25%);
   color: #dedede;
   border-bottom: solid hsl(0, 0%, 13%) 5px;
@@ -52,11 +50,30 @@ export default {
   &__theme-toggle {
     position: absolute;
     top: 50%;
-    right: 1.2rem;
-    font-size: 3rem;
     transform: translateY(-50%);
+    right: 2rem;
+    font-size: 3rem;
     border: 0;
     box-shadow: 0 0 5px currentColor;
+    transition: background-color 0.1s;
+
+    &:hover {
+      background-color: #6e6e6e;
+    }
   }
+}
+
+@media (max-width: 300px) {
+  .header {
+    &__heading {
+      text-align: left;
+      margin-left: 1rem;
+    }
+
+    &__theme-toggle {
+      font-size: 2.5rem;
+      right: 1rem;
+    }
+  } 
 }
 </style>
