@@ -1,4 +1,4 @@
-<template >
+<template>
   <TodoHeader @theme-toggled="changeTheme" :theme="darkTheme" />
   <TodoPanel @added-item="addItem" />
   <ControlButtons
@@ -40,19 +40,19 @@ export default {
     return {
       todoItems: [],
       previouslyToggled: "",
-      darkTheme: JSON.parse(localStorage.getItem('theme')) ?? true,
+      darkTheme: JSON.parse(localStorage.getItem("theme")) ?? true,
     };
   },
   watch: {
     todoItems: {
       handler() {
-        localStorage.setItem('todo-items', JSON.stringify(this.todoItems));
+        localStorage.setItem("todo-items", JSON.stringify(this.todoItems));
       },
       deep: true,
     },
     darkTheme() {
-      localStorage.setItem('theme', JSON.stringify(this.darkTheme));
-    }
+      localStorage.setItem("theme", JSON.stringify(this.darkTheme));
+    },
   },
   methods: {
     addItem(description) {
@@ -106,19 +106,24 @@ export default {
     },
     changeTheme() {
       this.darkTheme = !this.darkTheme;
-      document.body.classList.toggle('dark-theme');
-    }
+      document.body.classList.toggle("dark-theme");
+    },
   },
   mounted() {
-    this.todoItems = JSON.parse(localStorage.getItem('todo-items'));
-    if (this.darkTheme) document.body.classList.add('dark-theme');
+    this.todoItems = JSON.parse(localStorage.getItem("todo-items"));
+    if (this.darkTheme) document.body.classList.add("dark-theme");
   },
 };
 </script>
 
 <style lang="scss">
+html {
+  font: 62.5% / 1.15 sans-serif;
+}
+
 body {
   background-color: #eee;
+  font: 1.6rem / 1.25 "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
 .dark-theme {
@@ -142,12 +147,12 @@ ul {
 .icon {
   font-size: 2rem;
   padding: 0.8rem;
-  box-shadow: inset 0 0 3px hsl(0, 0%, 45%);
+  box-shadow: inset 0 0 4px currentColor;
   border-radius: 8px;
   cursor: pointer;
 
   &--standard {
-    color: hsl(210, 35%, 45%);
+    color: hsl(215, 60%, 45%);
   }
 
   &--danger {
@@ -156,9 +161,14 @@ ul {
 }
 
 .btn {
-  padding: 1rem 1rem 0.8rem;
   border: 2px solid currentColor;
   cursor: pointer;
-  border-radius: 8px;
+  border-radius: 10px;
+}
+
+@media (max-width: 400px) {
+  html {
+    font-size: 50%;
+  }
 }
 </style>

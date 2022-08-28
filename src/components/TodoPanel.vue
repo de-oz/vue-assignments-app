@@ -41,7 +41,7 @@ export default {
 
 <style lang="scss" scoped>
 .todo-form {
-  width: min(100%, 95vw);
+  width: 95vw;
   max-width: 45rem;
   margin: 0 auto;
   display: flex;
@@ -58,7 +58,8 @@ export default {
   }
 
   &__input {
-    width: 80%;
+    width: 90%;
+    max-width: 30rem;
     padding: 0.4rem;
     font-size: 2rem;
     border: 2px solid #558eaf;
@@ -67,7 +68,8 @@ export default {
 
   &__submit-button {
     color: #fff;
-    width: 80%;
+    width: 90%;
+    max-width: 30rem;
     margin: 1rem 0 2.5rem;
     font-size: 2rem;
     padding: 0.8rem 0 0.5rem;
@@ -75,6 +77,11 @@ export default {
     border: 2px solid hsl(210, 60%, 20%);
     border-radius: 8px;
     cursor: pointer;
+    transition: background-color 0.1s;
+
+    &:hover {
+      background-color: hsl(207, 60%, 30%);
+    }
   }
 }
 </style>

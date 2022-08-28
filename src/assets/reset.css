@@ -4,14 +4,8 @@
   box-sizing: border-box;
 }
 
-html {
-  font: 62.5% / 1.15 sans-serif;
-}
-
 body {
-  width: 100%;
   margin: 0;
-  font: 1.6rem/1.25 "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
 button {
