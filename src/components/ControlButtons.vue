@@ -23,6 +23,27 @@
       Uncheck All
     </button>
   </div>
+  <div v-show="!isEmpty" class="tabs">
+    <span
+      class="tabs__tab"
+      @click="$emit('show-all')"
+      :class="{ 'tabs__tab--selected': isAllTab }"
+    >
+      All ({{this.numberOfTodos[0]}})
+    </span>
+    <span
+      class="tabs__tab"
+      @click="$emit('show-active')"
+      :class="{ 'tabs__tab--selected': isActiveTab }"
+      >Active ({{this.numberOfTodos[1]}})
+    </span>
+    <span
+      class="tabs__tab"
+      @click="$emit('show-completed')"
+      :class="{ 'tabs__tab--selected': isCompletedTab }"
+      >Completed ({{this.numberOfTodos[2]}})
+    </span>
+  </div>
 </template>
 
 <script>
@@ -31,13 +52,35 @@ import axios from "axios";
 export default {
   props: {
     isEmpty: { required: true, type: Boolean },
+    displayedTab: String,
+    numberOfTodos: Array,
   },
+  emits: [
+    "data-fetched",
+    "list-cleared",
+    "checked-all",
+    "unchecked-all",
+    "show-all",
+    "show-active",
+    "show-completed",
+  ],
   methods: {
     fetchData() {
       axios
         .get(`https://jsonplaceholder.typicode.com/todos?_limit=10`)
         .then((res) => this.$emit("data-fetched", res.data))
         .catch((err) => console.log(`Error: ${err}`));
+    },
+  },
+  computed: {
+    isAllTab() {
+      return this.displayedTab === "";
+    },
+    isActiveTab() {
+      return this.displayedTab === "active";
+    },
+    isCompletedTab() {
+      return this.displayedTab === "completed";
     },
   },
 };
@@ -110,6 +153,36 @@ export default {
   }
 }
 
+.tabs {
+  width: 90%;
+  max-width: 58rem;
+  margin: 0 auto;
+
+  &__tab {
+    display: inline-block;
+    padding: 0.6rem 1rem 0.3rem;
+    margin: 0 0.5rem;
+    border-radius: 5px;
+    cursor: pointer;
+
+    &:hover {
+      background-color: hsl(0, 0%, 70%);
+    }
+
+    &--selected {
+      background-color: hsl(200, 10%, 45%);
+      // background-color: hsl(0, 0%, 50%);
+      color: #fff;
+    }
+  }
+}
+
+@media (max-width: 450px) {
+  .tabs {
+    text-align: center;
+  }
+}
+
 @media (max-width: 300px) {
   .controls {
     margin: 1rem auto;
@@ -122,6 +195,15 @@ export default {
 
     * + * {
       margin-left: 3px;
+    }
+  }
+
+  .tabs {
+    font-size: 90%;
+
+    &__tab {
+      padding: 0.4rem 0.5rem 0.2rem;
+      margin: 0 0.2rem;
     }
   }
 }

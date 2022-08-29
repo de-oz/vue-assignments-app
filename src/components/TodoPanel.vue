@@ -55,15 +55,21 @@ export default {
     width: 100%;
     text-align: center;
     margin: 2.5rem auto 1rem;
+    font-weight: normal;
   }
 
   &__input {
     width: 90%;
     max-width: 30rem;
-    padding: 0.4rem;
+    padding: 0.5rem;
     font-size: 2rem;
+    outline: 0;
     border: 2px solid #558eaf;
     border-radius: 5px;
+    
+    &:focus {
+      box-shadow: 0 0 6px #558eaf;
+    }
   }
 
   &__submit-button {
