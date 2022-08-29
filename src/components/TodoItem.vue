@@ -1,21 +1,27 @@
 <template>
-  <li class="todo-item">
+  <li class="todo-item" :class="{ 'todo-item--completed': isCompleted }">
     <input
       name="todo-status"
       type="checkbox"
       class="todo-item__checkbox"
+      :class="{ fade: isCompleted }"
       :id="id"
       :checked="isCompleted"
       @click="toggleCheckbox"
       @keyup.shift="toggleCheckbox"
     />
-    <label v-if="!isEditing" :for="id" class="todo-item__title">{{
-      title
-    }}</label>
+    <label
+      v-if="!isEditing"
+      :for="id"
+      class="todo-item__title"
+      :class="{ fade: isCompleted }"
+      >{{ title }}</label
+    >
     <input
       v-else
       name="todo-title"
       class="todo-item__editing-input"
+      :class="{ fade: isCompleted }"
       ref="labelEditingInput"
       autocomplete="off"
       v-model.trim="modifiedTitle"
@@ -100,11 +106,15 @@ export default {
   margin: 1.5rem auto;
   padding: 1.5rem 0;
   border-radius: 2.5rem;
-  box-shadow: 0 0 5px 1px hsl(5, 100%, 70%);
+  box-shadow: 0 0 7px hsl(5, 100%, 70%);
   transition: box-shadow 0.1s;
 
   &:hover {
-    box-shadow: 0 0 5px 3px #999;
+    box-shadow: 0 0 7px 2px #999;
+  }
+  
+  &--completed {
+    box-shadow: 0 0 7px hsl(205, 70%, 50%, 0.4);
   }
 
   /* CUSTOM CHECKBOX */
@@ -142,11 +152,8 @@ export default {
     margin-left: 1rem;
     border: 0;
     outline: 0;
-    border-bottom: 2px solid hsl(205, 70%, 45%);
-  }
-
-  &__checkbox:checked + &__title {
-    opacity: 0.3;
+    box-shadow: inset 0 -5px 3px -3px hsl(205, 70%, 45%);
+    border-radius: 3px;
   }
 
   &__title:not(:hover) {

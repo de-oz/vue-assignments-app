@@ -3,14 +3,19 @@
   <TodoPanel @added-item="addItem" />
   <ControlButtons
     :isEmpty="todoItems?.length === 0"
+    :displayedTab="this.tab"
+    :numberOfTodos="numberOfTodos"
     @list-cleared="clearAll"
     @checked-all="checkAll"
     @unchecked-all="uncheckAll"
     @data-fetched="generateData"
+    @show-all="this.tab = ``"
+    @show-active="this.tab = `active`"
+    @show-completed="this.tab = `completed`"
   />
   <ul>
     <TodoItem
-      v-for="item in todoItems"
+      v-for="item in currentTab"
       :key="item.id"
       :title="item.title"
       :completed="item.completed"
@@ -41,7 +46,24 @@ export default {
       todoItems: [],
       previouslyToggled: "",
       darkTheme: JSON.parse(localStorage.getItem("theme")) ?? true,
+      tab: localStorage.getItem("tab") ?? '',
     };
+  },
+  computed: {
+    currentTab() {
+      if (this.tab === "active")
+        return this.todoItems.filter((item) => !item.completed);
+      if (this.tab === "completed")
+        return this.todoItems.filter((item) => item.completed);
+      return this.todoItems;
+    },
+    numberOfTodos() {
+      const todosInTotal = this.todoItems.length;
+      const activeTodos = this.todoItems.filter((item) => !item.completed).length;
+      const completedTodos = todosInTotal - activeTodos;
+
+      return [todosInTotal, activeTodos, completedTodos];
+    }
   },
   watch: {
     todoItems: {
@@ -52,6 +74,9 @@ export default {
     },
     darkTheme() {
       localStorage.setItem("theme", JSON.stringify(this.darkTheme));
+    },
+    tab() {
+      localStorage.setItem("tab", this.tab);
     },
   },
   methods: {
@@ -94,6 +119,7 @@ export default {
     },
     clearAll() {
       this.todoItems = [];
+      this.tab = "";
     },
     checkAll() {
       this.todoItems.forEach((item) => (item.completed = true));
@@ -124,11 +150,6 @@ html {
 body {
   background-color: #eee;
   font: 1.6rem / 1.25 "Helvetica Neue", Helvetica, Arial, sans-serif;
-}
-
-.dark-theme {
-  background-color: hsl(0, 0%, 17%);
-  color: #fff;
 }
 
 h1 {
@@ -164,6 +185,15 @@ ul {
   border: 2px solid currentColor;
   cursor: pointer;
   border-radius: 10px;
+}
+
+.fade {
+  opacity: 0.3;
+}
+
+.dark-theme {
+  background-color: hsl(0, 0%, 17%);
+  color: #fff;
 }
 
 @media (max-width: 400px) {
