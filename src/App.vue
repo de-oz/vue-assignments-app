@@ -3,19 +3,20 @@
   <TodoPanel @added-item="addItem" />
   <ControlButtons
     :isEmpty="todoItems?.length === 0"
-    :displayedTab="this.tab"
-    :numberOfTodos="numberOfTodos"
+    :displayedTab="tab"
+    :numberOfActiveTodos="activeTodos.length"
+    :numberOfCompletedTodos="completedTodos.length"
     @list-cleared="clearAll"
     @checked-all="checkAll"
     @unchecked-all="uncheckAll"
-    @data-fetched="generateData"
-    @show-all="this.tab = ``"
-    @show-active="this.tab = `active`"
-    @show-completed="this.tab = `completed`"
+    @data-fetched="($event) => (todoItems = $event)"
+    @show-all="tab = `all`"
+    @show-active="tab = `active`"
+    @show-completed="tab = `completed`"
   />
   <ul>
     <TodoItem
-      v-for="item in currentTab"
+      v-for="item in filteredTodos"
       :key="item.id"
       :title="item.title"
       :completed="item.completed"
@@ -41,30 +42,32 @@ export default {
     ControlButtons,
     TodoItem,
   },
+
   data() {
     return {
-      todoItems: [],
+      todoItems: JSON.parse(localStorage.getItem("todo-items")) ?? [],
       previouslyToggled: "",
+      tab: localStorage.getItem("tab") || "all",
       darkTheme: JSON.parse(localStorage.getItem("theme")) ?? true,
-      tab: localStorage.getItem("tab") ?? '',
     };
   },
+
   computed: {
-    currentTab() {
-      if (this.tab === "active")
-        return this.todoItems.filter((item) => !item.completed);
-      if (this.tab === "completed")
-        return this.todoItems.filter((item) => item.completed);
+    activeTodos() {
+      return this.todoItems.filter((item) => !item.completed);
+    },
+
+    completedTodos() {
+      return this.todoItems.filter((item) => item.completed);
+    },
+
+    filteredTodos() {
+      if (this.tab === "active") return this.activeTodos;
+      if (this.tab === "completed") return this.completedTodos;
       return this.todoItems;
     },
-    numberOfTodos() {
-      const todosInTotal = this.todoItems.length;
-      const activeTodos = this.todoItems.filter((item) => !item.completed).length;
-      const completedTodos = todosInTotal - activeTodos;
-
-      return [todosInTotal, activeTodos, completedTodos];
-    }
   },
+
   watch: {
     todoItems: {
       handler() {
@@ -72,18 +75,22 @@ export default {
       },
       deep: true,
     },
-    darkTheme() {
-      localStorage.setItem("theme", JSON.stringify(this.darkTheme));
-    },
+
     tab() {
       localStorage.setItem("tab", this.tab);
     },
+
+    darkTheme() {
+      localStorage.setItem("theme", JSON.stringify(this.darkTheme));
+    },
   },
+
   methods: {
     addItem(description) {
       const item = { title: description, completed: false, id: uuidv4() };
       this.todoItems.unshift(item);
     },
+
     updateCompletedStatus(todoId, e) {
       if (e.type === "keyup" && e.key !== " ") return; // return if anything other than the spacebar was pressed on a checkbox
       if (e.type === "keyup" && e.key === " ") e.preventDefault(); // prevent spacebar keypress from firing a click event
@@ -109,34 +116,37 @@ export default {
 
       this.previouslyToggled = todoId;
     },
+
     removeItem(todoId) {
       const todoIndex = this.todoItems.findIndex((item) => item.id === todoId);
       this.todoItems.splice(todoIndex, 1);
     },
+
     editItem(todoId, newTitle) {
       const editedTodo = this.todoItems.find((item) => item.id === todoId);
       editedTodo.title = newTitle;
     },
+
     clearAll() {
       this.todoItems = [];
-      this.tab = "";
+      this.tab = "all";
     },
+
     checkAll() {
-      this.todoItems.forEach((item) => (item.completed = true));
+      this.activeTodos.forEach((item) => (item.completed = true));
     },
+
     uncheckAll() {
-      this.todoItems.forEach((item) => (item.completed = false));
+      this.completedTodos.forEach((item) => (item.completed = false));
     },
-    generateData(data) {
-      this.todoItems = data;
-    },
+
     changeTheme() {
       this.darkTheme = !this.darkTheme;
       document.body.classList.toggle("dark-theme");
     },
   },
+
   mounted() {
-    this.todoItems = JSON.parse(localStorage.getItem("todo-items"));
     if (this.darkTheme) document.body.classList.add("dark-theme");
   },
 };

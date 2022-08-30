@@ -17,11 +17,14 @@
 
 <script>
 export default {
+  emits: ["added-item"],
+
   data() {
     return {
       todoTitle: "",
     };
   },
+
   methods: {
     addItem() {
       if (this.todoTitle === "") return;
@@ -33,6 +36,7 @@ export default {
       this.$refs.todoTitleInput.focus();
     },
   },
+
   mounted() {
     this.$refs.todoTitleInput.focus();
   },
@@ -42,7 +46,7 @@ export default {
 <style lang="scss" scoped>
 .todo-form {
   width: 95vw;
-  max-width: 45rem;
+  max-width: 50rem;
   margin: 0 auto;
   display: flex;
   justify-content: center;
@@ -60,13 +64,13 @@ export default {
 
   &__input {
     width: 90%;
-    max-width: 30rem;
+    max-width: 35rem;
     padding: 0.5rem;
     font-size: 2rem;
     outline: 0;
     border: 2px solid #558eaf;
     border-radius: 5px;
-    
+
     &:focus {
       box-shadow: 0 0 6px #558eaf;
     }
@@ -75,7 +79,7 @@ export default {
   &__submit-button {
     color: #fff;
     width: 90%;
-    max-width: 30rem;
+    max-width: 35rem;
     margin: 1rem 0 2.5rem;
     font-size: 2rem;
     padding: 0.8rem 0 0.5rem;

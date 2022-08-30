@@ -61,36 +61,45 @@ export default {
     completed: { default: false, type: Boolean },
     id: { required: true, type: String },
   },
+
+  emits: ["checkbox-toggled", "item-edited", "item-removed"],
+
   data() {
     return {
       modifiedTitle: this.title,
       isEditing: false,
     };
   },
+
   computed: {
     isCompleted() {
       return this.completed;
     },
   },
+
   methods: {
+    toggleCheckbox(e) {
+      this.$emit("checkbox-toggled", e);
+    },
+
     editItem() {
       this.isEditing = true;
       this.$nextTick(() => this.$refs.labelEditingInput.focus());
     },
+
     saveEdit() {
       if (this.modifiedTitle) {
         this.$emit("item-edited", this.modifiedTitle);
         this.isEditing = false;
       }
     },
+
     cancelEdit() {
       this.isEditing = false;
     },
+
     removeItem() {
       this.$emit("item-removed");
-    },
-    toggleCheckbox(e) {
-      this.$emit("checkbox-toggled", e);
     },
   },
 };
@@ -112,7 +121,7 @@ export default {
   &:hover {
     box-shadow: 0 0 7px 2px #999;
   }
-  
+
   &--completed {
     box-shadow: 0 0 7px hsl(205, 70%, 50%, 0.4);
   }
@@ -153,7 +162,6 @@ export default {
     border: 0;
     outline: 0;
     box-shadow: inset 0 -5px 3px -3px hsl(205, 70%, 45%);
-    border-radius: 3px;
   }
 
   &__title:not(:hover) {
