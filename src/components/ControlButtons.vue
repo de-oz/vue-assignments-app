@@ -12,13 +12,17 @@
     >
       Clear All
     </button>
-    <button type="button" class="btn btn--check" @click="$emit('checked-all')">
+    <button
+      type="button"
+      class="btn btn--check"
+      @[numberOfActiveTodos&&`click`]="$emit('checked-all')"
+    >
       Check All
     </button>
     <button
       type="button"
       class="btn btn--uncheck"
-      @click="$emit('unchecked-all')"
+      @[numberOfCompletedTodos&&`click`]="$emit('unchecked-all')"
     >
       Uncheck All
     </button>
@@ -26,22 +30,22 @@
   <div v-show="!isEmpty" class="tabs">
     <span
       class="tabs__tab"
-      @click="$emit('show-all')"
+      @[!isAllTab&&`click`]="$emit('show-all')"
       :class="{ 'tabs__tab--selected': isAllTab }"
     >
-      All ({{this.numberOfTodos[0]}})
+      All ({{ numberOfActiveTodos + numberOfCompletedTodos }})
     </span>
     <span
       class="tabs__tab"
-      @click="$emit('show-active')"
+      @[!isActiveTab&&`click`]="$emit('show-active')"
       :class="{ 'tabs__tab--selected': isActiveTab }"
-      >Active ({{this.numberOfTodos[1]}})
+      >Active ({{ numberOfActiveTodos }})
     </span>
     <span
       class="tabs__tab"
-      @click="$emit('show-completed')"
+      @[!isCompletedTab&&`click`]="$emit('show-completed')"
       :class="{ 'tabs__tab--selected': isCompletedTab }"
-      >Completed ({{this.numberOfTodos[2]}})
+      >Completed ({{ numberOfCompletedTodos }})
     </span>
   </div>
 </template>
@@ -52,9 +56,11 @@ import axios from "axios";
 export default {
   props: {
     isEmpty: { required: true, type: Boolean },
-    displayedTab: String,
-    numberOfTodos: Array,
+    displayedTab: { required: true, type: String },
+    numberOfActiveTodos: { required: true, type: Number },
+    numberOfCompletedTodos: { required: true, type: Number },
   },
+
   emits: [
     "data-fetched",
     "list-cleared",
@@ -64,6 +70,7 @@ export default {
     "show-active",
     "show-completed",
   ],
+
   methods: {
     fetchData() {
       axios
@@ -72,9 +79,10 @@ export default {
         .catch((err) => console.log(`Error: ${err}`));
     },
   },
+
   computed: {
     isAllTab() {
-      return this.displayedTab === "";
+      return this.displayedTab === "all";
     },
     isActiveTab() {
       return this.displayedTab === "active";
@@ -166,12 +174,11 @@ export default {
     cursor: pointer;
 
     &:hover {
-      background-color: hsl(0, 0%, 70%);
+      background-color: hsl(200, 10%, 60%);
     }
 
     &--selected {
       background-color: hsl(200, 10%, 45%);
-      // background-color: hsl(0, 0%, 50%);
       color: #fff;
     }
   }

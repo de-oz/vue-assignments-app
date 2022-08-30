@@ -21,11 +21,15 @@ export default {
   props: {
     theme: { default: true, type: Boolean },
   },
+
+  emits: ["theme-toggled"],
+
   data() {
     return {
       darkTheme: this.theme,
     };
   },
+
   methods: {
     toggleTheme() {
       this.$emit("theme-toggled");
@@ -74,6 +78,6 @@ export default {
       font-size: 2.5rem;
       right: 1rem;
     }
-  } 
+  }
 }
 </style>
