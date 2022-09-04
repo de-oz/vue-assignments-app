@@ -1,5 +1,9 @@
 <template>
-  <li class="todo-item" :class="{ 'todo-item--completed': isCompleted }">
+  <li
+    class="todo-item"
+    :class="{ 'todo-item--completed': isCompleted }"
+    draggable="true"
+  >
     <input
       name="todo-status"
       type="checkbox"
@@ -114,6 +118,7 @@ export default {
   align-items: center;
   margin: 1.5rem auto;
   padding: 1.5rem 0;
+  cursor: move;
   border-radius: 2.5rem;
   box-shadow: 0 0 7px hsl(5, 100%, 70%);
   transition: box-shadow 0.1s;

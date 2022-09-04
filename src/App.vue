@@ -24,6 +24,7 @@
       @checkbox-toggled="updateCompletedStatus(item.id, $event)"
       @item-edited="editItem(item.id, $event)"
       @item-removed="removeItem(item.id)"
+      @dragstart="onDragStart"
     />
   </ul>
 </template>
@@ -76,6 +77,23 @@ export default {
       deep: true,
     },
 
+    activeTodos: {
+      handler() {
+        localStorage.setItem("active-todos", JSON.stringify(this.activeTodos));
+      },
+      deep: true,
+    },
+
+    completedTodos: {
+      handler() {
+        localStorage.setItem(
+          "completed-todos",
+          JSON.stringify(this.completedTodos)
+        );
+      },
+      deep: true,
+    },
+
     tab() {
       localStorage.setItem("tab", this.tab);
     },
@@ -86,8 +104,8 @@ export default {
   },
 
   methods: {
-    addItem(description) {
-      const item = { title: description, completed: false, id: uuidv4() };
+    addItem(label) {
+      const item = { title: label, completed: false, id: uuidv4() };
       this.todoItems.unshift(item);
     },
 
@@ -144,10 +162,60 @@ export default {
       this.darkTheme = !this.darkTheme;
       document.body.classList.toggle("dark-theme");
     },
+
+    onDragStart(e) {
+      e.dataTransfer.dropEffect = "move";
+      e.dataTransfer.effectAllowed = "move";
+      e.dataTransfer.setData("item-id", e.target.children[0].id); // store dragged item's ID of a checkbox
+    },
+
+    onDrag(e) {
+      e.preventDefault();
+
+      const todoList = document.querySelector("ul");
+      const listItems = Array.from(todoList.children);
+      const draggedItem = document
+        .querySelector(`input[id="${e.dataTransfer.getData("item-id")}"]`)
+        .closest("li");
+
+      const closest = listItems.reduce(
+        (closest, child) => {
+          const box = child.getBoundingClientRect();
+          const offset = e.y - (box.top + box.height / 2);
+
+          if (offset < 0 && offset > closest.offset) {
+            return { offset: offset, element: child };
+          } else {
+            return closest;
+          }
+        },
+        { offset: Number.NEGATIVE_INFINITY }
+      ).element;
+
+      closest ? closest.before(draggedItem) : todoList.append(draggedItem);
+    },
+
+    onDrop(e) {
+      e.preventDefault();
+      const listItems = Array.from(document.querySelector("ul").children);
+
+      // update the state
+
+      listItems.forEach((item, index) => {
+        const checkbox = item.children[0];
+        const label = item.children[1];
+
+        this.filteredTodos[index].completed = checkbox.checked;
+        this.filteredTodos[index].id = checkbox.id;
+        this.filteredTodos[index].title = label.textContent;
+      });
+    },
   },
 
   mounted() {
     if (this.darkTheme) document.body.classList.add("dark-theme");
+    window.addEventListener("dragover", this.onDrag);
+    window.addEventListener("drop", this.onDrop);
   },
 };
 </script>
