@@ -1,7 +1,7 @@
 <template>
   <div v-if="isEmpty" class="controls">
     <button type="button" class="btn btn--generate" @click="fetchData">
-      Generate data
+      Generate Data
     </button>
   </div>
   <div v-else class="controls">
