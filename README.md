@@ -1,7 +1,15 @@
-# vue3-advanced-todo-list
+# Advanced to-do list app
 
-This template should help get you started developing with Vue 3 in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+App features:
 
-## Recommended IDE Setup
+- Add, edit, delete and check (complete) functionality
+- Control buttons for clearing/checking/unchecking all to-do items
+- Three tabs for displaying all/active/completed todos
+- Check/uncheck everything in between two to-dos by clicking the last one of them while holding down `Shift` (works with both `Shift` + `click` with left mouse button and `Shift` + `Space Bar` keypress)
+- Drag and drop functionality for moving to-dos around
+- Light/dark theme toggle
+- Persisting state on refresh or browser closing & reopening
 
-- [VS Code](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar)
+## Demo
+
+You can find the app's demo on a [website](https://de-oz.github.io/vue3-advanced-todo-list/) published on Github Pages.
