@@ -82,15 +82,15 @@ export default {
     max-width: 35rem;
     margin: 1rem 0 2.5rem;
     font-size: 2rem;
-    padding: 0.8rem 0 0.5rem;
-    background-color: hsl(207, 60%, 40%);
+    padding: 0.8rem 0 0.6rem;
+    background-color: hsl(210, 60%, 40%);
     border: 2px solid hsl(210, 60%, 20%);
     border-radius: 8px;
     cursor: pointer;
     transition: background-color 0.1s;
 
     &:hover {
-      background-color: hsl(207, 60%, 30%);
+      background-color: hsl(210, 60%, 30%);
     }
   }
 }

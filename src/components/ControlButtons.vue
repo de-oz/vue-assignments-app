@@ -74,7 +74,7 @@ export default {
   methods: {
     fetchData() {
       axios
-        .get(`https://jsonplaceholder.typicode.com/todos?_limit=10`)
+        .get(`https://jsonplaceholder.typicode.com/todos?_limit=15`)
         .then((res) => this.$emit("data-fetched", res.data))
         .catch((err) => console.log(`Error: ${err}`));
     },
@@ -96,6 +96,9 @@ export default {
 
 <style lang="scss" scoped>
 .controls {
+  position: sticky;
+  top: 7rem;
+  z-index: 1;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -114,7 +117,7 @@ export default {
 
   .btn {
     color: #fff;
-    padding: 1rem 0 0.7rem;
+    padding: 1rem 0 0.8rem;
 
     &--generate {
       font-size: 1.8rem;
@@ -165,10 +168,13 @@ export default {
   width: 90%;
   max-width: 58rem;
   margin: 0 auto;
+  position: sticky;
+  top: 12rem;
+  z-index: 1;
 
   &__tab {
     display: inline-block;
-    padding: 0.6rem 1rem 0.3rem;
+    padding: 0.6rem 1rem 0.4rem;
     margin: 0 0.5rem;
     border-radius: 5px;
     cursor: pointer;
@@ -209,8 +215,8 @@ export default {
     font-size: 90%;
 
     &__tab {
-      padding: 0.4rem 0.5rem 0.2rem;
-      margin: 0 0.2rem;
+      padding: 0.5rem 0.5rem 0.3rem;
+      margin: 0 0.3rem;
     }
   }
 }

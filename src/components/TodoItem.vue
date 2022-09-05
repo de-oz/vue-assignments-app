@@ -34,24 +34,24 @@
     <div v-if="!isEditing" class="todo-item__control-buttons">
       <font-awesome-icon
         icon="fa-solid fa-pen"
-        class="icon icon--standard"
+        class="icon"
         @click="editItem"
       />
       <font-awesome-icon
         icon="fa-solid fa-trash"
-        class="icon icon--danger"
+        class="icon"
         @click="removeItem"
       />
     </div>
     <div v-else class="todo-item__control-buttons">
       <font-awesome-icon
         icon="fa-solid fa-check"
-        class="icon icon--standard"
+        class="icon"
         @click="saveEdit"
       />
       <font-awesome-icon
-        icon="fa-solid fa-x"
-        class="icon icon--danger"
+        icon="fa-solid fa-xmark"
+        class="icon"
         @click="cancelEdit"
       />
     </div>
@@ -131,18 +131,42 @@ export default {
     box-shadow: 0 0 7px hsl(205, 70%, 50%, 0.4);
   }
 
+  &--dragging {
+    box-shadow: 0 0 10px #eee;
+  }
+
   /* CUSTOM CHECKBOX */
 
   &__checkbox {
-    border: 3px solid currentColor;
-    margin-left: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     width: 3.5rem;
     height: 3.5rem;
+    color: inherit;
+    margin-left: 1rem;
+    border: 3px solid currentcolor;
     border-radius: 10px;
     cursor: pointer;
     -webkit-appearance: none;
-    -moz-appearance: none;
     appearance: none;
+  }
+
+  /* CUSTOM CHECK MARK */
+
+  &__checkbox::after {
+    box-sizing: content-box;
+    content: "";
+    width: 14px;
+    height: 6px;
+    border: solid;
+    border-width: 0 0 5px 5px;
+    transform: translateY(-15%) rotate(-45deg);
+    opacity: 0;
+  }
+
+  &__checkbox:checked::after {
+    opacity: 1;
   }
 
   /* TODO TITLE AND EDIT INPUT */
@@ -162,7 +186,7 @@ export default {
     background-color: inherit;
     width: 70%;
     flex: 1;
-    padding: 0.8rem 0.5rem 0.5rem;
+    padding: 0.8rem 0.5rem 0.6rem;
     margin-left: 1rem;
     border: 0;
     outline: 0;
@@ -179,11 +203,25 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 75px;
     margin: 0 1rem;
+    opacity: 0;
+    transition: opacity 0.3s;
 
     * {
-      width: 35%;
+      width: 2rem;
+      padding: 0.6rem;
+      color: hsl(185, 25%, 40%);
+      transition: color 0.15s;
+
+      &:last-child:hover {
+        color: hsl(0, 80%, 55%);
+        box-shadow: 0 0 5px currentcolor, inset 0 0 5px currentcolor;
+      }
+
+      &:first-child:hover {
+        color: hsl(215, 60%, 45%);
+        box-shadow: 0 0 5px currentcolor, inset 0 0 5px currentcolor;
+      }
     }
 
     * + * {
@@ -191,32 +229,7 @@ export default {
     }
   }
 
-  &__title + &__control-buttons {
-    opacity: 0;
-    transition: opacity 0.3s;
-  }
-
-  &:hover > &__title + &__control-buttons {
-    opacity: 1;
-  }
-
-  /* CUSTOM CHECK MARK */
-
-  &__checkbox::after {
-    box-sizing: content-box;
-    content: "";
-    position: absolute;
-    top: 50%;
-    left: 1.8rem;
-    width: 14px;
-    height: 6px;
-    transform: translateY(-65%) rotate(-45deg);
-    border: solid;
-    border-width: 0 0 5px 5px;
-    opacity: 0;
-  }
-
-  &__checkbox:checked::after {
+  &:hover > &__control-buttons {
     opacity: 1;
   }
 }
@@ -228,19 +241,12 @@ export default {
     }
 
     &__checkbox::after {
-      left: 1.82rem;
       width: 11px;
       height: 5px;
       border-width: 0 0 4px 4px;
     }
 
     &__control-buttons {
-      width: 54px;
-
-      * {
-        padding: 5px;
-      }
-
       * + * {
         margin-left: 0.3rem;
       }

@@ -160,25 +160,24 @@ export default {
 
     changeTheme() {
       this.darkTheme = !this.darkTheme;
-      document.body.classList.toggle("dark-theme");
+      document.documentElement.classList.toggle("dark-theme");
     },
 
     onDragStart(e) {
       e.dataTransfer.dropEffect = "move";
       e.dataTransfer.effectAllowed = "move";
-      e.dataTransfer.setData("item-id", e.target.children[0].id); // store dragged item's ID of a checkbox
+      e.dataTransfer.setData("text/plain", "e.target.textContent");
+      e.target.classList.add("todo-item--dragging");
     },
 
     onDrag(e) {
       e.preventDefault();
 
-      const todoList = document.querySelector("ul");
-      const listItems = Array.from(todoList.children);
-      const draggedItem = document
-        .querySelector(`input[id="${e.dataTransfer.getData("item-id")}"]`)
-        .closest("li");
+      const itemContainer = document.querySelector("ul");
+      const itemList = Array.from(itemContainer.children);
+      const draggedItem = document.querySelector(".todo-item--dragging");
 
-      const closest = listItems.reduce(
+      const closest = itemList.reduce(
         (closest, child) => {
           const box = child.getBoundingClientRect();
           const offset = e.y - (box.top + box.height / 2);
@@ -192,30 +191,35 @@ export default {
         { offset: Number.NEGATIVE_INFINITY }
       ).element;
 
-      closest ? closest.before(draggedItem) : todoList.append(draggedItem);
+      closest ? closest.before(draggedItem) : itemContainer.append(draggedItem);
     },
 
     onDrop(e) {
       e.preventDefault();
-      const listItems = Array.from(document.querySelector("ul").children);
+      const droppedItem = document.querySelector(".todo-item--dragging");
+      const itemList = document.querySelectorAll("li");
 
       // update the state
 
-      listItems.forEach((item, index) => {
+      itemList.forEach((item, index) => {
         const checkbox = item.children[0];
         const label = item.children[1];
 
         this.filteredTodos[index].completed = checkbox.checked;
         this.filteredTodos[index].id = checkbox.id;
-        this.filteredTodos[index].title = label.textContent;
+        this.filteredTodos[index].title = label.value ?? label.textContent; // take text either from editing input or label
       });
+
+      droppedItem.classList.remove("todo-item--dragging");
     },
   },
 
   mounted() {
-    if (this.darkTheme) document.body.classList.add("dark-theme");
+    window.addEventListener("dragenter", (e) => e.preventDefault());
     window.addEventListener("dragover", this.onDrag);
     window.addEventListener("drop", this.onDrop);
+
+    if (this.darkTheme) document.documentElement.classList.add("dark-theme");
   },
 };
 </script>
@@ -223,11 +227,14 @@ export default {
 <style lang="scss">
 html {
   font: 62.5% / 1.15 sans-serif;
+  background-color: #eee;
+  color: #000;
 }
 
 body {
-  background-color: #eee;
   font: 1.6rem / 1.25 "Helvetica Neue", Helvetica, Arial, sans-serif;
+  background-color: inherit;
+  color: inherit;
 }
 
 h1 {
@@ -245,22 +252,13 @@ ul {
 
 .icon {
   font-size: 2rem;
-  padding: 0.8rem;
-  box-shadow: inset 0 0 4px currentColor;
+  box-shadow: 0 0 1px currentcolor, inset 0 0 3px currentcolor;
   border-radius: 8px;
   cursor: pointer;
-
-  &--standard {
-    color: hsl(215, 60%, 45%);
-  }
-
-  &--danger {
-    color: hsl(0, 80%, 55%);
-  }
 }
 
 .btn {
-  border: 2px solid currentColor;
+  border: 2px solid currentcolor;
   cursor: pointer;
   border-radius: 10px;
 }
@@ -270,7 +268,7 @@ ul {
 }
 
 .dark-theme {
-  background-color: hsl(0, 0%, 17%);
+  background-color: #2b2b2b;
   color: #fff;
 }
 
