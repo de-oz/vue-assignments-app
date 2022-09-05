@@ -245,22 +245,13 @@ ul {
 
 .icon {
   font-size: 2rem;
-  padding: 0.8rem;
-  box-shadow: inset 0 0 4px currentColor;
+  box-shadow: 0 0 1px currentcolor, inset 0 0 3px currentcolor;
   border-radius: 8px;
   cursor: pointer;
-
-  &--standard {
-    color: hsl(215, 60%, 45%);
-  }
-
-  &--danger {
-    color: hsl(0, 80%, 55%);
-  }
 }
 
 .btn {
-  border: 2px solid currentColor;
+  border: 2px solid currentcolor;
   cursor: pointer;
   border-radius: 10px;
 }

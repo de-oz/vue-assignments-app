@@ -52,17 +52,19 @@ export default {
   }
 
   &__theme-toggle {
+    width: 3rem;
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
     right: 2rem;
     font-size: 3rem;
+    padding: 0.7rem;
     border: 0;
-    box-shadow: 0 0 5px currentColor;
-    transition: background-color 0.1s;
+    box-shadow: 0 0 5px currentcolor;
+    transition: background-color 0.15s;
 
     &:hover {
-      background-color: #6e6e6e;
+      background-color: #7e7e7e;
     }
   }
 }
@@ -75,6 +77,7 @@ export default {
     }
 
     &__theme-toggle {
+      width: 2.5rem;
       font-size: 2.5rem;
       right: 1rem;
     }

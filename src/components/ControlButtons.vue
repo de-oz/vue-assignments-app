@@ -209,8 +209,8 @@ export default {
     font-size: 90%;
 
     &__tab {
-      padding: 0.4rem 0.5rem 0.2rem;
-      margin: 0 0.2rem;
+      padding: 0.5rem 0.5rem 0.3rem;
+      margin: 0 0.3rem;
     }
   }
 }

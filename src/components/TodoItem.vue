@@ -34,24 +34,24 @@
     <div v-if="!isEditing" class="todo-item__control-buttons">
       <font-awesome-icon
         icon="fa-solid fa-pen"
-        class="icon icon--standard"
+        class="icon"
         @click="editItem"
       />
       <font-awesome-icon
         icon="fa-solid fa-trash"
-        class="icon icon--danger"
+        class="icon"
         @click="removeItem"
       />
     </div>
     <div v-else class="todo-item__control-buttons">
       <font-awesome-icon
         icon="fa-solid fa-check"
-        class="icon icon--standard"
+        class="icon"
         @click="saveEdit"
       />
       <font-awesome-icon
-        icon="fa-solid fa-x"
-        class="icon icon--danger"
+        icon="fa-solid fa-xmark"
+        class="icon"
         @click="cancelEdit"
       />
     </div>
@@ -134,7 +134,7 @@ export default {
   /* CUSTOM CHECKBOX */
 
   &__checkbox {
-    border: 3px solid currentColor;
+    border: 3px solid currentcolor;
     margin-left: 1rem;
     width: 3.5rem;
     height: 3.5rem;
@@ -179,11 +179,21 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 75px;
     margin: 0 1rem;
 
     * {
-      width: 35%;
+      width: 2rem;
+      padding: 0.6rem;
+      color: hsl(185, 15%, 40%);
+      transition: color 0.15s;
+
+      &:last-child:hover {
+        color: hsl(0, 80%, 55%);
+      }
+
+      &:first-child:hover {
+        color: hsl(215, 60%, 45%);
+      }
     }
 
     * + * {
@@ -191,12 +201,12 @@ export default {
     }
   }
 
-  &__title + &__control-buttons {
+  &__control-buttons {
     opacity: 0;
     transition: opacity 0.3s;
   }
 
-  &:hover > &__title + &__control-buttons {
+  &:hover > &__control-buttons {
     opacity: 1;
   }
 
@@ -204,6 +214,7 @@ export default {
 
   &__checkbox::after {
     box-sizing: content-box;
+    color: currentcolor;
     content: "";
     position: absolute;
     top: 50%;
@@ -235,12 +246,6 @@ export default {
     }
 
     &__control-buttons {
-      width: 54px;
-
-      * {
-        padding: 5px;
-      }
-
       * + * {
         margin-left: 0.3rem;
       }
