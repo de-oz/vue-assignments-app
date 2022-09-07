@@ -42,7 +42,9 @@ export default {
 
 <style lang="scss" scoped>
 .header {
-  position: relative;
+  position: sticky;
+  top: 0;
+  z-index: 1;
   background-color: hsl(0, 0%, 25%);
   color: #dedede;
   border-bottom: solid hsl(0, 0%, 13%) 5px;

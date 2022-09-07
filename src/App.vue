@@ -207,7 +207,7 @@ export default {
 
         this.filteredTodos[index].completed = checkbox.checked;
         this.filteredTodos[index].id = checkbox.id;
-        this.filteredTodos[index].title = label.textContent;
+        this.filteredTodos[index].title = label.value ?? label.textContent; // take text from either editing input or label
       });
     },
   },
