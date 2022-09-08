@@ -166,19 +166,18 @@ export default {
     onDragStart(e) {
       e.dataTransfer.dropEffect = "move";
       e.dataTransfer.effectAllowed = "move";
-      e.dataTransfer.setData("item-id", e.target.children[0].id); // store dragged item's ID of a checkbox
+      e.dataTransfer.setData("text/plain", "e.target.textContent");
+      e.target.classList.add("dragging");
     },
 
     onDrag(e) {
       e.preventDefault();
 
-      const todoList = document.querySelector("ul");
-      const listItems = Array.from(todoList.children);
-      const draggedItem = document
-        .querySelector(`input[id="${e.dataTransfer.getData("item-id")}"]`)
-        .closest("li");
+      const itemContainer = document.querySelector("ul");
+      const itemList = Array.from(itemContainer.children);
+      const draggedItem = document.querySelector(".dragging");
 
-      const closest = listItems.reduce(
+      const closest = itemList.reduce(
         (closest, child) => {
           const box = child.getBoundingClientRect();
           const offset = e.y - (box.top + box.height / 2);
@@ -192,28 +191,32 @@ export default {
         { offset: Number.NEGATIVE_INFINITY }
       ).element;
 
-      closest ? closest.before(draggedItem) : todoList.append(draggedItem);
+      closest ? closest.before(draggedItem) : itemContainer.append(draggedItem);
     },
 
     onDrop(e) {
       e.preventDefault();
-      const listItems = Array.from(document.querySelector("ul").children);
+      const droppedItem = document.querySelector(".dragging");
+      const itemList = document.querySelectorAll("li");
 
       // update the state
 
-      listItems.forEach((item, index) => {
+      itemList.forEach((item, index) => {
         const checkbox = item.children[0];
         const label = item.children[1];
 
         this.filteredTodos[index].completed = checkbox.checked;
         this.filteredTodos[index].id = checkbox.id;
-        this.filteredTodos[index].title = label.value ?? label.textContent; // take text from either editing input or label
+        this.filteredTodos[index].title = label.value ?? label.textContent; // take text either from editing input or label
       });
+
+      droppedItem.classList.remove("dragging");
     },
   },
 
   mounted() {
     if (this.darkTheme) document.body.classList.add("dark-theme");
+    window.addEventListener("dragenter", (e) => e.preventDefault());
     window.addEventListener("dragover", this.onDrag);
     window.addEventListener("drop", this.onDrop);
   },
@@ -226,8 +229,8 @@ html {
 }
 
 body {
-  background-color: #eee;
   font: 1.6rem / 1.25 "Helvetica Neue", Helvetica, Arial, sans-serif;
+  background-color: #eee;
 }
 
 h1 {
@@ -258,6 +261,10 @@ ul {
 
 .fade {
   opacity: 0.3;
+}
+
+.dragging {
+  box-shadow: 0 0 20px white !important;
 }
 
 .dark-theme {

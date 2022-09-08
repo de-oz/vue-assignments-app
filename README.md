@@ -5,8 +5,8 @@ App features:
 - Add, edit, delete and check (complete) functionality
 - Control buttons for clearing/checking/unchecking all to-do items
 - Three tabs for displaying all/active/completed to-dos
-- Check/uncheck everything in between two to-dos by clicking the last one of them while holding down `Shift` (works with both `Shift` + `click` with left mouse button and `Shift` + `Space Bar` keypress)
-- Drag and drop functionality for moving to-dos around
+- Check/uncheck everything in between two to-dos by clicking the last one of them while holding down `Shift` (works with both left mouse button `click` and `Space Bar` keypress)
+- Drag and drop functionality for changing to-do item order
 - Light/dark theme toggle
 - Persisting state on refresh or browser closing & reopening
 

@@ -134,14 +134,15 @@ export default {
   /* CUSTOM CHECKBOX */
 
   &__checkbox {
-    border: 3px solid currentcolor;
-    margin-left: 1rem;
     width: 3.5rem;
     height: 3.5rem;
+    color: inherit;
+    background-color: inherit;
+    margin-left: 1rem;
+    border: 3px solid currentcolor;
     border-radius: 10px;
     cursor: pointer;
     -webkit-appearance: none;
-    -moz-appearance: none;
     appearance: none;
   }
 
@@ -180,6 +181,8 @@ export default {
     justify-content: center;
     align-items: center;
     margin: 0 1rem;
+    opacity: 0;
+    transition: opacity 0.3s;
 
     * {
       width: 2rem;
@@ -201,11 +204,6 @@ export default {
     * + * {
       margin-left: 0.8rem;
     }
-  }
-
-  &__control-buttons {
-    opacity: 0;
-    transition: opacity 0.3s;
   }
 
   &:hover > &__control-buttons {

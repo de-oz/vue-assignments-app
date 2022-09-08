@@ -82,7 +82,7 @@ export default {
     max-width: 35rem;
     margin: 1rem 0 2.5rem;
     font-size: 2rem;
-    padding: 0.8rem 0 0.5rem;
+    padding: 0.8rem 0 0.6rem;
     background-color: hsl(207, 60%, 40%);
     border: 2px solid hsl(210, 60%, 20%);
     border-radius: 8px;
