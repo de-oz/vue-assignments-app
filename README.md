@@ -6,7 +6,7 @@ App features:
 - Control buttons for clearing/checking/unchecking all to-do items
 - Three tabs for displaying all/active/completed to-dos
 - Check/uncheck everything in between two to-dos by clicking the last one of them while holding down `Shift` (works with both left mouse button `click` and `Space Bar` keypress)
-- Drag and drop functionality for changing to-do item order
+- Drag and drop functionality for changing the order of to-do items
 - Light/dark theme toggle
 - Persisting state on refresh or browser closing & reopening
 

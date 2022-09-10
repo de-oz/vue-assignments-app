@@ -160,14 +160,14 @@ export default {
 
     changeTheme() {
       this.darkTheme = !this.darkTheme;
-      document.body.classList.toggle("dark-theme");
+      document.documentElement.classList.toggle("dark-theme");
     },
 
     onDragStart(e) {
       e.dataTransfer.dropEffect = "move";
       e.dataTransfer.effectAllowed = "move";
       e.dataTransfer.setData("text/plain", "e.target.textContent");
-      e.target.classList.add("dragging");
+      e.target.classList.add("todo-item--dragging");
     },
 
     onDrag(e) {
@@ -175,7 +175,7 @@ export default {
 
       const itemContainer = document.querySelector("ul");
       const itemList = Array.from(itemContainer.children);
-      const draggedItem = document.querySelector(".dragging");
+      const draggedItem = document.querySelector(".todo-item--dragging");
 
       const closest = itemList.reduce(
         (closest, child) => {
@@ -196,7 +196,7 @@ export default {
 
     onDrop(e) {
       e.preventDefault();
-      const droppedItem = document.querySelector(".dragging");
+      const droppedItem = document.querySelector(".todo-item--dragging");
       const itemList = document.querySelectorAll("li");
 
       // update the state
@@ -210,15 +210,16 @@ export default {
         this.filteredTodos[index].title = label.value ?? label.textContent; // take text either from editing input or label
       });
 
-      droppedItem.classList.remove("dragging");
+      droppedItem.classList.remove("todo-item--dragging");
     },
   },
 
   mounted() {
-    if (this.darkTheme) document.body.classList.add("dark-theme");
     window.addEventListener("dragenter", (e) => e.preventDefault());
     window.addEventListener("dragover", this.onDrag);
     window.addEventListener("drop", this.onDrop);
+
+    if (this.darkTheme) document.documentElement.classList.add("dark-theme");
   },
 };
 </script>
@@ -226,11 +227,14 @@ export default {
 <style lang="scss">
 html {
   font: 62.5% / 1.15 sans-serif;
+  background-color: #eee;
+  color: #000;
 }
 
 body {
   font: 1.6rem / 1.25 "Helvetica Neue", Helvetica, Arial, sans-serif;
-  background-color: #eee;
+  background-color: inherit;
+  color: inherit;
 }
 
 h1 {
@@ -263,12 +267,8 @@ ul {
   opacity: 0.3;
 }
 
-.dragging {
-  box-shadow: 0 0 20px white !important;
-}
-
 .dark-theme {
-  background-color: hsl(0, 0%, 17%);
+  background-color: #2b2b2b;
   color: #fff;
 }
 

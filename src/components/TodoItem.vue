@@ -131,19 +131,42 @@ export default {
     box-shadow: 0 0 7px hsl(205, 70%, 50%, 0.4);
   }
 
+  &--dragging {
+    box-shadow: 0 0 10px #eee;
+  }
+
   /* CUSTOM CHECKBOX */
 
   &__checkbox {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     width: 3.5rem;
     height: 3.5rem;
     color: inherit;
-    background-color: inherit;
     margin-left: 1rem;
     border: 3px solid currentcolor;
     border-radius: 10px;
     cursor: pointer;
     -webkit-appearance: none;
     appearance: none;
+  }
+
+  /* CUSTOM CHECK MARK */
+
+  &__checkbox::after {
+    box-sizing: content-box;
+    content: "";
+    width: 14px;
+    height: 6px;
+    border: solid;
+    border-width: 0 0 5px 5px;
+    transform: translateY(-15%) rotate(-45deg);
+    opacity: 0;
+  }
+
+  &__checkbox:checked::after {
+    opacity: 1;
   }
 
   /* TODO TITLE AND EDIT INPUT */
@@ -163,7 +186,7 @@ export default {
     background-color: inherit;
     width: 70%;
     flex: 1;
-    padding: 0.8rem 0.5rem 0.5rem;
+    padding: 0.8rem 0.5rem 0.6rem;
     margin-left: 1rem;
     border: 0;
     outline: 0;
@@ -209,27 +232,6 @@ export default {
   &:hover > &__control-buttons {
     opacity: 1;
   }
-
-  /* CUSTOM CHECK MARK */
-
-  &__checkbox::after {
-    box-sizing: content-box;
-    color: currentcolor;
-    content: "";
-    position: absolute;
-    top: 50%;
-    left: 1.8rem;
-    width: 14px;
-    height: 6px;
-    transform: translateY(-65%) rotate(-45deg);
-    border: solid;
-    border-width: 0 0 5px 5px;
-    opacity: 0;
-  }
-
-  &__checkbox:checked::after {
-    opacity: 1;
-  }
 }
 
 @media (max-width: 400px) {
@@ -239,7 +241,6 @@ export default {
     }
 
     &__checkbox::after {
-      left: 1.82rem;
       width: 11px;
       height: 5px;
       border-width: 0 0 4px 4px;

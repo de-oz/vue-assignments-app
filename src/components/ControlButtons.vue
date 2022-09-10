@@ -74,7 +74,7 @@ export default {
   methods: {
     fetchData() {
       axios
-        .get(`https://jsonplaceholder.typicode.com/todos?_limit=10`)
+        .get(`https://jsonplaceholder.typicode.com/todos?_limit=15`)
         .then((res) => this.$emit("data-fetched", res.data))
         .catch((err) => console.log(`Error: ${err}`));
     },
@@ -174,7 +174,7 @@ export default {
 
   &__tab {
     display: inline-block;
-    padding: 0.6rem 1rem 0.3rem;
+    padding: 0.6rem 1rem 0.4rem;
     margin: 0 0.5rem;
     border-radius: 5px;
     cursor: pointer;

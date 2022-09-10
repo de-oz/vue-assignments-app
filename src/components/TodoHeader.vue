@@ -2,7 +2,7 @@
   <header class="header">
     <h1 class="header__heading">To-Do App</h1>
     <font-awesome-icon
-      v-if="darkTheme"
+      v-if="theme"
       icon="fa-solid fa-moon"
       class="icon header__theme-toggle"
       @click="toggleTheme"
@@ -24,17 +24,9 @@ export default {
 
   emits: ["theme-toggled"],
 
-  data() {
-    return {
-      darkTheme: this.theme,
-    };
-  },
-
   methods: {
     toggleTheme() {
       this.$emit("theme-toggled");
-
-      this.darkTheme = !this.darkTheme;
     },
   },
 };
