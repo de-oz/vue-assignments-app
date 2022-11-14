@@ -1,57 +1,57 @@
 <template>
    <li
       class="todo-item"
-      :class="{ 'todo-item--completed': isCompleted }"
+      :class="{ 'todo-item--completed': completed }"
       draggable="true">
       <input
          name="todo-status"
          type="checkbox"
          class="todo-item__checkbox"
-         :class="{ fade: isCompleted }"
+         :class="{ fade: completed }"
          :id="id"
-         :checked="isCompleted"
+         :checked="completed"
          @click="toggleCheckbox"
          @keyup.shift="toggleCheckbox" />
-      <label
-         v-if="!isEditing"
-         :for="id"
-         class="todo-item__title"
-         :class="{ fade: isCompleted }">
-         {{ title }}
-      </label>
-      <input
-         v-else
-         name="todo-title"
-         class="todo-item__editing-input"
-         :class="{ fade: isCompleted }"
-         ref="labelEditingInput"
-         autocomplete="off"
-         v-model.trim="modifiedTitle"
-         @keydown.enter="saveEdit" />
-      <div
-         v-if="!isEditing"
-         class="todo-item__control-buttons">
-         <font-awesome-icon
-            icon="fa-solid fa-pen"
-            class="icon"
-            @click="editItem" />
-         <font-awesome-icon
-            icon="fa-solid fa-trash"
-            class="icon"
-            @click="removeItem" />
-      </div>
-      <div
-         v-else
-         class="todo-item__control-buttons">
-         <font-awesome-icon
-            icon="fa-solid fa-check"
-            class="icon"
-            @click="saveEdit" />
-         <font-awesome-icon
-            icon="fa-solid fa-xmark"
-            class="icon"
-            @click="cancelEdit" />
-      </div>
+
+      <template v-if="!isEditing">
+         <label
+            :for="id"
+            class="todo-item__title"
+            :class="{ fade: completed }">
+            {{ title }}
+         </label>
+         <div class="todo-item__control-buttons">
+            <font-awesome-icon
+               icon="fa-solid fa-pen"
+               class="icon"
+               @click="editItem" />
+            <font-awesome-icon
+               icon="fa-solid fa-trash"
+               class="icon"
+               @click="removeItem" />
+         </div>
+      </template>
+
+      <template v-else>
+         <input
+            name="todo-title"
+            class="todo-item__editing-input"
+            :class="{ fade: completed }"
+            ref="labelEditingInput"
+            autocomplete="off"
+            v-model.trim="modifiedTitle"
+            @keydown.enter="saveEdit" />
+         <div class="todo-item__control-buttons">
+            <font-awesome-icon
+               icon="fa-solid fa-check"
+               class="icon"
+               @click="saveEdit" />
+            <font-awesome-icon
+               icon="fa-solid fa-xmark"
+               class="icon"
+               @click="cancelEdit" />
+         </div>
+      </template>
    </li>
 </template>
 
@@ -70,12 +70,6 @@ export default {
          modifiedTitle: this.title,
          isEditing: false,
       };
-   },
-
-   computed: {
-      isCompleted() {
-         return this.completed;
-      },
    },
 
    methods: {
