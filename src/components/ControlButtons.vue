@@ -22,13 +22,13 @@
       <button
          type="button"
          class="btn btn--check"
-         @[numberOfActiveTodos&&`click`]="$emit('checked-all')">
+         @[activeTodosNumber&&`click`]="$emit('checked-all')">
          Check All
       </button>
       <button
          type="button"
          class="btn btn--uncheck"
-         @[numberOfCompletedTodos&&`click`]="$emit('unchecked-all')">
+         @[completedTodosNumber&&`click`]="$emit('unchecked-all')">
          Uncheck All
       </button>
    </div>
@@ -38,21 +38,21 @@
       class="tabs">
       <span
          class="tabs__tab"
-         @[!isAllTab&&`click`]="$emit('show-all')"
-         :class="{ 'tabs__tab--selected': isAllTab }">
-         All ({{ numberOfActiveTodos + numberOfCompletedTodos }})
+         @[!currentTab.all&&`click`]="$emit('show-all')"
+         :class="{ 'tabs__tab--selected': currentTab.all }">
+         All ({{ activeTodosNumber + completedTodosNumber }})
       </span>
       <span
          class="tabs__tab"
-         @[!isActiveTab&&`click`]="$emit('show-active')"
-         :class="{ 'tabs__tab--selected': isActiveTab }"
-         >Active ({{ numberOfActiveTodos }})
+         @[!currentTab.active&&`click`]="$emit('show-active')"
+         :class="{ 'tabs__tab--selected': currentTab.active }"
+         >Active ({{ activeTodosNumber }})
       </span>
       <span
          class="tabs__tab"
-         @[!isCompletedTab&&`click`]="$emit('show-completed')"
-         :class="{ 'tabs__tab--selected': isCompletedTab }"
-         >Completed ({{ numberOfCompletedTodos }})
+         @[!currentTab.completed&&`click`]="$emit('show-completed')"
+         :class="{ 'tabs__tab--selected': currentTab.completed }"
+         >Completed ({{ completedTodosNumber }})
       </span>
    </div>
 </template>
@@ -63,9 +63,9 @@ import axios from 'axios';
 export default {
    props: {
       isEmpty: { required: true, type: Boolean },
-      displayedTab: { required: true, type: String },
-      numberOfActiveTodos: { required: true, type: Number },
-      numberOfCompletedTodos: { required: true, type: Number },
+      tab: { required: true, type: String },
+      activeTodosNumber: { required: true, type: Number },
+      completedTodosNumber: { required: true, type: Number },
    },
 
    emits: [
@@ -88,14 +88,12 @@ export default {
    },
 
    computed: {
-      isAllTab() {
-         return this.displayedTab === 'all';
-      },
-      isActiveTab() {
-         return this.displayedTab === 'active';
-      },
-      isCompletedTab() {
-         return this.displayedTab === 'completed';
+      currentTab() {
+         return {
+            all: this.tab === 'all',
+            active: this.tab === 'active',
+            completed: this.tab === 'completed',
+         };
       },
    },
 };
