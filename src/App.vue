@@ -5,9 +5,9 @@
    <TodoPanel @added-item="addItem" />
    <ControlButtons
       :isEmpty="todoItems?.length === 0"
-      :displayedTab="tab"
-      :numberOfActiveTodos="activeTodos.length"
-      :numberOfCompletedTodos="completedTodos.length"
+      :tab="tab"
+      :activeTodosNumber="filteredTodos.active.length"
+      :completedTodosNumber="filteredTodos.completed.length"
       @list-cleared="clearAll"
       @checked-all="checkAll"
       @unchecked-all="uncheckAll"
@@ -17,7 +17,7 @@
       @show-completed="tab = `completed`" />
    <ul>
       <TodoItem
-         v-for="{ id, title, completed } in filteredTodos"
+         v-for="{ id, title, completed } in filteredTodos[tab]"
          :key="id"
          :title="title"
          :completed="completed"
@@ -54,18 +54,12 @@ export default {
    },
 
    computed: {
-      activeTodos() {
-         return this.todoItems.filter((item) => !item.completed);
-      },
-
-      completedTodos() {
-         return this.todoItems.filter((item) => item.completed);
-      },
-
       filteredTodos() {
-         if (this.tab === 'active') return this.activeTodos;
-         if (this.tab === 'completed') return this.completedTodos;
-         return this.todoItems;
+         return {
+            all: this.todoItems,
+            active: this.todoItems.filter((item) => !item.completed),
+            completed: this.todoItems.filter((item) => item.completed),
+         };
       },
    },
 
@@ -77,21 +71,21 @@ export default {
          deep: true,
       },
 
-      activeTodos: {
+      'this.filteredTodos.active': {
          handler() {
             localStorage.setItem(
                'active-todos',
-               JSON.stringify(this.activeTodos)
+               JSON.stringify(this.filteredTodos.active)
             );
          },
          deep: true,
       },
 
-      completedTodos: {
+      'this.filteredTodos.completed': {
          handler() {
             localStorage.setItem(
                'completed-todos',
-               JSON.stringify(this.completedTodos)
+               JSON.stringify(this.filteredTodos.completed)
             );
          },
          deep: true,
@@ -156,11 +150,13 @@ export default {
       },
 
       checkAll() {
-         this.activeTodos.forEach((item) => (item.completed = true));
+         this.filteredTodos.active.forEach((item) => (item.completed = true));
       },
 
       uncheckAll() {
-         this.completedTodos.forEach((item) => (item.completed = false));
+         this.filteredTodos.completed.forEach(
+            (item) => (item.completed = false)
+         );
       },
 
       changeTheme() {
@@ -212,9 +208,9 @@ export default {
             const checkbox = item.children[0];
             const label = item.children[1];
 
-            this.filteredTodos[index].completed = checkbox.checked;
-            this.filteredTodos[index].id = checkbox.id;
-            this.filteredTodos[index].title = label.value ?? label.textContent; // take text either from editing input or label
+            this.filteredTodos[this.tab][index].completed = checkbox.checked;
+            this.filteredTodos[this.tab][index].id = checkbox.id;
+            this.filteredTodos[this.tab][index].title = label.value ?? label.textContent; // take text either from editing input or label
          });
 
          droppedItem.classList.remove('todo-item--dragging');
