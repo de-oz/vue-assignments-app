@@ -17,14 +17,14 @@
       @show-completed="tab = `completed`" />
    <ul>
       <TodoItem
-         v-for="item in filteredTodos"
-         :key="item.id"
-         :title="item.title"
-         :completed="item.completed"
-         :id="String(item.id)"
-         @checkbox-toggled="updateCompletedStatus(item.id, $event)"
-         @item-edited="editItem(item.id, $event)"
-         @item-removed="removeItem(item.id)"
+         v-for="{ id, title, completed } in filteredTodos"
+         :key="id"
+         :title="title"
+         :completed="completed"
+         :id="String(id)"
+         @checkbox-toggled="updateCompletedStatus(id, $event)"
+         @item-edited="editItem(id, $event)"
+         @item-removed="removeItem(id)"
          @dragstart="onDragStart" />
    </ul>
 </template>

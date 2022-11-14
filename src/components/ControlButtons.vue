@@ -9,6 +9,7 @@
          Generate Data
       </button>
    </div>
+
    <div
       v-else
       class="controls">
@@ -31,6 +32,7 @@
          Uncheck All
       </button>
    </div>
+
    <div
       v-show="!isEmpty"
       class="tabs">
