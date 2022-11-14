@@ -1,27 +1,27 @@
 *,
 ::before,
 ::after {
-  box-sizing: border-box;
+   box-sizing: border-box;
 }
 
 body {
-  margin: 0;
+   margin: 0;
 }
 
 button {
-  border: none;
-  width: auto;
-  overflow: visible;
-  background: transparent;
-  color: inherit;
-  font: inherit;
+   border: none;
+   width: auto;
+   overflow: visible;
+   background: transparent;
+   color: inherit;
+   font: inherit;
 }
 
 button,
 input,
 select {
-  font-family: inherit;
-  font-size: 100%;
-  line-height: 1.15;
-  margin: 0;
+   font-family: inherit;
+   font-size: 100%;
+   line-height: 1.15;
+   margin: 0;
 }
