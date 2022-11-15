@@ -11,7 +11,7 @@
       @list-cleared="clearAll"
       @checked-all="checkAll"
       @unchecked-all="uncheckAll"
-      @data-fetched="($event) => (todoItems = $event)"
+      @data-fetched="(APIData) => (todoItems = APIData)"
       @show-all="tab = `all`"
       @show-active="tab = `active`"
       @show-completed="tab = `completed`" />
@@ -210,7 +210,8 @@ export default {
 
             this.filteredTodos[this.tab][index].completed = checkbox.checked;
             this.filteredTodos[this.tab][index].id = checkbox.id;
-            this.filteredTodos[this.tab][index].title = label.value ?? label.textContent; // take text either from editing input or label
+            this.filteredTodos[this.tab][index].title =
+               label.value ?? label.textContent; // take text either from editing input or label
          });
 
          droppedItem.classList.remove('todo-item--dragging');
@@ -232,12 +233,14 @@ html {
    font: 62.5% / 1.15 sans-serif;
    background-color: #eee;
    color: #000;
+   width: 100vw;
 }
 
 body {
    font: 1.6rem / 1.25 'Helvetica Neue', Helvetica, Arial, sans-serif;
    background-color: inherit;
    color: inherit;
+   overflow-x: hidden;
 }
 
 h1 {

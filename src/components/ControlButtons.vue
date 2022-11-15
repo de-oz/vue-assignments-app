@@ -176,6 +176,7 @@ export default {
    position: sticky;
    top: 12rem;
    z-index: 1;
+   text-align: center;
 
    &__tab {
       display: inline-block;
