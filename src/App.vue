@@ -4,14 +4,14 @@
       :theme="darkTheme" />
    <TodoPanel @added-item="addItem" />
    <ControlButtons
-      :isEmpty="todoItems?.length === 0"
+      :isEmpty="todos.length === 0"
       :tab="tab"
       :activeTodosNumber="filteredTodos.active.length"
       :completedTodosNumber="filteredTodos.completed.length"
       @list-cleared="clearAll"
       @checked-all="checkAll"
       @unchecked-all="uncheckAll"
-      @data-fetched="(APIData) => (todoItems = APIData)"
+      @data-fetched="(APIData) => (todos = APIData)"
       @show-all="tab = `all`"
       @show-active="tab = `active`"
       @show-completed="tab = `completed`" />
@@ -46,7 +46,7 @@ export default {
 
    data() {
       return {
-         todoItems: JSON.parse(localStorage.getItem('todo-items')) ?? [],
+         todos: JSON.parse(localStorage.getItem('todo-items')) || [],
          previouslyToggled: '',
          tab: localStorage.getItem('tab') || 'all',
          darkTheme: JSON.parse(localStorage.getItem('theme')) ?? true,
@@ -56,37 +56,17 @@ export default {
    computed: {
       filteredTodos() {
          return {
-            all: this.todoItems,
-            active: this.todoItems.filter((item) => !item.completed),
-            completed: this.todoItems.filter((item) => item.completed),
+            all: this.todos,
+            active: this.todos.filter((item) => !item.completed),
+            completed: this.todos.filter((item) => item.completed),
          };
       },
    },
 
    watch: {
-      todoItems: {
+      todos: {
          handler() {
-            localStorage.setItem('todo-items', JSON.stringify(this.todoItems));
-         },
-         deep: true,
-      },
-
-      'this.filteredTodos.active': {
-         handler() {
-            localStorage.setItem(
-               'active-todos',
-               JSON.stringify(this.filteredTodos.active)
-            );
-         },
-         deep: true,
-      },
-
-      'this.filteredTodos.completed': {
-         handler() {
-            localStorage.setItem(
-               'completed-todos',
-               JSON.stringify(this.filteredTodos.completed)
-            );
+            localStorage.setItem('todo-items', JSON.stringify(this.todos));
          },
          deep: true,
       },
@@ -103,19 +83,19 @@ export default {
    methods: {
       addItem(label) {
          const item = { title: label, completed: false, id: uuidv4() };
-         this.todoItems.unshift(item);
+         this.todos.unshift(item);
       },
 
       updateCompletedStatus(todoId, e) {
          if (e.type === 'keyup' && e.key !== ' ') return; // return if anything other than the spacebar was pressed on a checkbox
          if (e.type === 'keyup' && e.key === ' ') e.preventDefault(); // prevent spacebar keypress from firing a click event
 
-         const toggledTodo = this.todoItems.find((item) => item.id === todoId);
+         const toggledTodo = this.todos.find((item) => item.id === todoId);
          toggledTodo.completed = !toggledTodo.completed;
 
          if (e.shiftKey && this.previouslyToggled) {
-            const indexOfCurrentlyToggled = this.todoItems.indexOf(toggledTodo);
-            const indexOfPreviouslyToggled = this.todoItems.findIndex(
+            const indexOfCurrentlyToggled = this.todos.indexOf(toggledTodo);
+            const indexOfPreviouslyToggled = this.todos.findIndex(
                (item) => item.id === this.previouslyToggled
             );
 
@@ -125,7 +105,7 @@ export default {
             ];
 
             for (let i = minIndex; i <= maxIndex; i++) {
-               this.todoItems[i].completed = toggledTodo.completed;
+               this.todos[i].completed = toggledTodo.completed;
             }
          }
 
@@ -133,19 +113,17 @@ export default {
       },
 
       removeItem(todoId) {
-         const todoIndex = this.todoItems.findIndex(
-            (item) => item.id === todoId
-         );
-         this.todoItems.splice(todoIndex, 1);
+         const todoIndex = this.todos.findIndex((item) => item.id === todoId);
+         this.todos.splice(todoIndex, 1);
       },
 
       editItem(todoId, newTitle) {
-         const editedTodo = this.todoItems.find((item) => item.id === todoId);
+         const editedTodo = this.todos.find((item) => item.id === todoId);
          editedTodo.title = newTitle;
       },
 
       clearAll() {
-         this.todoItems = [];
+         this.todos = [];
          this.tab = 'all';
       },
 
