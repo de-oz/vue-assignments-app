@@ -45,14 +45,14 @@
       <span
          class="tabs__tab"
          @[!currentTab.active&&`click`]="$emit('show-active')"
-         :class="{ 'tabs__tab--selected': currentTab.active }"
-         >Active ({{ activeTodosNumber }})
+         :class="{ 'tabs__tab--selected': currentTab.active }">
+         Active ({{ activeTodosNumber }})
       </span>
       <span
          class="tabs__tab"
          @[!currentTab.completed&&`click`]="$emit('show-completed')"
-         :class="{ 'tabs__tab--selected': currentTab.completed }"
-         >Completed ({{ completedTodosNumber }})
+         :class="{ 'tabs__tab--selected': currentTab.completed }">
+         Completed ({{ completedTodosNumber }})
       </span>
    </div>
 </template>
