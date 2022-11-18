@@ -8,7 +8,7 @@
       <input
          name="new-todo-input"
          id="new-todo-input"
-         ref="todoTitleInput"
+         ref="titleInput"
          class="todo-form__input"
          autocomplete="off"
          v-model.trim="todoTitle" />
@@ -22,7 +22,7 @@
 
 <script>
 export default {
-   emits: ['added-item'],
+   emits: ['add-item'],
 
    data() {
       return {
@@ -34,16 +34,16 @@ export default {
       addItem() {
          if (this.todoTitle === '') return;
 
-         this.$emit('added-item', this.todoTitle);
+         this.$emit('add-item', this.todoTitle);
 
          this.todoTitle = '';
 
-         this.$refs.todoTitleInput.focus();
+         this.$refs.titleInput.focus();
       },
    },
 
    mounted() {
-      this.$refs.todoTitleInput.focus();
+      this.$refs.titleInput.focus();
    },
 };
 </script>
