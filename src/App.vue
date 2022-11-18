@@ -1,30 +1,41 @@
 <template>
    <TodoHeader
-      @theme-toggled="changeTheme"
+      @toggle-theme="toggleTheme"
       :theme="darkTheme" />
-   <TodoPanel @added-item="addItem" />
-   <ControlButtons
-      :isEmpty="todos.length === 0"
-      :tab="tab"
-      :activeTodosNumber="filteredTodos.active.length"
-      :completedTodosNumber="filteredTodos.completed.length"
-      @list-cleared="clearAll"
-      @checked-all="checkAll"
-      @unchecked-all="uncheckAll"
-      @data-fetched="(APIData) => (todos = APIData)"
-      @show-all="tab = `all`"
-      @show-active="tab = `active`"
-      @show-completed="tab = `completed`" />
+
+   <TodoPanel @add-item="addItem" />
+
+   <TodoControls
+      :todosExist="!!todos.length"
+      :activeTodosCount="filteredTodos.active.length"
+      :completedTodosCount="filteredTodos.completed.length"
+      @clear-all="clearAll"
+      @check-all="checkAll"
+      @uncheck-all="uncheckAll"
+      @fetch-data="(APIData) => (todos = APIData)" />
+
+   <div
+      v-show="todos.length"
+      class="tabs">
+      <TodoTabs
+         v-for="(array, tab) of filteredTodos"
+         :key="tab"
+         :name="tab"
+         :isPressed="tab === currentTab"
+         :count="array.length"
+         @[`show-${tab}`]="currentTab = tab" />
+   </div>
+
    <ul>
       <TodoItem
-         v-for="{ id, title, completed } in filteredTodos[tab]"
+         v-for="{ id, title, completed } of filteredTodos[currentTab]"
          :key="id"
          :title="title"
          :completed="completed"
          :id="String(id)"
-         @checkbox-toggled="updateCompletedStatus(id, $event)"
-         @item-edited="editItem(id, $event)"
-         @item-removed="removeItem(id)"
+         @toggle-checkbox="updateCompletedStatus(id, $event)"
+         @edit-item="editItem(id, $event)"
+         @remove-item="removeItem(id)"
          @dragstart="onDragStart" />
    </ul>
 </template>
@@ -32,7 +43,8 @@
 <script>
 import TodoHeader from './components/TodoHeader.vue';
 import TodoPanel from './components/TodoPanel.vue';
-import ControlButtons from './components/ControlButtons.vue';
+import TodoControls from './components/TodoControls.vue';
+import TodoTabs from './components/TodoTabs.vue';
 import TodoItem from './components/TodoItem.vue';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -40,15 +52,16 @@ export default {
    components: {
       TodoHeader,
       TodoPanel,
-      ControlButtons,
+      TodoControls,
       TodoItem,
+      TodoTabs,
    },
 
    data() {
       return {
-         todos: JSON.parse(localStorage.getItem('todo-items')) || [],
+         todos: JSON.parse(localStorage.getItem('todos')) || [],
          previouslyToggled: '',
-         tab: localStorage.getItem('tab') || 'all',
+         currentTab: localStorage.getItem('current-tab') || 'all',
          darkTheme: JSON.parse(localStorage.getItem('theme')) ?? true,
       };
    },
@@ -66,13 +79,13 @@ export default {
    watch: {
       todos: {
          handler() {
-            localStorage.setItem('todo-items', JSON.stringify(this.todos));
+            localStorage.setItem('todos', JSON.stringify(this.todos));
          },
          deep: true,
       },
 
-      tab() {
-         localStorage.setItem('tab', this.tab);
+      currentTab() {
+         localStorage.setItem('current-tab', this.currentTab);
       },
 
       darkTheme() {
@@ -124,7 +137,7 @@ export default {
 
       clearAll() {
          this.todos = [];
-         this.tab = 'all';
+         this.currentTab = 'all';
       },
 
       checkAll() {
@@ -137,7 +150,7 @@ export default {
          );
       },
 
-      changeTheme() {
+      toggleTheme() {
          this.darkTheme = !this.darkTheme;
          document.documentElement.classList.toggle('dark-theme');
       },
@@ -186,9 +199,10 @@ export default {
             const checkbox = item.children[0];
             const label = item.children[1];
 
-            this.filteredTodos[this.tab][index].completed = checkbox.checked;
-            this.filteredTodos[this.tab][index].id = checkbox.id;
-            this.filteredTodos[this.tab][index].title =
+            this.filteredTodos[this.currentTab][index].completed =
+               checkbox.checked;
+            this.filteredTodos[this.currentTab][index].id = checkbox.id;
+            this.filteredTodos[this.currentTab][index].title =
                label.value ?? label.textContent; // take text either from editing input or label
          });
 
@@ -254,6 +268,22 @@ ul {
 .dark-theme {
    background-color: #2b2b2b;
    color: #fff;
+}
+
+.tabs {
+   width: 90%;
+   max-width: 58rem;
+   margin: 0 auto;
+   position: sticky;
+   top: 12rem;
+   z-index: 1;
+   text-align: center;
+}
+
+@media (max-width: 300px) {
+   .tabs {
+      font-size: 90%;
+   }
 }
 
 @media (max-width: 400px) {

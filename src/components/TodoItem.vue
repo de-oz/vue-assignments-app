@@ -63,7 +63,7 @@ export default {
       id: { required: true, type: String },
    },
 
-   emits: ['checkbox-toggled', 'item-edited', 'item-removed'],
+   emits: ['toggle-checkbox', 'edit-item', 'remove-item'],
 
    data() {
       return {
@@ -74,7 +74,7 @@ export default {
 
    methods: {
       toggleCheckbox(e) {
-         this.$emit('checkbox-toggled', e);
+         this.$emit('toggle-checkbox', e);
       },
 
       editItem() {
@@ -84,7 +84,7 @@ export default {
 
       saveEdit() {
          if (this.modifiedTitle) {
-            this.$emit('item-edited', this.modifiedTitle);
+            this.$emit('edit-item', this.modifiedTitle);
             this.isEditing = false;
          }
       },
@@ -94,7 +94,7 @@ export default {
       },
 
       removeItem() {
-         this.$emit('item-removed');
+         this.$emit('remove-item');
       },
    },
 };

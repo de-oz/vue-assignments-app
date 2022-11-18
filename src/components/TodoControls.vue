@@ -1,6 +1,6 @@
 <template>
    <div
-      v-if="isEmpty"
+      v-if="!todosExist"
       class="controls">
       <button
          type="button"
@@ -16,44 +16,23 @@
       <button
          type="button"
          class="btn btn--delete"
-         @click="$emit('list-cleared')">
+         @click="$emit('clear-all')">
          Clear All
       </button>
       <button
          type="button"
          class="btn btn--check"
-         @[activeTodosNumber&&`click`]="$emit('checked-all')">
+         :disabled="!activeTodosCount"
+         @click="$emit('check-all')">
          Check All
       </button>
       <button
          type="button"
          class="btn btn--uncheck"
-         @[completedTodosNumber&&`click`]="$emit('unchecked-all')">
+         :disabled="!completedTodosCount"
+         @click="$emit('uncheck-all')">
          Uncheck All
       </button>
-   </div>
-
-   <div
-      v-show="!isEmpty"
-      class="tabs">
-      <span
-         class="tabs__tab"
-         @[!currentTab.all&&`click`]="$emit('show-all')"
-         :class="{ 'tabs__tab--selected': currentTab.all }">
-         All ({{ activeTodosNumber + completedTodosNumber }})
-      </span>
-      <span
-         class="tabs__tab"
-         @[!currentTab.active&&`click`]="$emit('show-active')"
-         :class="{ 'tabs__tab--selected': currentTab.active }">
-         Active ({{ activeTodosNumber }})
-      </span>
-      <span
-         class="tabs__tab"
-         @[!currentTab.completed&&`click`]="$emit('show-completed')"
-         :class="{ 'tabs__tab--selected': currentTab.completed }">
-         Completed ({{ completedTodosNumber }})
-      </span>
    </div>
 </template>
 
@@ -62,38 +41,19 @@ import axios from 'axios';
 
 export default {
    props: {
-      isEmpty: { required: true, type: Boolean },
-      tab: { required: true, type: String },
-      activeTodosNumber: { required: true, type: Number },
-      completedTodosNumber: { required: true, type: Number },
+      todosExist: { required: true, type: Boolean },
+      activeTodosCount: { required: true, type: Number },
+      completedTodosCount: { required: true, type: Number },
    },
 
-   emits: [
-      'data-fetched',
-      'list-cleared',
-      'checked-all',
-      'unchecked-all',
-      'show-all',
-      'show-active',
-      'show-completed',
-   ],
+   emits: ['fetch-data', 'clear-all', 'check-all', 'uncheck-all'],
 
    methods: {
       fetchData() {
          axios
             .get(`https://jsonplaceholder.typicode.com/todos?_limit=15`)
-            .then((res) => this.$emit('data-fetched', res.data))
+            .then((res) => this.$emit('fetch-data', res.data))
             .catch((err) => console.log(`Error: ${err}`));
-      },
-   },
-
-   computed: {
-      currentTab() {
-         return {
-            all: this.tab === 'all',
-            active: this.tab === 'active',
-            completed: this.tab === 'completed',
-         };
       },
    },
 };
@@ -169,39 +129,6 @@ export default {
    }
 }
 
-.tabs {
-   width: 90%;
-   max-width: 58rem;
-   margin: 0 auto;
-   position: sticky;
-   top: 12rem;
-   z-index: 1;
-   text-align: center;
-
-   &__tab {
-      display: inline-block;
-      padding: 0.6rem 1rem 0.4rem;
-      margin: 0 0.5rem;
-      border-radius: 5px;
-      cursor: pointer;
-
-      &:hover {
-         background-color: hsl(200, 10%, 60%);
-      }
-
-      &--selected {
-         background-color: hsl(200, 10%, 45%);
-         color: #fff;
-      }
-   }
-}
-
-@media (max-width: 450px) {
-   .tabs {
-      text-align: center;
-   }
-}
-
 @media (max-width: 300px) {
    .controls {
       margin: 1rem auto;
@@ -214,15 +141,6 @@ export default {
 
       * + * {
          margin-left: 3px;
-      }
-   }
-
-   .tabs {
-      font-size: 90%;
-
-      &__tab {
-         padding: 0.5rem 0.5rem 0.3rem;
-         margin: 0 0.3rem;
       }
    }
 }

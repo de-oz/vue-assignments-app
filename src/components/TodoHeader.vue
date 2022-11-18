@@ -17,17 +17,14 @@
 <script>
 export default {
    props: {
-      theme: {
-         default: true,
-         type: Boolean,
-      },
+      theme: { default: true, type: Boolean },
    },
 
-   emits: ['theme-toggled'],
+   emits: ['toggle-theme'],
 
    methods: {
       toggleTheme() {
-         this.$emit('theme-toggled');
+         this.$emit('toggle-theme');
       },
    },
 };
