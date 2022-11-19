@@ -6,9 +6,9 @@
    <TodoPanel @add-item="addItem" />
 
    <TodoControls
-      :todosExist="!!todos.length"
-      :activeTodosCount="filteredTodos.active.length"
-      :completedTodosCount="filteredTodos.completed.length"
+      :todos-exist="Boolean(todos.length)"
+      :active-todos-count="filteredTodos.Active.length"
+      :completed-todos-count="filteredTodos.Completed.length"
       @clear-all="clearAll"
       @check-all="checkAll"
       @uncheck-all="uncheckAll"
@@ -21,21 +21,19 @@
          v-for="(array, tab) of filteredTodos"
          :key="tab"
          :name="tab"
-         :isPressed="tab === currentTab"
+         :is-pressed="tab === currentTab"
          :count="array.length"
-         @[`show-${tab}`]="currentTab = tab" />
+         @[`show${tab}`]="currentTab = tab" />
    </div>
 
    <ul>
       <TodoItem
-         v-for="{ id, title, completed } of filteredTodos[currentTab]"
-         :key="id"
-         :title="title"
-         :completed="completed"
-         :id="String(id)"
-         @toggle-checkbox="updateCompletedStatus(id, $event)"
-         @edit-item="editItem(id, $event)"
-         @remove-item="removeItem(id)"
+         v-for="todo of filteredTodos[currentTab]"
+         v-bind="todo"
+         :key="todo.id"
+         @toggle-checkbox="updateCompletedStatus(todo.id, $event)"
+         @edit-item="editItem(todo.id, $event)"
+         @remove-item="removeItem(todo.id)"
          @dragstart="onDragStart" />
    </ul>
 </template>
@@ -61,7 +59,7 @@ export default {
       return {
          todos: JSON.parse(localStorage.getItem('todos')) || [],
          previouslyToggled: '',
-         currentTab: localStorage.getItem('current-tab') || 'all',
+         currentTab: localStorage.getItem('current-tab') || 'All',
          darkTheme: JSON.parse(localStorage.getItem('theme')) ?? true,
       };
    },
@@ -69,9 +67,9 @@ export default {
    computed: {
       filteredTodos() {
          return {
-            all: this.todos,
-            active: this.todos.filter((item) => !item.completed),
-            completed: this.todos.filter((item) => item.completed),
+            All: this.todos,
+            Active: this.todos.filter((item) => !item.completed),
+            Completed: this.todos.filter((item) => item.completed),
          };
       },
    },
@@ -137,15 +135,15 @@ export default {
 
       clearAll() {
          this.todos = [];
-         this.currentTab = 'all';
+         this.currentTab = 'All';
       },
 
       checkAll() {
-         this.filteredTodos.active.forEach((item) => (item.completed = true));
+         this.filteredTodos.Active.forEach((item) => (item.completed = true));
       },
 
       uncheckAll() {
-         this.filteredTodos.completed.forEach(
+         this.filteredTodos.Completed.forEach(
             (item) => (item.completed = false)
          );
       },

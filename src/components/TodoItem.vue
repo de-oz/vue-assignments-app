@@ -60,10 +60,10 @@ export default {
    props: {
       title: { required: true, type: String },
       completed: { default: false, type: Boolean },
-      id: { required: true, type: String },
+      id: { required: true, type: [String, Number] },
    },
 
-   emits: ['toggle-checkbox', 'edit-item', 'remove-item'],
+   emits: ['toggleCheckbox', 'editItem', 'removeItem'],
 
    data() {
       return {
@@ -74,7 +74,7 @@ export default {
 
    methods: {
       toggleCheckbox(e) {
-         this.$emit('toggle-checkbox', e);
+         this.$emit('toggleCheckbox', e);
       },
 
       editItem() {
@@ -84,7 +84,7 @@ export default {
 
       saveEdit() {
          if (this.modifiedTitle) {
-            this.$emit('edit-item', this.modifiedTitle);
+            this.$emit('editItem', this.modifiedTitle);
             this.isEditing = false;
          }
       },
@@ -94,7 +94,7 @@ export default {
       },
 
       removeItem() {
-         this.$emit('remove-item');
+         this.$emit('removeItem');
       },
    },
 };
@@ -175,9 +175,8 @@ export default {
    &__editing-input {
       color: inherit;
       background-color: inherit;
-      width: 70%;
       flex: 1;
-      padding: 0.8rem 0.5rem 0.6rem;
+      padding: 0.8rem 0.5rem 0.5rem;
       margin-left: 1rem;
       border: 0;
       outline: 0;

@@ -4,7 +4,7 @@
       class="tabs__tab"
       :class="{ 'tabs__tab--selected': isPressed }"
       :disabled="isPressed"
-      @click="$emit(`show-${name}`)">
+      @click="$emit(`show${name}`)">
       {{ name }} ({{ count }})
    </button>
 </template>
@@ -13,7 +13,7 @@
 export default {
    props: {
       name: { required: true, type: String },
-      isPressed: { required: true, type: Boolean },
+      isPressed: { default: false, type: Boolean },
       count: { required: true, type: Number },
    },
 };
@@ -25,7 +25,6 @@ export default {
    padding: 0.6rem 1rem 0.4rem;
    margin: 0 0.5rem;
    border-radius: 5px;
-   text-transform: capitalize;
    cursor: pointer;
 
    &:hover {
