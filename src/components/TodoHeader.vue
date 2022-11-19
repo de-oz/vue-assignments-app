@@ -20,11 +20,11 @@ export default {
       theme: { default: true, type: Boolean },
    },
 
-   emits: ['toggle-theme'],
+   emits: ['toggleTheme'],
 
    methods: {
       toggleTheme() {
-         this.$emit('toggle-theme');
+         this.$emit('toggleTheme');
       },
    },
 };

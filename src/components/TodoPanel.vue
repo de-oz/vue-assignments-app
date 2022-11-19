@@ -22,7 +22,7 @@
 
 <script>
 export default {
-   emits: ['add-item'],
+   emits: ['addItem'],
 
    data() {
       return {
@@ -34,7 +34,7 @@ export default {
       addItem() {
          if (this.todoTitle === '') return;
 
-         this.$emit('add-item', this.todoTitle);
+         this.$emit('addItem', this.todoTitle);
 
          this.todoTitle = '';
 
@@ -87,7 +87,7 @@ export default {
       max-width: 35rem;
       margin: 1rem 0 2.5rem;
       font-size: 2rem;
-      padding: 0.8rem 0 0.6rem;
+      padding: 0.9rem 0 0.5rem;
       background-color: hsl(210, 60%, 40%);
       border: 2px solid hsl(210, 60%, 20%);
       border-radius: 8px;

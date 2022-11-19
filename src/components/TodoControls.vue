@@ -16,21 +16,21 @@
       <button
          type="button"
          class="btn btn--delete"
-         @click="$emit('clear-all')">
+         @click="$emit('clearAll')">
          Clear All
       </button>
       <button
          type="button"
          class="btn btn--check"
          :disabled="!activeTodosCount"
-         @click="$emit('check-all')">
+         @click="$emit('checkAll')">
          Check All
       </button>
       <button
          type="button"
          class="btn btn--uncheck"
          :disabled="!completedTodosCount"
-         @click="$emit('uncheck-all')">
+         @click="$emit('uncheckAll')">
          Uncheck All
       </button>
    </div>
@@ -46,13 +46,13 @@ export default {
       completedTodosCount: { required: true, type: Number },
    },
 
-   emits: ['fetch-data', 'clear-all', 'check-all', 'uncheck-all'],
+   emits: ['fetchData', 'clearAll', 'checkAll', 'uncheckAll'],
 
    methods: {
       fetchData() {
          axios
             .get(`https://jsonplaceholder.typicode.com/todos?_limit=15`)
-            .then((res) => this.$emit('fetch-data', res.data))
+            .then((res) => this.$emit('fetchData', res.data))
             .catch((err) => console.log(`Error: ${err}`));
       },
    },
@@ -71,18 +71,15 @@ export default {
    max-width: 40rem;
    margin: 2rem auto;
 
-   * {
-      flex: 1;
-      white-space: nowrap;
-   }
-
-   * + * {
-      margin-left: 1rem;
-   }
-
    .btn {
       color: #fff;
-      padding: 1rem 0 0.8rem;
+      padding: 1rem 0 0.6rem;
+      flex: 1;
+      white-space: nowrap;
+
+      & + * {
+         margin-left: 1rem;
+      }
 
       &--generate {
          font-size: 1.8rem;
@@ -133,14 +130,14 @@ export default {
    .controls {
       margin: 1rem auto;
 
-      * {
+      .btn {
          padding: 0.7rem 0 0.5rem;
          font-size: 11px;
          border-radius: 7px;
-      }
 
-      * + * {
-         margin-left: 3px;
+         & + * {
+            margin-left: 3px;
+         }
       }
    }
 }
