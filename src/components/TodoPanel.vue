@@ -3,7 +3,7 @@
       @submit.prevent="addItem"
       class="todo-form">
       <h2 class="todo-form__heading">
-         <label for="new-todo-input">New Task</label>
+         <label for="new-todo-input">New Assignment</label>
       </h2>
       <input
          name="new-todo-input"
@@ -11,7 +11,7 @@
          ref="titleInput"
          class="todo-form__input"
          autocomplete="off"
-         v-model.trim="todoTitle" />
+         v-model.trim="newTodoTitle" />
       <button
          type="submit"
          class="todo-form__submit-button">
@@ -26,17 +26,17 @@ export default {
 
    data() {
       return {
-         todoTitle: '',
+         newTodoTitle: '',
       };
    },
 
    methods: {
       addItem() {
-         if (this.todoTitle === '') return;
+         if (this.newTodoTitle === '') return;
 
-         this.$emit('addItem', this.todoTitle);
+         this.$emit('addItem', this.newTodoTitle);
 
-         this.todoTitle = '';
+         this.newTodoTitle = '';
 
          this.$refs.titleInput.focus();
       },
@@ -70,8 +70,8 @@ export default {
    &__input {
       width: 90%;
       max-width: 35rem;
-      padding: 0.5rem;
-      font-size: 2rem;
+      padding: 0.5rem 0.5rem 0.2rem;
+      font-size: 1.8rem;
       outline: 0;
       border: 2px solid #558eaf;
       border-radius: 5px;
@@ -86,7 +86,7 @@ export default {
       width: 90%;
       max-width: 35rem;
       margin: 1rem 0 2.5rem;
-      font-size: 2rem;
+      font-size: 1.8rem;
       padding: 0.9rem 0 0.5rem;
       background-color: hsl(210, 60%, 40%);
       border: 2px solid hsl(210, 60%, 20%);
