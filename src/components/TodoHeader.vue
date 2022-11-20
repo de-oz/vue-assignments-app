@@ -2,15 +2,9 @@
    <header class="header">
       <h1 class="header__heading">To-Do App</h1>
       <font-awesome-icon
-         v-if="theme"
-         icon="fa-solid fa-moon"
+         :icon="`fa-solid fa-${theme ? 'moon' : 'sun'}`"
          class="icon header__theme-toggle"
-         @click="toggleTheme" />
-      <font-awesome-icon
-         v-else
-         icon="fa-solid fa-sun"
-         class="icon header__theme-toggle"
-         @click="toggleTheme" />
+         @click="$emit('toggleTheme')" />
    </header>
 </template>
 
@@ -21,12 +15,6 @@ export default {
    },
 
    emits: ['toggleTheme'],
-
-   methods: {
-      toggleTheme() {
-         this.$emit('toggleTheme');
-      },
-   },
 };
 </script>
 
@@ -40,7 +28,7 @@ export default {
    border-bottom: solid hsl(0, 0%, 13%) 5px;
 
    &__heading {
-      padding: 1rem 0;
+      padding: 1rem 0 0.5rem;
    }
 
    &__theme-toggle {

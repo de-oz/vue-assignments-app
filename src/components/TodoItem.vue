@@ -10,8 +10,8 @@
          :class="{ fade: completed }"
          :id="id"
          :checked="completed"
-         @click="toggleCheckbox"
-         @keyup.shift="toggleCheckbox" />
+         @click="$emit('toggleCheckbox', $event)"
+         @keyup.shift="$emit('toggleCheckbox', $event)" />
 
       <template v-if="!isEditing">
          <label
@@ -73,10 +73,6 @@ export default {
    },
 
    methods: {
-      toggleCheckbox(e) {
-         this.$emit('toggleCheckbox', e);
-      },
-
       editItem() {
          this.isEditing = true;
          this.$nextTick(() => this.$refs.labelEditingInput.focus());

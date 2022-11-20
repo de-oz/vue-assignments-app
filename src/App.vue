@@ -6,13 +6,13 @@
    <TodoPanel @add-item="addItem" />
 
    <TodoControls
-      :todos-exist="Boolean(todos.length)"
-      :active-todos-count="filteredTodos.Active.length"
-      :completed-todos-count="filteredTodos.Completed.length"
+      :total-todos="todos.length"
+      :active-todos="filteredTodos.active.length"
+      :completed-todos="filteredTodos.completed.length"
       @clear-all="clearAll"
       @check-all="checkAll"
       @uncheck-all="uncheckAll"
-      @fetch-data="(APIData) => (todos = APIData)" />
+      @fetch-data="todos = $event" />
 
    <div
       v-show="todos.length"
@@ -20,10 +20,9 @@
       <TodoTabs
          v-for="(array, tab) of filteredTodos"
          :key="tab"
-         :name="tab"
-         :is-pressed="tab === currentTab"
+         :tab="tab"
          :count="array.length"
-         @[`show${tab}`]="currentTab = tab" />
+         v-model:currentTab="currentTab" />
    </div>
 
    <ul>
@@ -59,7 +58,7 @@ export default {
       return {
          todos: JSON.parse(localStorage.getItem('todos')) || [],
          previouslyToggled: '',
-         currentTab: localStorage.getItem('current-tab') || 'All',
+         currentTab: localStorage.getItem('current-tab') || 'all',
          darkTheme: JSON.parse(localStorage.getItem('theme')) ?? true,
       };
    },
@@ -67,9 +66,9 @@ export default {
    computed: {
       filteredTodos() {
          return {
-            All: this.todos,
-            Active: this.todos.filter((item) => !item.completed),
-            Completed: this.todos.filter((item) => item.completed),
+            all: this.todos,
+            active: this.todos.filter((item) => !item.completed),
+            completed: this.todos.filter((item) => item.completed),
          };
       },
    },
@@ -92,16 +91,16 @@ export default {
    },
 
    methods: {
-      addItem(label) {
-         const item = { title: label, completed: false, id: uuidv4() };
+      addItem(title) {
+         const item = { title, completed: false, id: uuidv4() };
          this.todos.unshift(item);
       },
 
-      updateCompletedStatus(todoId, e) {
+      updateCompletedStatus(id, e) {
          if (e.type === 'keyup' && e.key !== ' ') return; // return if anything other than the spacebar was pressed on a checkbox
          if (e.type === 'keyup' && e.key === ' ') e.preventDefault(); // prevent spacebar keypress from firing a click event
 
-         const toggledTodo = this.todos.find((item) => item.id === todoId);
+         const toggledTodo = this.todos.find((item) => item.id === id);
          toggledTodo.completed = !toggledTodo.completed;
 
          if (e.shiftKey && this.previouslyToggled) {
@@ -111,39 +110,39 @@ export default {
             );
 
             const [minIndex, maxIndex] = [
-               Math.min(indexOfCurrentlyToggled, indexOfPreviouslyToggled),
-               Math.max(indexOfCurrentlyToggled, indexOfPreviouslyToggled),
-            ];
+               indexOfCurrentlyToggled,
+               indexOfPreviouslyToggled,
+            ].sort((a, b) => a - b);
 
             for (let i = minIndex; i <= maxIndex; i++) {
                this.todos[i].completed = toggledTodo.completed;
             }
          }
 
-         this.previouslyToggled = todoId;
+         this.previouslyToggled = id;
       },
 
-      removeItem(todoId) {
-         const todoIndex = this.todos.findIndex((item) => item.id === todoId);
+      removeItem(id) {
+         const todoIndex = this.todos.findIndex((item) => item.id === id);
          this.todos.splice(todoIndex, 1);
       },
 
-      editItem(todoId, newTitle) {
-         const editedTodo = this.todos.find((item) => item.id === todoId);
+      editItem(id, newTitle) {
+         const editedTodo = this.todos.find((item) => item.id === id);
          editedTodo.title = newTitle;
       },
 
       clearAll() {
          this.todos = [];
-         this.currentTab = 'All';
+         this.currentTab = 'all';
       },
 
       checkAll() {
-         this.filteredTodos.Active.forEach((item) => (item.completed = true));
+         this.filteredTodos.active.forEach((item) => (item.completed = true));
       },
 
       uncheckAll() {
-         this.filteredTodos.Completed.forEach(
+         this.filteredTodos.completed.forEach(
             (item) => (item.completed = false)
          );
       },
@@ -271,7 +270,7 @@ ul {
 .tabs {
    width: 90%;
    max-width: 58rem;
-   margin: 0 auto;
+   margin: 1.75rem auto;
    position: sticky;
    top: 12rem;
    z-index: 1;

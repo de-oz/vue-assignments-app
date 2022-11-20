@@ -2,29 +2,32 @@
    <button
       type="button"
       class="tabs__tab"
-      :class="{ 'tabs__tab--selected': isPressed }"
-      :disabled="isPressed"
-      @click="$emit(`show${name}`)">
-      {{ name }} ({{ count }})
+      :class="{ 'tabs__tab--selected': tab === currentTab }"
+      :disabled="tab === currentTab"
+      @click="$emit('update:currentTab', tab)">
+      {{ tab }} ({{ count }})
    </button>
 </template>
 
 <script>
 export default {
    props: {
-      name: { required: true, type: String },
-      isPressed: { default: false, type: Boolean },
+      tab: { required: true, type: String },
       count: { required: true, type: Number },
+      currentTab: { required: true, type: String },
    },
+
+   emits: ['update:currentTab'],
 };
 </script>
 
 <style lang="scss" scoped>
 .tabs__tab {
    display: inline-block;
-   padding: 0.6rem 1rem 0.4rem;
+   padding: 0.7rem 1rem 0.3rem;
    margin: 0 0.5rem;
    border-radius: 5px;
+   text-transform: capitalize;
    cursor: pointer;
 
    &:hover {
