@@ -1,24 +1,24 @@
 <template>
-   <TodoHeader
+   <AssignmentHeader
       @toggle-theme="toggleTheme"
       :theme="darkTheme" />
 
-   <TodoPanel @add-item="addItem" />
+   <AssignmentForm @add-item="addItem" />
 
-   <TodoControls
-      :total-todos="todos.length"
-      :active-todos="filteredTodos.active.length"
-      :completed-todos="filteredTodos.completed.length"
+   <AssignmentControls
+      :total-assignments="assignments.length"
+      :active-assignments="filteredAssignments.active.length"
+      :completed-assignments="filteredAssignments.completed.length"
       @clear-all="clearAll"
       @check-all="checkAll"
       @uncheck-all="uncheckAll"
-      @fetch-data="todos = $event" />
+      @fetch-data="assignments = $event" />
 
    <div
-      v-show="todos.length"
+      v-show="assignments.length"
       class="tabs">
-      <TodoTabs
-         v-for="(array, tab) of filteredTodos"
+      <AssignmentTabs
+         v-for="(array, tab) of filteredAssignments"
          :key="tab"
          :tab="tab"
          :count="array.length"
@@ -26,37 +26,37 @@
    </div>
 
    <ul>
-      <TodoItem
-         v-for="todo of filteredTodos[currentTab]"
-         v-bind="todo"
-         :key="todo.id"
-         @toggle-checkbox="updateCompletedStatus(todo.id, $event)"
-         @edit-item="editItem(todo.id, $event)"
-         @remove-item="removeItem(todo.id)"
+      <AssignmentItem
+         v-for="assignment of filteredAssignments[currentTab]"
+         v-bind="assignment"
+         :key="assignment.id"
+         @toggle-checkbox="updateCompletedStatus(assignment.id, $event)"
+         @edit-item="editItem(assignment.id, $event)"
+         @remove-item="removeItem(assignment.id)"
          @dragstart="onDragStart" />
    </ul>
 </template>
 
 <script>
-import TodoHeader from './components/TodoHeader.vue';
-import TodoPanel from './components/TodoPanel.vue';
-import TodoControls from './components/TodoControls.vue';
-import TodoTabs from './components/TodoTabs.vue';
-import TodoItem from './components/TodoItem.vue';
+import AssignmentHeader from './components/AssignmentHeader.vue';
+import AssignmentForm from './components/AssignmentForm.vue';
+import AssignmentControls from './components/AssignmentControls.vue';
+import AssignmentTabs from './components/AssignmentTabs.vue';
+import AssignmentItem from './components/AssignmentItem.vue';
 import { v4 as uuidv4 } from 'uuid';
 
 export default {
    components: {
-      TodoHeader,
-      TodoPanel,
-      TodoControls,
-      TodoItem,
-      TodoTabs,
+      AssignmentHeader,
+      AssignmentForm,
+      AssignmentControls,
+      AssignmentItem,
+      AssignmentTabs,
    },
 
    data() {
       return {
-         todos: JSON.parse(localStorage.getItem('todos')) || [],
+         assignments: JSON.parse(localStorage.getItem('assignments')) || [],
          previouslyToggled: '',
          currentTab: localStorage.getItem('current-tab') || 'all',
          darkTheme: JSON.parse(localStorage.getItem('theme')) ?? true,
@@ -64,19 +64,19 @@ export default {
    },
 
    computed: {
-      filteredTodos() {
+      filteredAssignments() {
          return {
-            all: this.todos,
-            active: this.todos.filter((item) => !item.completed),
-            completed: this.todos.filter((item) => item.completed),
+            all: this.assignments,
+            active: this.assignments.filter((item) => !item.completed),
+            completed: this.assignments.filter((item) => item.completed),
          };
       },
    },
 
    watch: {
-      todos: {
+      assignments: {
          handler() {
-            localStorage.setItem('todos', JSON.stringify(this.todos));
+            localStorage.setItem('assignments', JSON.stringify(this.assignments));
          },
          deep: true,
       },
@@ -93,19 +93,19 @@ export default {
    methods: {
       addItem(title) {
          const item = { title, completed: false, id: uuidv4() };
-         this.todos.unshift(item);
+         this.assignments.unshift(item);
       },
 
       updateCompletedStatus(id, e) {
          if (e.type === 'keyup' && e.key !== ' ') return; // return if anything other than the spacebar was pressed on a checkbox
          if (e.type === 'keyup' && e.key === ' ') e.preventDefault(); // prevent spacebar keypress from firing a click event
 
-         const toggledTodo = this.todos.find((item) => item.id === id);
-         toggledTodo.completed = !toggledTodo.completed;
+         const toggledAssignment = this.assignments.find((item) => item.id === id);
+         toggledAssignment.completed = !toggledAssignment.completed;
 
          if (e.shiftKey && this.previouslyToggled) {
-            const indexOfCurrentlyToggled = this.todos.indexOf(toggledTodo);
-            const indexOfPreviouslyToggled = this.todos.findIndex(
+            const indexOfCurrentlyToggled = this.assignments.indexOf(toggledAssignment);
+            const indexOfPreviouslyToggled = this.assignments.findIndex(
                (item) => item.id === this.previouslyToggled
             );
 
@@ -115,7 +115,7 @@ export default {
             ].sort((a, b) => a - b);
 
             for (let i = minIndex; i <= maxIndex; i++) {
-               this.todos[i].completed = toggledTodo.completed;
+               this.assignments[i].completed = toggledAssignment.completed;
             }
          }
 
@@ -123,26 +123,26 @@ export default {
       },
 
       removeItem(id) {
-         const todoIndex = this.todos.findIndex((item) => item.id === id);
-         this.todos.splice(todoIndex, 1);
+         const assignmentIndex = this.assignments.findIndex((item) => item.id === id);
+         this.assignments.splice(assignmentIndex, 1);
       },
 
       editItem(id, newTitle) {
-         const editedTodo = this.todos.find((item) => item.id === id);
-         editedTodo.title = newTitle;
+         const editedAssignment = this.assignments.find((item) => item.id === id);
+         editedAssignment.title = newTitle;
       },
 
       clearAll() {
-         this.todos = [];
+         this.assignments = [];
          this.currentTab = 'all';
       },
 
       checkAll() {
-         this.filteredTodos.active.forEach((item) => (item.completed = true));
+         this.filteredAssignments.active.forEach((item) => (item.completed = true));
       },
 
       uncheckAll() {
-         this.filteredTodos.completed.forEach(
+         this.filteredAssignments.completed.forEach(
             (item) => (item.completed = false)
          );
       },
@@ -156,7 +156,7 @@ export default {
          e.dataTransfer.dropEffect = 'move';
          e.dataTransfer.effectAllowed = 'move';
          e.dataTransfer.setData('text/plain', 'e.target.textContent');
-         e.target.classList.add('todo-item--dragging');
+         e.target.classList.add('assignment-item--dragging');
       },
 
       onDrag(e) {
@@ -164,7 +164,7 @@ export default {
 
          const itemContainer = document.querySelector('ul');
          const itemList = Array.from(itemContainer.children);
-         const draggedItem = document.querySelector('.todo-item--dragging');
+         const draggedItem = document.querySelector('.assignment-item--dragging');
 
          const closest = itemList.reduce(
             (closest, child) => {
@@ -187,7 +187,7 @@ export default {
 
       onDrop(e) {
          e.preventDefault();
-         const droppedItem = document.querySelector('.todo-item--dragging');
+         const droppedItem = document.querySelector('.assignment-item--dragging');
          const itemList = document.querySelectorAll('li');
 
          // update the state
@@ -196,14 +196,14 @@ export default {
             const checkbox = item.children[0];
             const label = item.children[1];
 
-            this.filteredTodos[this.currentTab][index].completed =
+            this.filteredAssignments[this.currentTab][index].completed =
                checkbox.checked;
-            this.filteredTodos[this.currentTab][index].id = checkbox.id;
-            this.filteredTodos[this.currentTab][index].title =
+            this.filteredAssignments[this.currentTab][index].id = checkbox.id;
+            this.filteredAssignments[this.currentTab][index].title =
                label.value ?? label.textContent; // take text either from editing input or label
          });
 
-         droppedItem.classList.remove('todo-item--dragging');
+         droppedItem.classList.remove('assignment-item--dragging');
       },
    },
 

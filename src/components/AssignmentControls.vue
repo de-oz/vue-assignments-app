@@ -1,6 +1,6 @@
 <template>
    <div
-      v-if="!totalTodos"
+      v-if="!totalAssignments"
       class="controls">
       <button
          type="button"
@@ -22,14 +22,14 @@
       <button
          type="button"
          class="btn btn--check"
-         :disabled="!activeTodos"
+         :disabled="!activeAssignments"
          @click="$emit('checkAll')">
          Check All
       </button>
       <button
          type="button"
          class="btn btn--uncheck"
-         :disabled="!completedTodos"
+         :disabled="!completedAssignments"
          @click="$emit('uncheckAll')">
          Uncheck All
       </button>
@@ -41,9 +41,9 @@ import axios from 'axios';
 
 export default {
    props: {
-      totalTodos: { required: true, type: Number },
-      activeTodos: { required: true, type: Number },
-      completedTodos: { required: true, type: Number },
+      totalAssignments: { required: true, type: Number },
+      activeAssignments: { required: true, type: Number },
+      completedAssignments: { required: true, type: Number },
    },
 
    emits: ['fetchData', 'clearAll', 'checkAll', 'uncheckAll'],
