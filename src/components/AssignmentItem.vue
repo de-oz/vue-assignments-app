@@ -1,12 +1,12 @@
 <template>
    <li
-      class="todo-item"
-      :class="{ 'todo-item--completed': completed }"
+      class="assignment-item"
+      :class="{ 'assignment-item--completed': completed }"
       draggable="true">
       <input
-         name="todo-status"
+         name="assignment-status"
          type="checkbox"
-         class="todo-item__checkbox"
+         class="assignment-item__checkbox"
          :class="{ fade: completed }"
          :id="id"
          :checked="completed"
@@ -16,11 +16,11 @@
       <template v-if="!isEditing">
          <label
             :for="id"
-            class="todo-item__title"
+            class="assignment-item__title"
             :class="{ fade: completed }">
             {{ title }}
          </label>
-         <div class="todo-item__control-buttons">
+         <div class="assignment-item__control-buttons">
             <font-awesome-icon
                icon="fa-solid fa-pen"
                class="icon"
@@ -34,14 +34,14 @@
 
       <template v-else>
          <input
-            name="todo-title"
-            class="todo-item__editing-input"
+            name="assignment-title"
+            class="assignment-item__editing-input"
             :class="{ fade: completed }"
             ref="labelEditingInput"
             autocomplete="off"
             v-model.trim="modifiedTitle"
             @keydown.enter="saveEdit" />
-         <div class="todo-item__control-buttons">
+         <div class="assignment-item__control-buttons">
             <font-awesome-icon
                icon="fa-solid fa-check"
                class="icon"
@@ -97,7 +97,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.todo-item {
+.assignment-item {
    max-width: 60rem;
    position: relative;
    display: flex;
@@ -156,7 +156,7 @@ export default {
       opacity: 1;
    }
 
-   /* TODO TITLE AND EDIT INPUT */
+   /* ASSIGNMENT TITLE AND EDIT INPUT */
 
    &__title {
       flex: 1;
@@ -183,7 +183,7 @@ export default {
       user-select: none;
    }
 
-   /* TODO ITEM CONTROLS */
+   /* ASSIGNMENT ITEM CONTROLS */
 
    &__control-buttons {
       display: flex;
@@ -221,7 +221,7 @@ export default {
 }
 
 @media (max-width: 400px) {
-   .todo-item {
+   .assignment-item {
       &__checkbox {
          border-radius: 8px;
       }

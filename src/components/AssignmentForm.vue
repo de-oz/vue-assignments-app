@@ -1,20 +1,20 @@
 <template>
    <form
       @submit.prevent="addItem"
-      class="todo-form">
-      <h2 class="todo-form__heading">
-         <label for="new-todo-input">New Assignment</label>
+      class="assignment-form">
+      <h2 class="assignment-form__heading">
+         <label for="new-assignment-input">New Assignment</label>
       </h2>
       <input
-         name="new-todo-input"
-         id="new-todo-input"
+         name="new-assignment-input"
+         id="new-assignment-input"
          ref="titleInput"
-         class="todo-form__input"
+         class="assignment-form__input"
          autocomplete="off"
-         v-model.trim="newTodoTitle" />
+         v-model.trim="newAssignmentTitle" />
       <button
          type="submit"
-         class="todo-form__submit-button">
+         class="assignment-form__submit-button">
          Add
       </button>
    </form>
@@ -26,17 +26,17 @@ export default {
 
    data() {
       return {
-         newTodoTitle: '',
+         newAssignmentTitle: '',
       };
    },
 
    methods: {
       addItem() {
-         if (this.newTodoTitle === '') return;
+         if (this.newAssignmentTitle === '') return;
 
-         this.$emit('addItem', this.newTodoTitle);
+         this.$emit('addItem', this.newAssignmentTitle);
 
-         this.newTodoTitle = '';
+         this.newAssignmentTitle = '';
 
          this.$refs.titleInput.focus();
       },
@@ -49,7 +49,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.todo-form {
+.assignment-form {
    width: 95vw;
    max-width: 50rem;
    margin: 0 auto;

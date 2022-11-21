@@ -1,6 +1,6 @@
 <template>
    <header class="header">
-      <h1 class="header__heading">To-Do App</h1>
+      <h1 class="header__heading">Assignments App</h1>
       <font-awesome-icon
          :icon="`fa-solid fa-${theme ? 'moon' : 'sun'}`"
          class="icon header__theme-toggle"
