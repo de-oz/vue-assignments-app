@@ -14,7 +14,7 @@
          v-model.trim="newAssignmentTitle" />
       <button
          type="submit"
-         class="assignment-form__submit-button">
+         class="btn assignment-form__submit-button">
          Add
       </button>
    </form>
@@ -90,8 +90,6 @@ export default {
       padding: 0.9rem 0 0.5rem;
       background-color: hsl(210, 60%, 40%);
       border: 2px solid hsl(210, 60%, 20%);
-      border-radius: 8px;
-      cursor: pointer;
       transition: background-color 0.1s;
 
       &:hover {

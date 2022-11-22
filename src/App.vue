@@ -12,7 +12,7 @@
       @clear-all="clearAll"
       @check-all="checkAll"
       @uncheck-all="uncheckAll"
-      @fetch-data="assignments = $event" />
+      @generate-data="assignments = $event" />
 
    <div
       v-show="assignments.length"
