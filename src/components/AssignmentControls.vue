@@ -5,7 +5,7 @@
       <button
          type="button"
          class="btn btn--generate"
-         @click="fetchData">
+         @click="generateData">
          Generate Data
       </button>
    </div>
@@ -37,8 +37,6 @@
 </template>
 
 <script>
-import axios from 'axios';
-
 export default {
    props: {
       totalAssignments: { required: true, type: Number },
@@ -46,14 +44,57 @@ export default {
       completedAssignments: { required: true, type: Number },
    },
 
-   emits: ['fetchData', 'clearAll', 'checkAll', 'uncheckAll'],
+   emits: ['generateData', 'clearAll', 'checkAll', 'uncheckAll'],
 
    methods: {
-      fetchData() {
-         axios
-            .get(`https://jsonplaceholder.typicode.com/todos?_limit=15`)
-            .then((res) => this.$emit('fetchData', res.data))
-            .catch((err) => console.log(`Error: ${err}`));
+      shuffleArray(array) {
+         for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+         }
+      },
+
+      generateData() {
+         const assignmentList = [
+            'Solve 5 coding problems',
+            'Read three arbitrary online articles related to programming',
+            'Spend 3 hours coding without interruption',
+            'Learn the basics of a JS framework and build a project with it in under a week',
+            'Learn how to touch type',
+            'Hit 100 WPM touch typing milestone',
+            'Find and correct a typo in any open-source documentation',
+            'Walk 10 miles in a single day',
+            'Successfully make 5 pull requests to an open-source project',
+            'Get any online programming certificate',
+            'Build 3 projects for a personal portfolio',
+            'Switch from Windows to GNU/Linux',
+            'Read 3 arbitrary books related to programming',
+            'Send off 10 job applications',
+            'Spend 50 hours on studying within 1 week',
+            'Complete 3 assignments within 24 hours',
+            'Build a copy of an existing website',
+            'Go through a real coding interview',
+            'Enter 3 new assignments using only a keyboard',
+            'Switch the background theme with a corresponding toggle button',
+            'Check or uncheck multiple assignments at once with Shift + click',
+            'Check or uncheck multiple assignments at once with Shift + Enter',
+            'Change the order of assignments by making use of drag and drop functionality',
+            'Change the title of an assignment',
+            'Clear all the assignments and generate them again to see them update',
+            'Click on a different tab to filter the assignment list',
+         ];
+
+         this.shuffleArray(assignmentList);
+
+         const assignments = assignmentList.slice(0, 10).reduce((a, b, i) => {
+            const assignment = {};
+            assignment.title = b;
+            assignment.completed = Boolean(Math.trunc(Math.random() * 2));
+            assignment.id = i;
+            return a.concat(assignment);
+         }, []);
+
+         this.$emit('generateData', assignments);
       },
    },
 };
