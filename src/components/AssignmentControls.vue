@@ -37,6 +37,8 @@
 </template>
 
 <script>
+import { v4 as uuidv4 } from 'uuid';
+
 export default {
    props: {
       totalAssignments: { required: true, type: Number },
@@ -86,11 +88,11 @@ export default {
 
          this.shuffleArray(assignmentList);
 
-         const assignments = assignmentList.slice(0, 10).reduce((a, b, i) => {
+         const assignments = assignmentList.slice(0, 10).reduce((a, b) => {
             const assignment = {};
             assignment.title = b;
             assignment.completed = Boolean(Math.trunc(Math.random() * 2));
-            assignment.id = i;
+            assignment.id = uuidv4();
             return a.concat(assignment);
          }, []);
 
