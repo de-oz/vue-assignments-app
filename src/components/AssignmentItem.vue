@@ -13,45 +13,33 @@
          @click="$emit('toggleCheckbox', $event)"
          @keyup.shift="$emit('toggleCheckbox', $event)" />
 
-      <template v-if="!isEditing">
-         <label
-            :for="id"
-            class="assignment-item__title"
-            :class="{ fade: completed }">
-            {{ title }}
-         </label>
-         <div class="assignment-item__control-buttons">
-            <font-awesome-icon
-               icon="fa-solid fa-pen"
-               class="icon"
-               @click="editItem" />
-            <font-awesome-icon
-               icon="fa-solid fa-trash"
-               class="icon"
-               @click="removeItem" />
-         </div>
-      </template>
+      <label
+         v-if="!isEditing"
+         :for="id"
+         class="assignment-item__title"
+         :class="{ fade: completed }">
+         {{ title }}
+      </label>
+      <input
+         v-else
+         name="assignment-title"
+         class="assignment-item__editing-input"
+         :class="{ fade: completed }"
+         ref="titleEditingInput"
+         autocomplete="off"
+         v-model.trim="modifiedTitle"
+         @keydown.enter="saveEdit" />
 
-      <template v-else>
-         <input
-            name="assignment-title"
-            class="assignment-item__editing-input"
-            :class="{ fade: completed }"
-            ref="labelEditingInput"
-            autocomplete="off"
-            v-model.trim="modifiedTitle"
-            @keydown.enter="saveEdit" />
-         <div class="assignment-item__control-buttons">
-            <font-awesome-icon
-               icon="fa-solid fa-check"
-               class="icon"
-               @click="saveEdit" />
-            <font-awesome-icon
-               icon="fa-solid fa-xmark"
-               class="icon"
-               @click="cancelEdit" />
-         </div>
-      </template>
+      <div class="assignment-item__control-buttons">
+         <font-awesome-icon
+            :icon="`fa-solid fa-${isEditing ? 'check' : 'pen'}`"
+            class="icon"
+            @click="isEditing ? saveEdit() : editItem()" />
+         <font-awesome-icon
+            :icon="`fa-solid fa-${isEditing ? 'xmark' : 'trash'}`"
+            class="icon"
+            @click="isEditing ? cancelEdit() : removeItem()" />
+      </div>
    </li>
 </template>
 
@@ -75,7 +63,7 @@ export default {
    methods: {
       editItem() {
          this.isEditing = true;
-         this.$nextTick(() => this.$refs.labelEditingInput.focus());
+         this.$nextTick(() => this.$refs.titleEditingInput.focus());
       },
 
       saveEdit() {
