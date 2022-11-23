@@ -76,7 +76,10 @@ export default {
    watch: {
       assignments: {
          handler() {
-            localStorage.setItem('assignments', JSON.stringify(this.assignments));
+            localStorage.setItem(
+               'assignments',
+               JSON.stringify(this.assignments)
+            );
          },
          deep: true,
       },
@@ -100,11 +103,14 @@ export default {
          if (e.type === 'keyup' && e.key !== ' ') return; // return if anything other than the spacebar was pressed on a checkbox
          if (e.type === 'keyup' && e.key === ' ') e.preventDefault(); // prevent spacebar keypress from firing a click event
 
-         const toggledAssignment = this.assignments.find((item) => item.id === id);
+         const toggledAssignment = this.assignments.find(
+            (item) => item.id === id
+         );
          toggledAssignment.completed = !toggledAssignment.completed;
 
          if (e.shiftKey && this.previouslyToggled) {
-            const indexOfCurrentlyToggled = this.assignments.indexOf(toggledAssignment);
+            const indexOfCurrentlyToggled =
+               this.assignments.indexOf(toggledAssignment);
             const indexOfPreviouslyToggled = this.assignments.findIndex(
                (item) => item.id === this.previouslyToggled
             );
@@ -123,12 +129,16 @@ export default {
       },
 
       removeItem(id) {
-         const assignmentIndex = this.assignments.findIndex((item) => item.id === id);
+         const assignmentIndex = this.assignments.findIndex(
+            (item) => item.id === id
+         );
          this.assignments.splice(assignmentIndex, 1);
       },
 
       editItem(id, newTitle) {
-         const editedAssignment = this.assignments.find((item) => item.id === id);
+         const editedAssignment = this.assignments.find(
+            (item) => item.id === id
+         );
          editedAssignment.title = newTitle;
       },
 
@@ -138,7 +148,9 @@ export default {
       },
 
       checkAll() {
-         this.filteredAssignments.active.forEach((item) => (item.completed = true));
+         this.filteredAssignments.active.forEach(
+            (item) => (item.completed = true)
+         );
       },
 
       uncheckAll() {
@@ -164,7 +176,9 @@ export default {
 
          const itemContainer = document.querySelector('ul');
          const itemList = Array.from(itemContainer.children);
-         const draggedItem = document.querySelector('.assignment-item--dragging');
+         const draggedItem = document.querySelector(
+            '.assignment-item--dragging'
+         );
 
          const closest = itemList.reduce(
             (closest, child) => {
@@ -187,7 +201,9 @@ export default {
 
       onDrop(e) {
          e.preventDefault();
-         const droppedItem = document.querySelector('.assignment-item--dragging');
+         const droppedItem = document.querySelector(
+            '.assignment-item--dragging'
+         );
          const itemList = document.querySelectorAll('li');
 
          // update the state
