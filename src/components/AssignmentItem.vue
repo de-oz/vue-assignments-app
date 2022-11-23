@@ -48,7 +48,7 @@ export default {
    props: {
       title: { required: true, type: String },
       completed: { default: false, type: Boolean },
-      id: { required: true, type: [String, Number] },
+      id: { required: true, type: String },
    },
 
    emits: ['toggleCheckbox', 'editItem', 'removeItem'],
