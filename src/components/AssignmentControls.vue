@@ -105,18 +105,19 @@ export default {
 <style lang="scss" scoped>
 .controls {
    position: sticky;
-   top: 7rem;
+   top: 5.25rem;
    z-index: 1;
    display: flex;
    justify-content: center;
    align-items: center;
    width: 90%;
    max-width: 40rem;
-   margin: 2rem auto;
+   margin: 2rem auto 1rem;
+   font-size: 1.5rem;
 
    .btn {
       color: #fff;
-      padding: 1rem 0 0.6rem;
+      padding: 0.9rem 0 0.5rem;
       flex: 1;
       white-space: nowrap;
 
@@ -125,10 +126,9 @@ export default {
       }
 
       &--generate {
-         font-size: 1.8rem;
          margin: 2rem 0;
          max-width: 60%;
-         background-color: hsl(180, 100%, 25%);
+         background-color: hsl(180, 100%, 28%);
          border-color: hsl(180, 100%, 10%);
          transition: background-color 0.1s;
 
@@ -158,12 +158,12 @@ export default {
       }
 
       &--uncheck {
-         background-color: hsl(30, 100%, 40%);
-         border-color: hsl(30, 100%, 25%);
+         background-color: hsl(20, 100%, 50%);
+         border-color: hsl(20, 100%, 20%);
          transition: background-color 0.1s;
 
          &:hover {
-            background-color: hsl(30, 100%, 32%);
+            background-color: hsl(20, 100%, 30%);
          }
       }
    }

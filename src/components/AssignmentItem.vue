@@ -184,7 +184,7 @@ export default {
       * {
          width: 2rem;
          padding: 0.6rem;
-         color: hsl(185, 25%, 40%);
+         color: hsl(180, 100%, 25%);
          transition: color 0.15s;
 
          &:last-child:hover {
@@ -193,7 +193,7 @@ export default {
          }
 
          &:first-child:hover {
-            color: hsl(215, 60%, 45%);
+            color: hsl(215, 100%, 45%);
             box-shadow: 0 0 5px currentcolor, inset 0 0 5px currentcolor;
          }
       }

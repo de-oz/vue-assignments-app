@@ -23,28 +23,29 @@ export default {
    position: sticky;
    top: 0;
    z-index: 1;
-   background-color: hsl(0, 0%, 25%);
    color: #dedede;
-   border-bottom: solid hsl(0, 0%, 13%) 5px;
+   background-color: hsl(180, 100%, 20%);
+   box-shadow: 0 0 5px 2px hsl(180, 100%, 15%);
 
    &__heading {
       padding: 1rem 0 0.5rem;
+      font-size: 2.4rem;
    }
 
    &__theme-toggle {
-      width: 3rem;
+      width: 2.5rem;
       position: absolute;
       top: 50%;
       transform: translateY(-50%);
       right: 2rem;
-      font-size: 3rem;
-      padding: 0.7rem;
+      font-size: 2.5rem;
+      padding: 0.5rem;
       border: 0;
       box-shadow: 0 0 5px currentcolor;
       transition: background-color 0.15s;
 
       &:hover {
-         background-color: #7e7e7e;
+         background-color: hsl(180, 100%, 32%);
       }
    }
 }

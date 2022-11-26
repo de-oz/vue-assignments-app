@@ -286,11 +286,12 @@ ul {
 .tabs {
    width: 90%;
    max-width: 58rem;
-   margin: 1.75rem auto;
+   margin: 1.5rem auto;
    position: sticky;
-   top: 12rem;
+   top: 9.5rem;
    z-index: 1;
    text-align: center;
+   font-size: 1.5rem;
 }
 
 @media (max-width: 300px) {
