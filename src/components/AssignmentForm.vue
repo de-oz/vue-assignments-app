@@ -65,13 +65,13 @@ export default {
       text-align: center;
       margin: 2.5rem auto 1rem;
       font-weight: normal;
+      font-size: 2rem;
    }
 
    &__input {
       width: 90%;
       max-width: 35rem;
       padding: 0.5rem 0.5rem 0.2rem;
-      font-size: 1.8rem;
       outline: 0;
       border: 2px solid #558eaf;
       border-radius: 5px;
@@ -86,7 +86,6 @@ export default {
       width: 90%;
       max-width: 35rem;
       margin: 1rem 0 2.5rem;
-      font-size: 1.8rem;
       padding: 0.9rem 0 0.5rem;
       background-color: hsl(210, 60%, 40%);
       border: 2px solid hsl(210, 60%, 20%);
