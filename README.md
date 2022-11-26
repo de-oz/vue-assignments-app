@@ -3,12 +3,12 @@
 App features:
 
 - Add, edit, delete and check (complete) functionality
-- Control buttons for clearing/checking/unchecking all to-do items
-- Three tabs for displaying all/active/completed assignments
-- Check/uncheck everything in between two assignments by clicking the last one of them while holding down `Shift` (also works with `Space Bar` keypress apart from the left mouse button `click`)
+- Control buttons for clearing, checking and unchecking all assignments
+- Three tabs for displaying all, active or completed assignments
+- Check or uncheck everything in-between two assignments by clicking the last one of them while holding down `Shift` (this also works with `Space Bar` keypress besides the left mouse button `click`)
 - Drag and drop functionality for changing the order of assignments
 - Light/dark theme toggle
-- Persisting state on refresh or browser closing & reopening
+- Persisting state on page refresh and after the browser is closed and reopened
 
 ## Demo
 

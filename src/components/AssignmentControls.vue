@@ -59,7 +59,7 @@ export default {
       generateData() {
          const assignmentList = [
             'Solve 5 coding problems',
-            'Read three arbitrary online articles related to programming',
+            'Read three online articles related to programming',
             'Spend 3 hours coding without interruption',
             'Learn the basics of a JS framework and build a project with it in under a week',
             'Learn how to touch type',
@@ -70,19 +70,19 @@ export default {
             'Get any online programming certificate',
             'Build 3 projects for a personal portfolio',
             'Switch from Windows to GNU/Linux',
-            'Read 3 arbitrary books related to programming',
+            'Read 3 books related to programming',
             'Send off 10 job applications',
             'Spend 50 hours on studying within 1 week',
             'Complete 3 assignments within 24 hours',
             'Build a copy of an existing website',
             'Go through a real coding interview',
             'Enter 3 new assignments using only a keyboard',
-            'Switch the background theme with a corresponding toggle button',
+            'Switch the background theme with a toggle button',
             'Check or uncheck multiple assignments at once with Shift + click',
-            'Check or uncheck multiple assignments at once with Shift + Enter',
-            'Change the order of assignments by making use of drag and drop functionality',
+            'Check or uncheck multiple assignments at once with Shift + SpaceBar',
+            'Change the order of assignments by making use of drag-and-drop features',
             'Change the title of an assignment',
-            'Clear all the assignments and generate them again to see them update',
+            'Clear all the assignments and generate them again to see the list update',
             'Click on a different tab to filter the assignment list',
          ];
 
