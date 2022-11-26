@@ -40,65 +40,57 @@
 import { v4 as uuidv4 } from 'uuid';
 
 export default {
-   props: {
-      totalAssignments: { required: true, type: Number },
-      activeAssignments: { required: true, type: Number },
-      completedAssignments: { required: true, type: Number },
-   },
+  props: {
+    totalAssignments: { required: true, type: Number },
+    activeAssignments: { required: true, type: Number },
+    completedAssignments: { required: true, type: Number },
+  },
 
-   emits: ['generateData', 'clearAll', 'checkAll', 'uncheckAll'],
+  emits: ['generateData', 'clearAll', 'checkAll', 'uncheckAll'],
 
-   methods: {
-      shuffleArray(array) {
-         for (let i = array.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1));
-            [array[i], array[j]] = [array[j], array[i]];
-         }
-      },
+  methods: {
+    shuffleArray(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+    },
 
-      generateData() {
-         const assignmentList = [
-            'Solve 5 coding problems',
-            'Read three arbitrary online articles related to programming',
-            'Spend 3 hours coding without interruption',
-            'Learn the basics of a JS framework and build a project with it in under a week',
-            'Learn how to touch type',
-            'Hit 100 WPM touch typing milestone',
-            'Find and correct a typo in any open-source documentation',
-            'Walk 10 miles in a single day',
-            'Successfully make 5 pull requests to an open-source project',
-            'Get any online programming certificate',
-            'Build 3 projects for a personal portfolio',
-            'Switch from Windows to GNU/Linux',
-            'Read 3 arbitrary books related to programming',
-            'Send off 10 job applications',
-            'Spend 50 hours on studying within 1 week',
-            'Complete 3 assignments within 24 hours',
-            'Build a copy of an existing website',
-            'Go through a real coding interview',
-            'Enter 3 new assignments using only a keyboard',
-            'Switch the background theme with a corresponding toggle button',
-            'Check or uncheck multiple assignments at once with Shift + click',
-            'Check or uncheck multiple assignments at once with Shift + Enter',
-            'Change the order of assignments by making use of drag and drop functionality',
-            'Change the title of an assignment',
-            'Clear all the assignments and generate them again to see them update',
-            'Click on a different tab to filter the assignment list',
-         ];
+    generateData() {
+      const assignmentList = [
+        'Switch the theme by clicking the toggle in the top-right corner',
+        'Create a new assignment',
+        'Enter three new assignments using only a keyboard',
+        'Make sure empty assignments are not allowed by trying to add one',
+        'Clear out the assignment list',
+        'Check all the assignments',
+        'Uncheck all the assignments',
+        'Click on a different tab to filter the assignment list',
+        'Check/uncheck multiple assignments at once with Shift + mouse click',
+        'Check/uncheck multiple assignments at once with Shift + Spacebar',
+        'Change the order of assignments by clicking on and dragging the list items',
+        'Edit the title of an assignment',
+        'Delete an assignment',
+        'Mark an active assignment as completed by clicking its checkbox or title',
+        'Mark a completed assignment as active by clicking its checkbox or title',
+        'Clear all the assignments and generate them again to see how the list updates',
+        'Refresh the page to see how the data is preserved',
+        'Close and reopen the page to see how the state persists',
+      ];
 
-         this.shuffleArray(assignmentList);
+      this.shuffleArray(assignmentList);
 
-         const assignments = assignmentList.slice(0, 10).reduce((a, b) => {
-            const assignment = {};
-            assignment.title = b;
-            assignment.completed = Boolean(Math.trunc(Math.random() * 2));
-            assignment.id = uuidv4();
-            return a.concat(assignment);
-         }, []);
+      const assignments = assignmentList.slice(0, 10).reduce((a, b) => {
+        const assignment = {};
+        assignment.title = b;
+        assignment.completed = Boolean(Math.trunc(Math.random() * 2));
+        assignment.id = uuidv4();
+        return a.concat(assignment);
+      }, []);
 
-         this.$emit('generateData', assignments);
-      },
-   },
+      this.$emit('generateData', assignments);
+    },
+  },
 };
 </script>
 
