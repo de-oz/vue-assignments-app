@@ -1,9 +1,11 @@
-# Advanced Assignment List application
+# Assignment List application
 
-App features:
+Advanced assignment list app built with Vue 3 using Options API.
+
+## Key features
 
 - Add, edit, delete and check (complete) functionality
-- Control buttons for clearing, checking and unchecking all assignments
+- Buttons for clearing, checking and unchecking all assignments
 - Three tabs for displaying all, active or completed assignments
 - Check or uncheck everything in-between two assignments by clicking the last one of them while holding down `Shift` (this also works with `Space Bar` keypress besides the left mouse button `click`)
 - Drag and drop functionality for changing the order of assignments
