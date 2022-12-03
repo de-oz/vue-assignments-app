@@ -1,40 +1,40 @@
 <template>
-   <AssignmentHeader
-      @toggle-theme="toggleTheme"
-      :theme="darkTheme" />
+  <AssignmentHeader
+    @toggle-theme="toggleTheme"
+    :theme="darkTheme" />
 
-   <AssignmentForm @add-item="addItem" />
+  <AssignmentForm @add-item="addItem" />
 
-   <AssignmentControls
-      :total-assignments="assignments.length"
-      :active-assignments="filteredAssignments.active.length"
-      :completed-assignments="filteredAssignments.completed.length"
-      @clear-all="clearAll"
-      @check-all="checkAll"
-      @uncheck-all="uncheckAll"
-      @generate-data="assignments = $event" />
+  <AssignmentControls
+    :total-assignments="assignments.length"
+    :active-assignments="filteredAssignments.active.length"
+    :completed-assignments="filteredAssignments.completed.length"
+    @clear-all="clearAll"
+    @check-all="checkAll"
+    @uncheck-all="uncheckAll"
+    @generate-data="assignments = $event" />
 
-   <div
-      v-show="assignments.length"
-      class="tabs">
-      <AssignmentTabs
-         v-for="(array, tab) of filteredAssignments"
-         :key="tab"
-         :tab="tab"
-         :count="array.length"
-         v-model:currentTab="currentTab" />
-   </div>
+  <div
+    v-show="assignments.length"
+    class="tabs">
+    <AssignmentTabs
+      v-for="(array, tab) of filteredAssignments"
+      :key="tab"
+      :tab="tab"
+      :count="array.length"
+      v-model:currentTab="currentTab" />
+  </div>
 
-   <ul>
-      <AssignmentItem
-         v-for="assignment of filteredAssignments[currentTab]"
-         v-bind="assignment"
-         :key="assignment.id"
-         @toggle-checkbox="updateCompletedStatus(assignment.id, $event)"
-         @edit-item="editItem(assignment.id, $event)"
-         @remove-item="removeItem(assignment.id)"
-         @dragstart="onDragStart" />
-   </ul>
+  <ul>
+    <AssignmentItem
+      v-for="assignment of filteredAssignments[currentTab]"
+      v-bind="assignment"
+      :key="assignment.id"
+      @toggle-checkbox="updateCompletedStatus(assignment.id, $event)"
+      @edit-item="editItem(assignment.id, $event)"
+      @remove-item="removeItem(assignment.id)"
+      @dragstart="onDragStart" />
+  </ul>
 </template>
 
 <script>
@@ -46,262 +46,249 @@ import AssignmentItem from './components/AssignmentItem.vue';
 import { v4 as uuidv4 } from 'uuid';
 
 export default {
-   components: {
-      AssignmentHeader,
-      AssignmentForm,
-      AssignmentControls,
-      AssignmentItem,
-      AssignmentTabs,
-   },
+  components: {
+    AssignmentHeader,
+    AssignmentForm,
+    AssignmentControls,
+    AssignmentItem,
+    AssignmentTabs,
+  },
 
-   data() {
+  data() {
+    return {
+      assignments: JSON.parse(localStorage.getItem('assignments')) || [],
+      previouslyToggled: '',
+      currentTab: localStorage.getItem('current-tab') || 'all',
+      darkTheme: JSON.parse(localStorage.getItem('theme')) ?? true,
+    };
+  },
+
+  computed: {
+    filteredAssignments() {
       return {
-         assignments: JSON.parse(localStorage.getItem('assignments')) || [],
-         previouslyToggled: '',
-         currentTab: localStorage.getItem('current-tab') || 'all',
-         darkTheme: JSON.parse(localStorage.getItem('theme')) ?? true,
+        all: this.assignments,
+        active: this.assignments.filter((item) => !item.completed),
+        completed: this.assignments.filter((item) => item.completed),
       };
-   },
+    },
+  },
 
-   computed: {
-      filteredAssignments() {
-         return {
-            all: this.assignments,
-            active: this.assignments.filter((item) => !item.completed),
-            completed: this.assignments.filter((item) => item.completed),
-         };
+  watch: {
+    assignments: {
+      handler() {
+        localStorage.setItem('assignments', JSON.stringify(this.assignments));
       },
-   },
+      deep: true,
+    },
 
-   watch: {
-      assignments: {
-         handler() {
-            localStorage.setItem(
-               'assignments',
-               JSON.stringify(this.assignments)
-            );
-         },
-         deep: true,
-      },
+    currentTab() {
+      localStorage.setItem('current-tab', this.currentTab);
+    },
 
-      currentTab() {
-         localStorage.setItem('current-tab', this.currentTab);
-      },
+    darkTheme() {
+      localStorage.setItem('theme', JSON.stringify(this.darkTheme));
+    },
+  },
 
-      darkTheme() {
-         localStorage.setItem('theme', JSON.stringify(this.darkTheme));
-      },
-   },
+  methods: {
+    addItem(title) {
+      const item = { title, completed: false, id: uuidv4() };
+      this.assignments.unshift(item);
+    },
 
-   methods: {
-      addItem(title) {
-         const item = { title, completed: false, id: uuidv4() };
-         this.assignments.unshift(item);
-      },
+    updateCompletedStatus(id, e) {
+      if (e.type === 'keyup' && e.key !== ' ') return; // return if anything other than the spacebar was pressed on a checkbox
+      if (e.type === 'keyup' && e.key === ' ') e.preventDefault(); // prevent spacebar keypress from firing a click event
 
-      updateCompletedStatus(id, e) {
-         if (e.type === 'keyup' && e.key !== ' ') return; // return if anything other than the spacebar was pressed on a checkbox
-         if (e.type === 'keyup' && e.key === ' ') e.preventDefault(); // prevent spacebar keypress from firing a click event
+      const toggledAssignment = this.assignments.find((item) => item.id === id);
+      toggledAssignment.completed = !toggledAssignment.completed;
 
-         const toggledAssignment = this.assignments.find(
-            (item) => item.id === id
-         );
-         toggledAssignment.completed = !toggledAssignment.completed;
+      if (e.shiftKey && this.previouslyToggled) {
+        const indexOfCurrentlyToggled =
+          this.assignments.indexOf(toggledAssignment);
+        const indexOfPreviouslyToggled = this.assignments.findIndex(
+          (item) => item.id === this.previouslyToggled
+        );
 
-         if (e.shiftKey && this.previouslyToggled) {
-            const indexOfCurrentlyToggled =
-               this.assignments.indexOf(toggledAssignment);
-            const indexOfPreviouslyToggled = this.assignments.findIndex(
-               (item) => item.id === this.previouslyToggled
-            );
+        const [minIndex, maxIndex] = [
+          indexOfCurrentlyToggled,
+          indexOfPreviouslyToggled,
+        ].sort((a, b) => a - b);
 
-            const [minIndex, maxIndex] = [
-               indexOfCurrentlyToggled,
-               indexOfPreviouslyToggled,
-            ].sort((a, b) => a - b);
+        for (let i = minIndex; i <= maxIndex; i++) {
+          this.assignments[i].completed = toggledAssignment.completed;
+        }
+      }
 
-            for (let i = minIndex; i <= maxIndex; i++) {
-               this.assignments[i].completed = toggledAssignment.completed;
-            }
-         }
+      this.previouslyToggled = id;
+    },
 
-         this.previouslyToggled = id;
-      },
+    removeItem(id) {
+      const assignmentIndex = this.assignments.findIndex(
+        (item) => item.id === id
+      );
+      this.assignments.splice(assignmentIndex, 1);
+    },
 
-      removeItem(id) {
-         const assignmentIndex = this.assignments.findIndex(
-            (item) => item.id === id
-         );
-         this.assignments.splice(assignmentIndex, 1);
-      },
+    editItem(id, newTitle) {
+      const editedAssignment = this.assignments.find((item) => item.id === id);
+      editedAssignment.title = newTitle;
+    },
 
-      editItem(id, newTitle) {
-         const editedAssignment = this.assignments.find(
-            (item) => item.id === id
-         );
-         editedAssignment.title = newTitle;
-      },
+    clearAll() {
+      this.assignments = [];
+      this.currentTab = 'all';
+    },
 
-      clearAll() {
-         this.assignments = [];
-         this.currentTab = 'all';
-      },
+    checkAll() {
+      this.filteredAssignments.active.forEach(
+        (item) => (item.completed = true)
+      );
+    },
 
-      checkAll() {
-         this.filteredAssignments.active.forEach(
-            (item) => (item.completed = true)
-         );
-      },
+    uncheckAll() {
+      this.filteredAssignments.completed.forEach(
+        (item) => (item.completed = false)
+      );
+    },
 
-      uncheckAll() {
-         this.filteredAssignments.completed.forEach(
-            (item) => (item.completed = false)
-         );
-      },
+    toggleTheme() {
+      this.darkTheme = !this.darkTheme;
+      document.documentElement.classList.toggle('dark-theme');
+    },
 
-      toggleTheme() {
-         this.darkTheme = !this.darkTheme;
-         document.documentElement.classList.toggle('dark-theme');
-      },
+    onDragStart(e) {
+      e.dataTransfer.dropEffect = 'move';
+      e.dataTransfer.effectAllowed = 'move';
+      e.dataTransfer.setData('text/plain', 'e.target.textContent');
+      e.target.classList.add('assignment-item--dragging');
+    },
 
-      onDragStart(e) {
-         e.dataTransfer.dropEffect = 'move';
-         e.dataTransfer.effectAllowed = 'move';
-         e.dataTransfer.setData('text/plain', 'e.target.textContent');
-         e.target.classList.add('assignment-item--dragging');
-      },
+    onDrag(e) {
+      e.preventDefault();
 
-      onDrag(e) {
-         e.preventDefault();
+      const itemContainer = document.querySelector('ul');
+      const itemList = Array.from(itemContainer.children);
+      const draggedItem = document.querySelector('.assignment-item--dragging');
 
-         const itemContainer = document.querySelector('ul');
-         const itemList = Array.from(itemContainer.children);
-         const draggedItem = document.querySelector(
-            '.assignment-item--dragging'
-         );
+      const closest = itemList.reduce(
+        (closest, child) => {
+          const box = child.getBoundingClientRect();
+          const offset = e.y - (box.top + box.height / 2);
 
-         const closest = itemList.reduce(
-            (closest, child) => {
-               const box = child.getBoundingClientRect();
-               const offset = e.y - (box.top + box.height / 2);
+          if (offset < 0 && offset > closest.offset) {
+            return { offset: offset, element: child };
+          } else {
+            return closest;
+          }
+        },
+        { offset: Number.NEGATIVE_INFINITY }
+      ).element;
 
-               if (offset < 0 && offset > closest.offset) {
-                  return { offset: offset, element: child };
-               } else {
-                  return closest;
-               }
-            },
-            { offset: Number.NEGATIVE_INFINITY }
-         ).element;
+      closest ? closest.before(draggedItem) : itemContainer.append(draggedItem);
+    },
 
-         closest
-            ? closest.before(draggedItem)
-            : itemContainer.append(draggedItem);
-      },
+    onDrop(e) {
+      e.preventDefault();
+      const droppedItem = document.querySelector('.assignment-item--dragging');
+      const itemList = document.querySelectorAll('li');
 
-      onDrop(e) {
-         e.preventDefault();
-         const droppedItem = document.querySelector(
-            '.assignment-item--dragging'
-         );
-         const itemList = document.querySelectorAll('li');
+      // update the state
 
-         // update the state
+      itemList.forEach((item, index) => {
+        const checkbox = item.children[0];
+        const label = item.children[1];
 
-         itemList.forEach((item, index) => {
-            const checkbox = item.children[0];
-            const label = item.children[1];
+        this.filteredAssignments[this.currentTab][index].completed =
+          checkbox.checked;
+        this.filteredAssignments[this.currentTab][index].id = checkbox.id;
+        this.filteredAssignments[this.currentTab][index].title =
+          label.value ?? label.textContent; // take text either from editing input or label
+      });
 
-            this.filteredAssignments[this.currentTab][index].completed =
-               checkbox.checked;
-            this.filteredAssignments[this.currentTab][index].id = checkbox.id;
-            this.filteredAssignments[this.currentTab][index].title =
-               label.value ?? label.textContent; // take text either from editing input or label
-         });
+      droppedItem.classList.remove('assignment-item--dragging');
+    },
+  },
 
-         droppedItem.classList.remove('assignment-item--dragging');
-      },
-   },
+  mounted() {
+    window.addEventListener('dragenter', (e) => e.preventDefault());
+    window.addEventListener('dragover', this.onDrag);
+    window.addEventListener('drop', this.onDrop);
 
-   mounted() {
-      window.addEventListener('dragenter', (e) => e.preventDefault());
-      window.addEventListener('dragover', this.onDrag);
-      window.addEventListener('drop', this.onDrop);
-
-      if (this.darkTheme) document.documentElement.classList.add('dark-theme');
-   },
+    if (this.darkTheme) document.documentElement.classList.add('dark-theme');
+  },
 };
 </script>
 
 <style lang="scss">
 html {
-   font: 62.5% / 1.15 sans-serif;
-   background-color: #eee;
-   color: #000;
-   width: 100vw;
+  font: 62.5% / 1.15 sans-serif;
+  background-color: #eee;
+  color: #000;
+  width: 100vw;
 }
 
 body {
-   font: 1.5rem / 1.25 Arial, sans-serif;
-   background-color: inherit;
-   color: inherit;
-   overflow-x: hidden;
+  font: 1.5rem / 1.25 Arial, sans-serif;
+  background-color: inherit;
+  color: inherit;
+  overflow-x: hidden;
 }
 
 h1 {
-   width: 100%;
-   margin: 0;
-   text-align: center;
+  width: 100%;
+  margin: 0;
+  text-align: center;
 }
 
 ul {
-   width: 90vw;
-   margin: 0 auto;
-   padding: 0;
-   list-style: none;
+  width: 90vw;
+  margin: 0 auto;
+  padding: 0;
+  list-style: none;
 }
 
 .icon {
-   font-size: 2rem;
-   box-shadow: 0 0 1px currentcolor, inset 0 0 3px currentcolor;
-   border-radius: 8px;
-   cursor: pointer;
+  font-size: 2rem;
+  box-shadow: 0 0 1px currentcolor, inset 0 0 3px currentcolor;
+  border-radius: 8px;
+  cursor: pointer;
 }
 
 .btn {
-   border: 2px solid currentcolor;
-   cursor: pointer;
-   border-radius: 10px;
+  border: 2px solid currentcolor;
+  cursor: pointer;
+  border-radius: 10px;
 }
 
 .fade {
-   opacity: 0.3;
+  opacity: 0.3;
 }
 
 .dark-theme {
-   background-color: #2b2b2b;
-   color: #fff;
+  background-color: #2b2b2b;
+  color: #fff;
 }
 
 .tabs {
-   width: 90%;
-   max-width: 58rem;
-   margin: 1.5rem auto;
-   position: sticky;
-   top: 9.5rem;
-   z-index: 1;
-   text-align: center;
+  width: 90%;
+  max-width: 58rem;
+  margin: 1.5rem auto;
+  position: sticky;
+  top: 9.5rem;
+  z-index: 1;
+  text-align: center;
 }
 
 @media (max-width: 300px) {
-   .tabs {
-      font-size: 90%;
-   }
+  .tabs {
+    font-size: 90%;
+  }
 }
 
 @media (max-width: 400px) {
-   html {
-      font-size: 50%;
-   }
+  html {
+    font-size: 50%;
+  }
 }
 </style>

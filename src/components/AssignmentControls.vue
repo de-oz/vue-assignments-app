@@ -1,39 +1,39 @@
 <template>
-   <div
-      v-if="!totalAssignments"
-      class="controls">
-      <button
-         type="button"
-         class="btn btn--generate"
-         @click="generateData">
-         Generate Data
-      </button>
-   </div>
+  <div
+    v-if="!totalAssignments"
+    class="controls">
+    <button
+      type="button"
+      class="btn btn--generate"
+      @click="generateData">
+      Generate Data
+    </button>
+  </div>
 
-   <div
-      v-else
-      class="controls">
-      <button
-         type="button"
-         class="btn btn--clear"
-         @click="$emit('clearAll')">
-         Clear All
-      </button>
-      <button
-         type="button"
-         class="btn btn--check"
-         :disabled="!activeAssignments"
-         @click="$emit('checkAll')">
-         Check All
-      </button>
-      <button
-         type="button"
-         class="btn btn--uncheck"
-         :disabled="!completedAssignments"
-         @click="$emit('uncheckAll')">
-         Uncheck All
-      </button>
-   </div>
+  <div
+    v-else
+    class="controls">
+    <button
+      type="button"
+      class="btn btn--clear"
+      @click="$emit('clearAll')">
+      Clear All
+    </button>
+    <button
+      type="button"
+      class="btn btn--check"
+      :disabled="!activeAssignments"
+      @click="$emit('checkAll')">
+      Check All
+    </button>
+    <button
+      type="button"
+      class="btn btn--uncheck"
+      :disabled="!completedAssignments"
+      @click="$emit('uncheckAll')">
+      Uncheck All
+    </button>
+  </div>
 </template>
 
 <script>
@@ -96,82 +96,82 @@ export default {
 
 <style lang="scss" scoped>
 .controls {
-   position: sticky;
-   top: 5.25rem;
-   z-index: 1;
-   display: flex;
-   justify-content: center;
-   align-items: center;
-   width: 90%;
-   max-width: 40rem;
-   margin: 2rem auto 1rem;
+  position: sticky;
+  top: 5.25rem;
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 90%;
+  max-width: 40rem;
+  margin: 2rem auto 1rem;
 
-   .btn {
-      color: #fff;
-      padding: 0.5rem 0;
-      flex: 1;
-      white-space: nowrap;
+  .btn {
+    color: #fff;
+    padding: 0.5rem 0;
+    flex: 1;
+    white-space: nowrap;
 
-      & + * {
-         margin-left: 1rem;
+    & + * {
+      margin-left: 1rem;
+    }
+
+    &--generate {
+      margin: 2rem 0;
+      max-width: 60%;
+      background-color: hsl(180, 100%, 28%);
+      border-color: hsl(180, 100%, 10%);
+      transition: background-color 0.1s;
+
+      &:hover {
+        background-color: hsl(180, 100%, 15%);
       }
+    }
 
-      &--generate {
-         margin: 2rem 0;
-         max-width: 60%;
-         background-color: hsl(180, 100%, 28%);
-         border-color: hsl(180, 100%, 10%);
-         transition: background-color 0.1s;
+    &--clear {
+      background-color: hsl(0, 90%, 40%);
+      border-color: hsl(0, 90%, 20%);
+      transition: background-color 0.1s;
 
-         &:hover {
-            background-color: hsl(180, 100%, 15%);
-         }
+      &:hover {
+        background-color: hsl(0, 90%, 30%);
       }
+    }
 
-      &--clear {
-         background-color: hsl(0, 90%, 40%);
-         border-color: hsl(0, 90%, 20%);
-         transition: background-color 0.1s;
+    &--check {
+      background-color: hsl(120, 50%, 30%);
+      border-color: hsl(120, 50%, 15%);
+      transition: background-color 0.1s;
 
-         &:hover {
-            background-color: hsl(0, 90%, 30%);
-         }
+      &:hover {
+        background-color: hsl(120, 50%, 22%);
       }
+    }
 
-      &--check {
-         background-color: hsl(120, 50%, 30%);
-         border-color: hsl(120, 50%, 15%);
-         transition: background-color 0.1s;
+    &--uncheck {
+      background-color: hsl(20, 100%, 50%);
+      border-color: hsl(20, 100%, 20%);
+      transition: background-color 0.1s;
 
-         &:hover {
-            background-color: hsl(120, 50%, 22%);
-         }
+      &:hover {
+        background-color: hsl(20, 100%, 30%);
       }
-
-      &--uncheck {
-         background-color: hsl(20, 100%, 50%);
-         border-color: hsl(20, 100%, 20%);
-         transition: background-color 0.1s;
-
-         &:hover {
-            background-color: hsl(20, 100%, 30%);
-         }
-      }
-   }
+    }
+  }
 }
 
 @media (max-width: 300px) {
-   .controls {
-      margin: 1rem auto;
+  .controls {
+    margin: 1rem auto;
 
-      .btn {
-         font-size: 1.2rem;
-         border-radius: 7px;
+    .btn {
+      font-size: 1.2rem;
+      border-radius: 7px;
 
-         & + * {
-            margin-left: 3px;
-         }
+      & + * {
+        margin-left: 3px;
       }
-   }
+    }
+  }
 }
 </style>
