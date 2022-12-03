@@ -105,11 +105,10 @@ export default {
    width: 90%;
    max-width: 40rem;
    margin: 2rem auto 1rem;
-   font-size: 1.5rem;
 
    .btn {
       color: #fff;
-      padding: 0.9rem 0 0.5rem;
+      padding: 0.5rem 0;
       flex: 1;
       white-space: nowrap;
 
@@ -166,8 +165,7 @@ export default {
       margin: 1rem auto;
 
       .btn {
-         padding: 0.7rem 0 0.5rem;
-         font-size: 11px;
+         font-size: 1.2rem;
          border-radius: 7px;
 
          & + * {

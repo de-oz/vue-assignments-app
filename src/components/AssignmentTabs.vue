@@ -24,8 +24,8 @@ export default {
 <style lang="scss" scoped>
 .tabs__tab {
    display: inline-block;
-   padding: 0.7rem 1rem 0.3rem;
-   margin: 0 0.5rem;
+   padding: 0.4rem 1rem;
+   margin: 0 0.7rem;
    border-radius: 5px;
    text-transform: capitalize;
    cursor: pointer;
@@ -41,8 +41,8 @@ export default {
 }
 
 @media (max-width: 300px) {
-   tabs__tab {
-      padding: 0.5rem 0.5rem 0.3rem;
+   .tabs__tab {
+      padding: 0.4rem 0.6rem 0.4rem;
       margin: 0 0.3rem;
    }
 }

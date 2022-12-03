@@ -242,7 +242,7 @@ html {
 }
 
 body {
-   font: 1.6rem / 1.25 'Helvetica Neue', Helvetica, Arial, sans-serif;
+   font: 1.5rem / 1.25 Arial, sans-serif;
    background-color: inherit;
    color: inherit;
    overflow-x: hidden;
@@ -291,7 +291,6 @@ ul {
    top: 9.5rem;
    z-index: 1;
    text-align: center;
-   font-size: 1.5rem;
 }
 
 @media (max-width: 300px) {

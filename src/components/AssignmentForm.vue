@@ -71,7 +71,7 @@ export default {
    &__input {
       width: 90%;
       max-width: 35rem;
-      padding: 0.5rem 0.5rem 0.2rem;
+      padding: 0.5rem;
       outline: 0;
       border: 2px solid #558eaf;
       border-radius: 5px;
@@ -86,7 +86,7 @@ export default {
       width: 90%;
       max-width: 35rem;
       margin: 1rem 0 2.5rem;
-      padding: 0.9rem 0 0.5rem;
+      padding: 0.5rem 0;
       background-color: hsl(210, 60%, 40%);
       border: 2px solid hsl(210, 60%, 20%);
       transition: background-color 0.1s;

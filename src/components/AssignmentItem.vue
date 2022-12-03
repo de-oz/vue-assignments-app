@@ -148,7 +148,7 @@ export default {
 
    &__title {
       flex: 1;
-      padding: 0.8rem 0.5rem 0.5rem;
+      padding: 0.7rem;
       margin-left: 1rem;
       cursor: pointer;
       touch-action: manipulation;
@@ -160,11 +160,11 @@ export default {
       color: inherit;
       background-color: inherit;
       flex: 1;
-      padding: 0.8rem 0.5rem 0.5rem;
+      padding: 0.7rem;
       margin-left: 1rem;
       border: 0;
       outline: 0;
-      box-shadow: inset 0 -5px 3px -3px hsl(205, 70%, 45%);
+      box-shadow: inset 0 -5px 2px -3px hsl(215, 80%, 50%);
    }
 
    &__title:not(:hover) {
@@ -183,7 +183,7 @@ export default {
 
       * {
          width: 2rem;
-         padding: 0.6rem;
+         padding: 0.5rem;
          color: hsl(180, 100%, 25%);
          transition: color 0.15s;
 

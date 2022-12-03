@@ -28,7 +28,7 @@ export default {
    box-shadow: 0 0 5px 2px hsl(180, 100%, 15%);
 
    &__heading {
-      padding: 1rem 0 0.5rem;
+      padding: 0.6rem 0;
       font-size: 2.4rem;
    }
 
@@ -59,8 +59,6 @@ export default {
 
       &__theme-toggle {
          width: 2.5rem;
-         font-size: 2.5rem;
-         right: 1rem;
       }
    }
 }
