@@ -49,7 +49,7 @@ header {
       top: 50%;
       transform: translateY(-50%);
       box-shadow: 0 0 5px currentcolor;
-      transition: background-color 0.15s;
+      transition: background-color 0.2s;
 
       &:hover {
          background-color: hsl(180, 100%, 32%);

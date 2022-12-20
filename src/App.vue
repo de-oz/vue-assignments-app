@@ -233,6 +233,7 @@ body {
   background-color: inherit;
   color: inherit;
   overflow-x: hidden;
+  transition: color 0.3s, background-color 0.3s;
 }
 
 h1 {

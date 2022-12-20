@@ -85,11 +85,12 @@ export default {
     color: #fff;
     width: 90%;
     max-width: 35rem;
+    font-size: 1.6rem;
     margin: 1rem 0 2.5rem;
     padding: 0.5rem 0;
     background-color: hsl(210, 60%, 40%);
     border: 2px solid hsl(210, 60%, 20%);
-    transition: background-color 0.1s;
+    transition: background-color 0.2s;
 
     &:hover {
       background-color: hsl(210, 60%, 30%);

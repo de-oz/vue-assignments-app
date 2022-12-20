@@ -29,9 +29,10 @@ export default {
   border-radius: 5px;
   text-transform: capitalize;
   cursor: pointer;
+  transition: background-color 0.2s;
 
   &:hover {
-    background-color: hsl(200, 10%, 60%);
+    background-color: hsl(200, 10%, 65%);
   }
 
   &--selected {
