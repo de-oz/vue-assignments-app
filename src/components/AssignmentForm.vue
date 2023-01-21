@@ -75,6 +75,7 @@ export default {
     outline: 0;
     border: 2px solid #558eaf;
     border-radius: 5px;
+    transition: background-color 0.3s;
 
     &:focus {
       box-shadow: 0 0 6px #558eaf;
@@ -90,7 +91,6 @@ export default {
     padding: 0.5rem 0;
     background-color: hsl(210, 60%, 40%);
     border: 2px solid hsl(210, 60%, 20%);
-    transition: background-color 0.2s;
 
     &:hover {
       background-color: hsl(210, 60%, 30%);

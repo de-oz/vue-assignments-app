@@ -111,6 +111,7 @@ export default {
     padding: 0.5rem 0;
     flex: 1;
     white-space: nowrap;
+    border: 2px solid currentcolor;
 
     & + * {
       margin-left: 1rem;
@@ -121,7 +122,6 @@ export default {
       max-width: 60%;
       background-color: hsl(180, 100%, 28%);
       border-color: hsl(180, 100%, 10%);
-      transition: background-color 0.2s;
 
       &:hover {
         background-color: hsl(180, 100%, 15%);
@@ -131,7 +131,6 @@ export default {
     &--clear {
       background-color: hsl(0, 90%, 40%);
       border-color: hsl(0, 90%, 20%);
-      transition: background-color 0.2s;
 
       &:hover {
         background-color: hsl(0, 90%, 30%);
@@ -141,7 +140,6 @@ export default {
     &--check {
       background-color: hsl(120, 50%, 30%);
       border-color: hsl(120, 50%, 15%);
-      transition: background-color 0.2s;
 
       &:hover {
         background-color: hsl(120, 50%, 22%);
@@ -151,7 +149,6 @@ export default {
     &--uncheck {
       background-color: hsl(20, 100%, 50%);
       border-color: hsl(20, 100%, 20%);
-      transition: background-color 0.2s;
 
       &:hover {
         background-color: hsl(20, 100%, 30%);

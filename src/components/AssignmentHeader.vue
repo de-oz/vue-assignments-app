@@ -41,15 +41,10 @@ header {
    }
 
    &__theme-toggle {
-      width: 2.5rem;
-      font-size: 2.5rem;
-      padding: 0.5rem;
       position: absolute;
       right: 2rem;
       top: 50%;
       transform: translateY(-50%);
-      box-shadow: 0 0 5px currentcolor;
-      transition: background-color 0.2s;
 
       &:hover {
          background-color: hsl(180, 100%, 32%);

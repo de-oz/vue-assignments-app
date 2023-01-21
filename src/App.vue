@@ -247,17 +247,18 @@ ul {
   list-style: none;
 }
 
-.icon {
-  font-size: 2rem;
-  box-shadow: 0 0 1px currentcolor, inset 0 0 3px currentcolor;
-  border-radius: 8px;
+.btn {
+  border-radius: 1rem;
+  transition: background-color 0.3s;
   cursor: pointer;
 }
 
-.btn {
-  border: 2px solid currentcolor;
-  border-radius: 10px;
-  cursor: pointer;
+.icon {
+  @extend .btn;
+  width: 2rem;
+  font-size: 2rem;
+  padding: 0.5rem;
+  box-shadow: 0 0 5px currentcolor;
 }
 
 .fade {

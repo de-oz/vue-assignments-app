@@ -96,6 +96,7 @@ export default {
   cursor: move;
   border-radius: 2.5rem;
   box-shadow: 0 0 7px hsl(5, 100%, 70%);
+  transition: box-shadow 0.3s;
 
   &:hover {
     box-shadow: 0 0 7px 2px #999;
@@ -181,19 +182,15 @@ export default {
     transition: opacity 0.3s;
 
     * {
-      width: 2rem;
-      padding: 0.5rem;
       color: hsl(180, 100%, 25%);
       transition: color 0.3s;
 
       &:last-child:hover {
         color: hsl(0, 80%, 55%);
-        box-shadow: 0 0 5px currentcolor, inset 0 0 5px currentcolor;
       }
 
       &:first-child:hover {
         color: hsl(215, 100%, 45%);
-        box-shadow: 0 0 5px currentcolor, inset 0 0 5px currentcolor;
       }
     }
 
