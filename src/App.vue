@@ -203,7 +203,7 @@ export default {
           checkbox.checked;
         this.filteredAssignments[this.currentTab][index].id = checkbox.id;
         this.filteredAssignments[this.currentTab][index].title =
-          label.value ?? label.textContent; // take text either from editing input or label
+          label.value ?? label.textContent; // take the text either from the editing input or label
       });
 
       droppedItem.classList.remove('assignment-item--dragging');
@@ -222,18 +222,16 @@ export default {
 
 <style lang="scss">
 html {
-  font: 62.5% / 1.15 sans-serif;
+  font-size: 62.5%;
   background-color: #eee;
-  color: #000;
-  width: 100vw;
+  transition: color 0.3s, background-color 0.3s;
 }
 
 body {
   font: 1.5rem / 1.25 Arial, sans-serif;
-  background-color: inherit;
-  color: inherit;
+  min-height: 100vh;
+  width: 100vw;
   overflow-x: hidden;
-  transition: color 0.3s, background-color 0.3s;
 }
 
 h1 {
@@ -258,8 +256,8 @@ ul {
 
 .btn {
   border: 2px solid currentcolor;
-  cursor: pointer;
   border-radius: 10px;
+  cursor: pointer;
 }
 
 .fade {
@@ -268,7 +266,7 @@ ul {
 
 .dark-theme {
   background-color: #2b2b2b;
-  color: #fff;
+  color-scheme: dark;
 }
 
 .tabs {
@@ -279,12 +277,6 @@ ul {
   top: 9.5rem;
   z-index: 1;
   text-align: center;
-}
-
-@media (max-width: 300px) {
-  .tabs {
-    font-size: 90%;
-  }
 }
 
 @media (max-width: 400px) {

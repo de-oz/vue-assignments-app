@@ -91,12 +91,11 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin: 1.5rem auto;
+  margin: 1.5rem auto 0;
   padding: 1.5rem 0;
   cursor: move;
   border-radius: 2.5rem;
   box-shadow: 0 0 7px hsl(5, 100%, 70%);
-  transition: box-shadow 0.3s;
 
   &:hover {
     box-shadow: 0 0 7px 2px #999;
