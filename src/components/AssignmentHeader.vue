@@ -31,7 +31,7 @@ header {
 }
 
 .header {
-   max-width: 80rem;
+   max-width: 768px;
    position: relative;
    margin: 0 auto;
 
@@ -42,21 +42,12 @@ header {
 
    &__theme-toggle {
       position: absolute;
-      right: 2rem;
+      right: 3rem;
       top: 50%;
       transform: translateY(-50%);
 
       &:hover {
          background-color: hsl(180, 100%, 32%);
-      }
-   }
-}
-
-@media (max-width: 300px) {
-   .header {
-      &__heading {
-         text-align: left;
-         margin-left: 1rem;
       }
    }
 }

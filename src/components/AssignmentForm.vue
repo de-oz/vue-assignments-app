@@ -50,29 +50,26 @@ export default {
 
 <style lang="scss" scoped>
 .assignment-form {
-  width: 95vw;
-  max-width: 50rem;
+  max-width: 35rem;
   margin: 0 auto;
+  padding: 0 2rem;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  flex-direction: column;
   border-bottom: solid #565656 5px;
-  border-radius: 5px;
+  border-radius: 8px;
 
   &__heading {
-    width: 100%;
     text-align: center;
-    margin: 2.5rem auto 1rem;
+    margin: 1rem auto;
     font-weight: normal;
     font-size: 2rem;
   }
 
   &__input {
-    width: 90%;
-    max-width: 35rem;
+    width: 100%;
     padding: 0.5rem;
-    outline: 0;
     border: 2px solid #558eaf;
     border-radius: 5px;
     transition: background-color 0.3s;
@@ -83,11 +80,9 @@ export default {
   }
 
   &__submit-button {
+    width: 100%;
     color: #fff;
-    width: 90%;
-    max-width: 35rem;
-    font-size: 1.6rem;
-    margin: 1rem 0 2.5rem;
+    margin: 1rem 0 2rem;
     padding: 0.5rem 0;
     background-color: hsl(210, 60%, 40%);
     border: 2px solid hsl(210, 60%, 20%);

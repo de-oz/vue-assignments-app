@@ -3,38 +3,40 @@
     @toggle-theme="toggleTheme"
     :theme="darkTheme" />
 
-  <AssignmentForm @add-item="addItem" />
+  <main>
+    <AssignmentForm @add-item="addItem" />
 
-  <AssignmentControls
-    :total-assignments="assignments.length"
-    :active-assignments="filteredAssignments.active.length"
-    :completed-assignments="filteredAssignments.completed.length"
-    @clear-all="clearAll"
-    @check-all="checkAll"
-    @uncheck-all="uncheckAll"
-    @generate-data="assignments = $event" />
+    <AssignmentControls
+      :total-assignments="assignments.length"
+      :active-assignments="filteredAssignments.active.length"
+      :completed-assignments="filteredAssignments.completed.length"
+      @clear-all="clearAll"
+      @check-all="checkAll"
+      @uncheck-all="uncheckAll"
+      @generate-data="assignments = $event" />
 
-  <div
-    v-show="assignments.length"
-    class="tabs">
-    <AssignmentTabs
-      v-for="(array, tab) of filteredAssignments"
-      :key="tab"
-      :tab="tab"
-      :count="array.length"
-      v-model:currentTab="currentTab" />
-  </div>
+    <div
+      v-show="assignments.length"
+      class="tabs">
+      <AssignmentTabs
+        v-for="(array, tab) of filteredAssignments"
+        :key="tab"
+        :tab="tab"
+        :count="array.length"
+        v-model:currentTab="currentTab" />
+    </div>
 
-  <ul>
-    <AssignmentItem
-      v-for="assignment of filteredAssignments[currentTab]"
-      v-bind="assignment"
-      :key="assignment.id"
-      @toggle-checkbox="updateCompletedStatus(assignment.id, $event)"
-      @edit-item="editItem(assignment.id, $event)"
-      @remove-item="removeItem(assignment.id)"
-      @dragstart="onDragStart" />
-  </ul>
+    <ul>
+      <AssignmentItem
+        v-for="assignment of filteredAssignments[currentTab]"
+        v-bind="assignment"
+        :key="assignment.id"
+        @toggle-checkbox="updateCompletedStatus(assignment.id, $event)"
+        @edit-item="editItem(assignment.id, $event)"
+        @remove-item="removeItem(assignment.id)"
+        @dragstart="onDragStart" />
+    </ul>
+  </main>
 </template>
 
 <script>
@@ -228,22 +230,25 @@ html {
 }
 
 body {
-  font: 1.5rem / 1.25 Arial, sans-serif;
+  font: 1.6rem / 1.25 Arial, sans-serif;
   min-height: 100vh;
   width: 100vw;
   overflow-x: hidden;
 }
 
+main {
+  max-width: 768px;
+  padding: 1.5rem 0;
+  margin: 0 auto;
+}
+
 h1 {
-  width: 100%;
   margin: 0;
   text-align: center;
 }
 
 ul {
-  width: 90vw;
-  margin: 0 auto;
-  padding: 0;
+  padding: 0 4rem;
   list-style: none;
 }
 
@@ -258,7 +263,7 @@ ul {
   width: 2rem;
   font-size: 2rem;
   padding: 0.5rem;
-  box-shadow: 0 0 5px currentcolor;
+  box-shadow: 0 0 5px;
 }
 
 .fade {
@@ -271,12 +276,11 @@ ul {
 }
 
 .tabs {
-  width: 90%;
-  max-width: 58rem;
-  margin: 1.5rem auto;
   position: sticky;
   top: 9.5rem;
   z-index: 1;
+  width: fit-content;
+  margin: 0 auto;
   text-align: center;
 }
 

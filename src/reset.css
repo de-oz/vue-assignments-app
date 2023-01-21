@@ -8,20 +8,10 @@ body {
   margin: 0;
 }
 
-button {
-  border: none;
-  width: auto;
-  overflow: visible;
-  background: transparent;
-  color: inherit;
-  font: inherit;
-}
-
 button,
-input,
-select {
-  font-family: inherit;
-  font-size: 100%;
-  line-height: 1.20;
+input {
+  font: inherit;
   margin: 0;
+  border: 0;
+  outline: 0;
 }

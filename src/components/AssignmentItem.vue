@@ -86,28 +86,26 @@ export default {
 
 <style lang="scss" scoped>
 .assignment-item {
-  max-width: 60rem;
-  position: relative;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   align-items: center;
-  margin: 1.5rem auto 0;
+  margin-top: 1.5rem;
   padding: 1.5rem 0;
+  border-radius: 2rem;
   cursor: move;
-  border-radius: 2.5rem;
-  box-shadow: 0 0 7px hsl(5, 100%, 70%);
+  box-shadow: 0 0 8px hsl(5, 100%, 70%);
   transition: box-shadow 0.3s;
 
   &:hover {
-    box-shadow: 0 0 7px 2px #999;
+    box-shadow: 0 0 8px 2px #999;
   }
 
   &--completed {
-    box-shadow: 0 0 7px hsl(205, 70%, 50%, 0.4);
+    box-shadow: 0 0 8px hsl(205, 70%, 50%, 0.4);
   }
 
   &--dragging {
-    box-shadow: 0 0 10px #eee;
+    box-shadow: 0 0 10px #fff;
   }
 
   /* CUSTOM CHECKBOX */
@@ -118,10 +116,9 @@ export default {
     align-items: center;
     width: 3.5rem;
     height: 3.5rem;
-    color: inherit;
     margin-left: 1rem;
-    border: 3px solid currentcolor;
-    border-radius: 10px;
+    border: 3px solid;
+    border-radius: 1rem;
     cursor: pointer;
     -webkit-appearance: none;
     appearance: none;
@@ -148,22 +145,20 @@ export default {
 
   &__title {
     flex: 1;
-    padding: 0.7rem;
+    padding: 0.6rem;
     margin-left: 1rem;
-    cursor: pointer;
+    overflow-wrap: anywhere;
+    hyphens: auto;
     touch-action: manipulation;
+    cursor: pointer;
     transition: opacity 0.3s;
-    overflow: auto;
   }
 
   &__editing-input {
-    color: inherit;
-    background-color: inherit;
     flex: 1;
-    padding: 0.7rem;
+    background-color: transparent;
+    padding: 0.6rem;
     margin-left: 1rem;
-    border: 0;
-    outline: 0;
     box-shadow: inset 0 -5px 2px -3px hsl(215, 80%, 50%);
   }
 

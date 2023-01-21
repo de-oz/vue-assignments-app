@@ -102,24 +102,22 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 90%;
   max-width: 40rem;
-  margin: 2rem auto 1rem;
+  margin: 2rem auto 1.5rem;
 
   .btn {
     color: #fff;
     padding: 0.5rem 0;
     flex: 1;
     white-space: nowrap;
-    border: 2px solid currentcolor;
+    border: 2px solid;
 
     & + * {
       margin-left: 1rem;
     }
 
     &--generate {
-      margin: 2rem 0;
-      max-width: 60%;
+      max-width: 50%;
       background-color: hsl(180, 100%, 28%);
       border-color: hsl(180, 100%, 10%);
 

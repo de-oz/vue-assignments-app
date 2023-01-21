@@ -24,9 +24,10 @@ export default {
 <style lang="scss" scoped>
 .tabs__tab {
   padding: 0.4rem 1rem;
-  margin: 0 0.7rem;
+  margin: 0 0.6rem;
   border-radius: 0.5rem;
   text-transform: capitalize;
+  background-color: transparent;
 
   &:hover {
     background-color: hsl(200, 10%, 65%);
