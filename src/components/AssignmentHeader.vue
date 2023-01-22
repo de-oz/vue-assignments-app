@@ -20,14 +20,16 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
+$primary: hsl(180, 100%, 20%);
+
 header {
    position: sticky;
    top: 0;
    z-index: 1;
-   color: #dedede;
-   background-color: hsl(180, 100%, 20%);
-   box-shadow: 0 0 5px 2px hsl(180, 100%, 15%);
+   color: #e5e5e5;
+   background-color: $primary;
+   box-shadow: 0 0 5px 3px darken($primary, 3%);
 }
 
 .header {
@@ -47,7 +49,7 @@ header {
       transform: translateY(-50%);
 
       &:hover {
-         background-color: hsl(180, 100%, 32%);
+         background-color: lighten($primary, 10%);
       }
    }
 }

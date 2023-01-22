@@ -84,7 +84,7 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .assignment-item {
   display: flex;
   justify-content: space-around;
@@ -105,7 +105,7 @@ export default {
   }
 
   &--dragging {
-    box-shadow: 0 0 10px #fff;
+    box-shadow: 0 0 10px;
   }
 
   /* CUSTOM CHECKBOX */
@@ -156,9 +156,9 @@ export default {
 
   &__editing-input {
     flex: 1;
-    background-color: transparent;
     padding: 0.6rem;
     margin-left: 1rem;
+    background-color: transparent;
     box-shadow: inset 0 -5px 2px -3px hsl(215, 80%, 50%);
   }
 
@@ -176,9 +176,8 @@ export default {
     opacity: 0;
     transition: opacity 0.3s;
 
-    * {
+    > * {
       color: hsl(180, 100%, 25%);
-      transition: color 0.3s;
 
       &:last-child:hover {
         color: hsl(0, 80%, 55%);

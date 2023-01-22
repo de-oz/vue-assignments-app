@@ -225,7 +225,7 @@ export default {
 <style lang="scss">
 html {
   font-size: 62.5%;
-  background-color: #eee;
+  background-color: #e5e5e5;
   transition: color 0.3s, background-color 0.3s;
 }
 
@@ -254,7 +254,7 @@ ul {
 
 .btn {
   border-radius: 1rem;
-  transition: background-color 0.3s;
+  transition: color 0.3s, background-color 0.3s;
   cursor: pointer;
 }
 
@@ -271,7 +271,7 @@ ul {
 }
 
 .dark-theme {
-  background-color: #2b2b2b;
+  background-color: #242526;
   color-scheme: dark;
 }
 

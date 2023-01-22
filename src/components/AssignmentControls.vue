@@ -94,7 +94,14 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
+$buttons: (
+  generate: hsl(180, 100%, 25%),
+  clear: hsl(0, 90%, 40%),
+  check: hsl(120, 50%, 30%),
+  uncheck: hsl(20, 100%, 50%),
+);
+
 .controls {
   position: sticky;
   top: 5.25rem;
@@ -116,41 +123,19 @@ export default {
       margin-left: 1rem;
     }
 
+    @each $button, $color in $buttons {
+      &--#{$button} {
+        background-color: $color;
+        border-color: darken($color, 15%);
+
+        &:hover {
+          background-color: darken($color, 10%);
+        }
+      }
+    }
+
     &--generate {
       max-width: 50%;
-      background-color: hsl(180, 100%, 28%);
-      border-color: hsl(180, 100%, 10%);
-
-      &:hover {
-        background-color: hsl(180, 100%, 15%);
-      }
-    }
-
-    &--clear {
-      background-color: hsl(0, 90%, 40%);
-      border-color: hsl(0, 90%, 20%);
-
-      &:hover {
-        background-color: hsl(0, 90%, 30%);
-      }
-    }
-
-    &--check {
-      background-color: hsl(120, 50%, 30%);
-      border-color: hsl(120, 50%, 15%);
-
-      &:hover {
-        background-color: hsl(120, 50%, 22%);
-      }
-    }
-
-    &--uncheck {
-      background-color: hsl(20, 100%, 50%);
-      border-color: hsl(20, 100%, 20%);
-
-      &:hover {
-        background-color: hsl(20, 100%, 30%);
-      }
     }
   }
 }

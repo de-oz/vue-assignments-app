@@ -48,7 +48,9 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
+$submit: hsl(210, 60%, 40%);
+
 .assignment-form {
   max-width: 35rem;
   margin: 0 auto;
@@ -57,7 +59,7 @@ export default {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  border-bottom: solid #565656 5px;
+  border-bottom: 5px solid #565656;
   border-radius: 8px;
 
   &__heading {
@@ -75,7 +77,7 @@ export default {
     transition: background-color 0.3s;
 
     &:focus {
-      box-shadow: 0 0 6px #558eaf;
+      box-shadow: 0 0 3px;
     }
   }
 
@@ -84,11 +86,11 @@ export default {
     color: #fff;
     margin: 1rem 0 2rem;
     padding: 0.5rem 0;
-    background-color: hsl(210, 60%, 40%);
-    border: 2px solid hsl(210, 60%, 20%);
+    background-color: $submit;
+    border: 2px solid darken($submit, 15%);
 
     &:hover {
-      background-color: hsl(210, 60%, 30%);
+      background-color: darken($submit, 10%);
     }
   }
 }

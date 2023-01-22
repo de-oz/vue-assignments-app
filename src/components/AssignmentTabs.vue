@@ -21,8 +21,10 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
-.tabs__tab {
+<style lang="scss">
+$tab: hsl(200, 10%, 65%);
+
+.tabs .tabs__tab {
   padding: 0.4rem 1rem;
   margin: 0 0.6rem;
   border-radius: 0.5rem;
@@ -30,11 +32,11 @@ export default {
   background-color: transparent;
 
   &:hover {
-    background-color: hsl(200, 10%, 65%);
+    background-color: $tab;
   }
 
   &--selected {
-    background-color: hsl(200, 10%, 45%);
+    background-color: darken($tab, 20%);
     color: #fff;
   }
 }
