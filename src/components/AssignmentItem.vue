@@ -94,7 +94,6 @@ export default {
   border-radius: 2rem;
   cursor: move;
   box-shadow: 0 0 8px hsl(5, 100%, 70%);
-  transition: box-shadow 0.3s;
 
   &:hover {
     box-shadow: 0 0 8px 2px #999;

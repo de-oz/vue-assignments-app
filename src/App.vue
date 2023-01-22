@@ -212,12 +212,16 @@ export default {
     },
   },
 
+  created() {
+    if (this.darkTheme) document.documentElement.classList.add('dark-theme');
+  },
+
   mounted() {
     window.addEventListener('dragenter', (e) => e.preventDefault());
     window.addEventListener('dragover', this.onDrag);
     window.addEventListener('drop', this.onDrop);
 
-    if (this.darkTheme) document.documentElement.classList.add('dark-theme');
+    document.documentElement.classList.add('transition');
   },
 };
 </script>
@@ -226,6 +230,9 @@ export default {
 html {
   font-size: 62.5%;
   background-color: #e5e5e5;
+}
+
+.transition {
   transition: color 0.3s, background-color 0.3s;
 }
 
@@ -254,7 +261,7 @@ ul {
 
 .btn {
   border-radius: 1rem;
-  transition: color 0.3s, background-color 0.3s;
+  transition: background-color 0.3s;
   cursor: pointer;
 }
 
