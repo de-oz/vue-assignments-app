@@ -87,9 +87,8 @@ export default {
 <style lang="scss">
 .assignment-item {
   display: flex;
-  justify-content: space-around;
+  column-gap: 1rem;
   align-items: center;
-  margin-top: 1.5rem;
   padding: 1.5rem 0;
   border-radius: 2rem;
   cursor: move;
@@ -105,6 +104,10 @@ export default {
 
   &--dragging {
     box-shadow: 0 0 10px;
+  }
+
+  & + * {
+    margin-top: 1.5rem;
   }
 
   /* CUSTOM CHECKBOX */
@@ -128,10 +131,10 @@ export default {
   &__checkbox::after {
     box-sizing: content-box;
     content: '';
-    width: 14px;
-    height: 6px;
+    width: 1.4rem;
+    height: 0.6rem;
     border: solid;
-    border-width: 0 0 5px 5px;
+    border-width: 0 0 0.5rem 0.5rem;
     transform: translateY(-15%) rotate(-45deg);
     opacity: 0;
   }
@@ -145,7 +148,6 @@ export default {
   &__title {
     flex: 1;
     padding: 0.6rem;
-    margin-left: 1rem;
     overflow-wrap: anywhere;
     hyphens: auto;
     touch-action: manipulation;
@@ -156,7 +158,6 @@ export default {
   &__editing-input {
     flex: 1;
     padding: 0.6rem;
-    margin-left: 1rem;
     background-color: transparent;
     box-shadow: inset 0 -5px 2px -3px hsl(215, 80%, 50%);
   }
@@ -169,9 +170,8 @@ export default {
 
   &__control-buttons {
     display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 0 1rem;
+    column-gap: 0.8rem;
+    margin-right: 1rem;
     opacity: 0;
     transition: opacity 0.3s;
 
@@ -186,34 +186,10 @@ export default {
         color: hsl(215, 100%, 45%);
       }
     }
-
-    * + * {
-      margin-left: 0.8rem;
-    }
   }
 
   &:hover > &__control-buttons {
     opacity: 1;
-  }
-}
-
-@media (max-width: 400px) {
-  .assignment-item {
-    &__checkbox {
-      border-radius: 8px;
-    }
-
-    &__checkbox::after {
-      width: 11px;
-      height: 5px;
-      border-width: 0 0 4px 4px;
-    }
-
-    &__control-buttons {
-      * + * {
-        margin-left: 0.3rem;
-      }
-    }
   }
 }
 </style>

@@ -26,7 +26,6 @@ $tab: hsl(200, 10%, 65%);
 
 .tabs .tabs__tab {
   padding: 0.4rem 1rem;
-  margin: 0 0.6rem;
   border-radius: 0.5rem;
   text-transform: capitalize;
   background-color: transparent;
@@ -38,13 +37,6 @@ $tab: hsl(200, 10%, 65%);
   &--selected {
     background-color: darken($tab, 20%);
     color: #fff;
-  }
-}
-
-@media (max-width: 300px) {
-  .tabs__tab {
-    padding: 0.4rem 0.6rem 0.4rem;
-    margin: 0 0.3rem;
   }
 }
 </style>

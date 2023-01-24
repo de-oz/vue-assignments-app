@@ -103,25 +103,19 @@ $buttons: (
 );
 
 .controls {
+  width: 40rem;
+  display: flex;
+  justify-content: center;
+  column-gap: 1rem;
   position: sticky;
   top: 5.25rem;
   z-index: 1;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  max-width: 40rem;
-  margin: 2rem auto 1.5rem;
 
   .btn {
     color: #fff;
     padding: 0.5rem 0;
     flex: 1;
-    white-space: nowrap;
     border: 2px solid;
-
-    & + * {
-      margin-left: 1rem;
-    }
 
     @each $button, $color in $buttons {
       &--#{$button} {
@@ -136,21 +130,6 @@ $buttons: (
 
     &--generate {
       max-width: 50%;
-    }
-  }
-}
-
-@media (max-width: 300px) {
-  .controls {
-    margin: 1rem auto;
-
-    .btn {
-      font-size: 1.2rem;
-      border-radius: 7px;
-
-      & + * {
-        margin-left: 3px;
-      }
     }
   }
 }

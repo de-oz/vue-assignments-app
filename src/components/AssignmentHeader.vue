@@ -27,7 +27,7 @@ header {
    position: sticky;
    top: 0;
    z-index: 1;
-   color: #e5e5e5;
+   color: #fff;
    background-color: $primary;
    box-shadow: 0 0 5px 3px darken($primary, 3%);
 }
@@ -44,7 +44,7 @@ header {
 
    &__theme-toggle {
       position: absolute;
-      right: 3rem;
+      right: 2rem;
       top: 50%;
       transform: translateY(-50%);
 

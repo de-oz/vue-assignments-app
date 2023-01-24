@@ -228,7 +228,7 @@ export default {
 
 <style lang="scss">
 html {
-  font-size: 62.5%;
+  font-size: clamp(8px, 5px + 1vw, 10px);
   background-color: #e5e5e5;
 }
 
@@ -245,17 +245,27 @@ body {
 
 main {
   max-width: 768px;
-  padding: 1.5rem 0;
   margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  row-gap: 1.5rem;
+
+  > * {
+    max-width: calc(100vw - 2rem);
+  }
 }
 
-h1 {
-  margin: 0;
+h1,
+h2 {
+  white-space: nowrap;
   text-align: center;
 }
 
 ul {
-  padding: 0 4rem;
+  width: 70rem;
+  padding: 0;
+  margin: 0.5rem 0 3rem;
   list-style: none;
 }
 
@@ -283,17 +293,10 @@ ul {
 }
 
 .tabs {
+  display: flex;
+  column-gap: 1rem;
   position: sticky;
   top: 9.5rem;
   z-index: 1;
-  width: fit-content;
-  margin: 0 auto;
-  text-align: center;
-}
-
-@media (max-width: 400px) {
-  html {
-    font-size: 50%;
-  }
 }
 </style>

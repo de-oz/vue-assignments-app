@@ -52,28 +52,23 @@ export default {
 $submit: hsl(210, 60%, 40%);
 
 .assignment-form {
-  max-width: 35rem;
-  margin: 0 auto;
-  padding: 0 2rem;
+  width: 35rem;
+  margin-top: 2.5rem;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
   border-bottom: 5px solid #565656;
-  border-radius: 8px;
+  border-radius: 0.5rem;
 
   &__heading {
-    text-align: center;
-    margin: 1rem auto;
     font-weight: normal;
     font-size: 2rem;
   }
 
   &__input {
-    width: 100%;
     padding: 0.5rem;
+    margin: 1rem 0;
     border: 2px solid #558eaf;
-    border-radius: 5px;
+    border-radius: 0.5rem;
     transition: background-color 0.3s;
 
     &:focus {
@@ -82,9 +77,8 @@ $submit: hsl(210, 60%, 40%);
   }
 
   &__submit-button {
-    width: 100%;
     color: #fff;
-    margin: 1rem 0 2rem;
+    margin-bottom: 1.5rem;
     padding: 0.5rem 0;
     background-color: $submit;
     border: 2px solid darken($submit, 15%);
