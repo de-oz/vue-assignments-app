@@ -85,6 +85,9 @@ export default {
 </script>
 
 <style lang="scss">
+$edit: hsl(215, 100%, 45%);
+$delete: hsl(0, 80%, 55%);
+
 .assignment-item {
   display: flex;
   column-gap: 1rem;
@@ -172,24 +175,22 @@ export default {
     display: flex;
     column-gap: 0.8rem;
     margin-right: 1rem;
-    opacity: 0;
-    transition: opacity 0.3s;
 
-    > * {
-      color: hsl(180, 100%, 25%);
+    > *:first-child {
+      color: $edit;
 
-      &:last-child:hover {
-        color: hsl(0, 80%, 55%);
-      }
-
-      &:first-child:hover {
-        color: hsl(215, 100%, 45%);
+      &:hover {
+        color: lighten($edit, 10%);
       }
     }
-  }
 
-  &:hover > &__control-buttons {
-    opacity: 1;
+    > *:last-child {
+      color: $delete;
+
+      &:hover {
+        color: lighten($delete, 10%);
+      }
+    }
   }
 }
 </style>
