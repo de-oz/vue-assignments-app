@@ -7,7 +7,6 @@
       name="assignment-status"
       type="checkbox"
       class="assignment-item__checkbox"
-      :class="{ fade: completed }"
       :id="id"
       :checked="completed"
       @click="$emit('toggleCheckbox', $event)"
@@ -16,15 +15,13 @@
     <label
       v-if="!isEditing"
       :for="id"
-      class="assignment-item__title"
-      :class="{ fade: completed }">
+      class="assignment-item__title">
       {{ title }}
     </label>
     <input
       v-else
       name="assignment-title"
       class="assignment-item__editing-input"
-      :class="{ fade: completed }"
       ref="titleEditingInput"
       autocomplete="off"
       v-model.trim="modifiedTitle"
@@ -113,6 +110,10 @@ $delete: hsl(0, 80%, 55%);
     margin-top: 1.5rem;
   }
 
+  > * {
+    transition: opacity 0.3s;
+  }
+
   /* CUSTOM CHECKBOX */
 
   &__checkbox {
@@ -146,6 +147,11 @@ $delete: hsl(0, 80%, 55%);
     opacity: 1;
   }
 
+  &__checkbox:checked,
+  &__checkbox:checked ~ * {
+    opacity: 0.3;
+  }
+
   /* ASSIGNMENT TITLE AND EDIT INPUT */
 
   &__title {
@@ -155,7 +161,6 @@ $delete: hsl(0, 80%, 55%);
     hyphens: auto;
     touch-action: manipulation;
     cursor: pointer;
-    transition: opacity 0.3s;
   }
 
   &__editing-input {

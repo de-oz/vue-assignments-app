@@ -283,10 +283,6 @@ ul {
   box-shadow: 0 0 5px;
 }
 
-.fade {
-  opacity: 0.3;
-}
-
 .dark-theme {
   background-color: #242526;
   color-scheme: dark;
