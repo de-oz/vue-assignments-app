@@ -1,7 +1,7 @@
 <template>
   <button
     type="button"
-    class="btn tabs__tab"
+    class="tabs__tab"
     :class="{ 'tabs__tab--selected': tab === currentTab }"
     :disabled="tab === currentTab"
     @click="$emit('update:currentTab', tab)">
@@ -22,21 +22,20 @@ export default {
 </script>
 
 <style lang="scss">
-$tab: hsl(200, 10%, 65%);
+$tab: hsl(200, 10%, 45%);
 
 .tabs .tabs__tab {
   padding: 0.4rem 1rem;
   border-radius: 0.5rem;
   text-transform: capitalize;
-  background-color: transparent;
-
-  &:hover {
-    background-color: $tab;
-  }
 
   &--selected {
-    background-color: darken($tab, 20%);
+    background-color: $tab;
     color: #fff;
+  }
+
+  &:hover {
+    background-color: lighten($tab, 15%);
   }
 }
 </style>

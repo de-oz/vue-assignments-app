@@ -269,17 +269,18 @@ ul {
   list-style: none;
 }
 
-.btn {
+button {
   border-radius: 1rem;
   transition: background-color 0.3s;
+  background-color: inherit;
   cursor: pointer;
 }
 
 .icon {
-  @extend .btn;
+  @extend button;
   width: 2rem;
-  font-size: 2rem;
   padding: 0.5rem;
+  font-size: 2rem;
   box-shadow: 0 0 5px;
 }
 

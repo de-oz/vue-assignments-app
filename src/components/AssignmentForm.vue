@@ -14,7 +14,7 @@
       v-model.trim="newAssignmentTitle" />
     <button
       type="submit"
-      class="btn assignment-form__submit-button">
+      class="assignment-form__submit-button">
       Add
     </button>
   </form>
@@ -67,6 +67,7 @@ $submit: hsl(210, 60%, 40%);
   &__input {
     padding: 0.5rem;
     margin: 1rem 0;
+    outline: 0;
     border: 2px solid #558eaf;
     border-radius: 0.5rem;
     transition: background-color 0.3s;

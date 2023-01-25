@@ -22,7 +22,7 @@
       v-else
       name="assignment-title"
       class="assignment-item__editing-input"
-      ref="titleEditingInput"
+      ref="editingInput"
       autocomplete="off"
       v-model.trim="modifiedTitle"
       @keydown.enter="saveEdit" />
@@ -60,7 +60,7 @@ export default {
   methods: {
     editItem() {
       this.isEditing = true;
-      this.$nextTick(() => this.$refs.titleEditingInput.focus());
+      this.$nextTick(() => this.$refs.editingInput.focus());
     },
 
     saveEdit() {
@@ -166,8 +166,9 @@ $delete: hsl(0, 80%, 55%);
   &__editing-input {
     flex: 1;
     padding: 0.6rem;
+    outline: 0;
     background-color: transparent;
-    box-shadow: inset 0 -5px 2px -3px hsl(215, 80%, 50%);
+    box-shadow: inset 0 -5px 2px -3px $edit;
   }
 
   &__title:not(:hover) {
@@ -185,7 +186,7 @@ $delete: hsl(0, 80%, 55%);
       color: $edit;
 
       &:hover {
-        color: lighten($edit, 10%);
+        color: lighten($edit, 15%);
       }
     }
 
@@ -193,7 +194,7 @@ $delete: hsl(0, 80%, 55%);
       color: $delete;
 
       &:hover {
-        color: lighten($delete, 10%);
+        color: lighten($delete, 15%);
       }
     }
   }

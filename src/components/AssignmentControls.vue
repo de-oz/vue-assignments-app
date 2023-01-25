@@ -4,7 +4,7 @@
     class="controls">
     <button
       type="button"
-      class="btn btn--generate"
+      class="controls__generate"
       @click="generateData">
       Generate Data
     </button>
@@ -15,20 +15,20 @@
     class="controls">
     <button
       type="button"
-      class="btn btn--clear"
+      class="controls__clear"
       @click="$emit('clearAll')">
       Clear All
     </button>
     <button
       type="button"
-      class="btn btn--check"
+      class="controls__check"
       :disabled="!activeAssignments"
       @click="$emit('checkAll')">
       Check All
     </button>
     <button
       type="button"
-      class="btn btn--uncheck"
+      class="controls__uncheck"
       :disabled="!completedAssignments"
       @click="$emit('uncheckAll')">
       Uncheck All
@@ -111,25 +111,24 @@ $buttons: (
   top: 5.25rem;
   z-index: 1;
 
-  .btn {
-    color: #fff;
-    padding: 0.5rem 0;
+  button {
     flex: 1;
-    border: 2px solid;
+    padding: 0.5rem 0;
+    color: #fff;
+  }
 
-    @each $button, $color in $buttons {
-      &--#{$button} {
-        background-color: $color;
-        border-color: darken($color, 15%);
+  &__generate {
+    max-width: 50%;
+  }
 
-        &:hover {
-          background-color: darken($color, 10%);
-        }
+  @each $button, $color in $buttons {
+    &__#{$button} {
+      background-color: $color;
+      border: 2px solid darken($color, 15%);
+
+      &:hover {
+        background-color: darken($color, 10%);
       }
-    }
-
-    &--generate {
-      max-width: 50%;
     }
   }
 }

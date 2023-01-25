@@ -24,33 +24,33 @@ export default {
 $primary: hsl(180, 100%, 20%);
 
 header {
-   position: sticky;
-   top: 0;
-   z-index: 1;
-   color: #fff;
-   background-color: $primary;
-   box-shadow: 0 0 5px 3px darken($primary, 3%);
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  color: #fff;
+  background-color: $primary;
+  box-shadow: 0 0 5px 3px darken($primary, 3%);
 }
 
 .header {
-   max-width: 768px;
-   position: relative;
-   margin: 0 auto;
+  max-width: 768px;
+  position: relative;
+  margin: 0 auto;
 
-   &__heading {
-      padding: 0.6rem 0;
-      font-size: 2.4rem;
-   }
+  &__heading {
+    padding: 0.6rem 0;
+    font-size: 2.4rem;
+  }
 
-   &__theme-toggle {
-      position: absolute;
-      right: 2rem;
-      top: 50%;
-      transform: translateY(-50%);
+  &__theme-toggle {
+    position: absolute;
+    right: 2rem;
+    top: 50%;
+    transform: translateY(-50%);
 
-      &:hover {
-         background-color: lighten($primary, 10%);
-      }
-   }
+    &:hover {
+      background-color: lighten($primary, 10%);
+    }
+  }
 }
 </style>
