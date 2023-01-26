@@ -2,10 +2,11 @@
   <header>
     <div class="header">
       <h1 class="header__heading">Assignments App</h1>
-      <font-awesome-icon
-        :icon="`fa-solid fa-${theme ? 'moon' : 'sun'}`"
+      <div
         class="icon header__theme-toggle"
-        @click="$emit('toggleTheme')" />
+        @click="$emit('toggleTheme')">
+        <font-awesome-icon :icon="`fa-solid fa-${theme ? 'moon' : 'sun'}`" />
+      </div>
     </div>
   </header>
 </template>

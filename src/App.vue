@@ -278,10 +278,13 @@ button {
 
 .icon {
   @extend button;
-  width: 2rem;
-  padding: 0.5rem;
+  width: 3rem;
+  height: 3rem;
   font-size: 2rem;
   box-shadow: 0 0 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .dark-theme {

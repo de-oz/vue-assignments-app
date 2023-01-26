@@ -28,14 +28,18 @@
       @keydown.enter="saveEdit" />
 
     <div class="assignment-item__control-buttons">
-      <font-awesome-icon
-        :icon="`fa-solid fa-${isEditing ? 'check' : 'pen'}`"
+      <div
         class="icon"
-        @click="isEditing ? saveEdit() : editItem()" />
-      <font-awesome-icon
-        :icon="`fa-solid fa-${isEditing ? 'xmark' : 'trash'}`"
+        @click="isEditing ? saveEdit() : editItem()">
+        <font-awesome-icon
+          :icon="`fa-solid fa-${isEditing ? 'check' : 'pen'}`" />
+      </div>
+      <div
         class="icon"
-        @click="isEditing ? cancelEdit() : removeItem()" />
+        @click="isEditing ? cancelEdit() : removeItem()">
+        <font-awesome-icon
+          :icon="`fa-solid fa-${isEditing ? 'xmark' : 'trash'}`" />
+      </div>
     </div>
   </li>
 </template>
